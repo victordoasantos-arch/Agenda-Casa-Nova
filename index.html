@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Controle financeiro</title>
+<link rel="icon" href="data:,">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #12140F; color: #E7E2D3; font-family: 'IBM Plex Mono', monospace; }
+  .disp { font-family: 'Space Grotesk', sans-serif; }
+  input, select, textarea { font-family: 'IBM Plex Mono', monospace; }
+  button { font-family: inherit; }
+  @media print {
+    body * { visibility: hidden; }
+    .relatorio-print-area, .relatorio-print-area * { visibility: visible; }
+    .relatorio-print-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; }
+    .no-print { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root">Carregando app… (se isso não sumir em alguns segundos, algo não carregou)</div>
+
+<script>
+  window.onerror = function (msg, url, line, col, error) {
+    var el = document.getElementById('root');
+    el.innerHTML += '<br><br><span style="color:#E08A7B;white-space:pre-wrap;">ERRO DETALHADO:\n' +
+      'Mensagem: ' + msg + '\n' +
+      'Arquivo: ' + url + '\n' +
+      'Linha: ' + line + ', Coluna: ' + col + '\n' +
+      (error && error.stack ? 'Stack: ' + error.stack : '') +
+      '</span>';
+    return false;
+  };
+</script>
+
+<!-- ====== CONFIGURE AQUI ANTES DE PUBLICAR ====== -->
+<script>
+  window.SUPABASE_URL = "https://hmbvpmmmldbnvxzejvdc.supabase.co";
+  window.SUPABASE_ANON_KEY = "sb_publishable_-KsKYSvqFNsQwgUMce7zsw_LEvkIriw";
+</script>
+<!-- =============================================== -->
+
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js" onerror="document.getElementById('root').innerHTML += '<br><span style=\'color:#E08A7B\'>ERRO: não consegui carregar React (react.production.min.js)</span>'"></script>
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js" onerror="document.getElementById('root').innerHTML += '<br><span style=\'color:#E08A7B\'>ERRO: não consegui carregar ReactDOM (react-dom.production.min.js)</span>'"></script>
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="document.getElementById('root').innerHTML += '<br><span style=\'color:#E08A7B\'>ERRO: não consegui carregar Supabase (supabase-js)</span>'"></script>
+
+<script>
+try {
+  let mesDaFatura2 = function(dataStr, diaFechamento, diaVencimento) {
+    const [ano, mes, dia] = dataStr.split("-").map(Number);
+    let mesIdx = mes - 1;
+    let anoAjustado = ano;
+    if (dia > diaFechamento) {
+      mesIdx += 1;
+    }
+    if (typeof diaVencimento === "number" && diaVencimento < diaFechamento) {
+      mesIdx += 1;
+    }
+    if (mesIdx > 11) {
+      mesIdx -= 12;
+      anoAjustado += 1;
+    } else if (mesIdx < 0) {
+      mesIdx += 12;
+      anoAjustado -= 1;
+    }
+    return { ano: anoAjustado, mes: mesIdx };
+  }, formatBRL2 = function(v) {
+    return (v || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }, todayISO2 = function() {
+    return (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+  }, normalizar2 = function(s) {
+    return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }, detectarParcelaFormal2 = function(descricao) {
+    const m = descricao.match(/parcelas?\s+(\d+)\s*(?:de|\/)\s*(\d+)/i);
+    if (!m) return null;
+    const atual = parseInt(m[1], 10), total = parseInt(m[2], 10);
+    if (total <= atual) return null;
+    const descBase = descricao.replace(m[0], "").replace(/\s{2,}/g, " ").trim() || "Compra";
+    return { atual, total, descBase };
+  }, detectarParcela2 = function(descricao) {
+    const formal = detectarParcelaFormal2(descricao);
+    if (formal) return formal;
+    const m = descricao.match(/(\d+)\s*(?:x|vezes)\b/i);
+    if (!m) return null;
+    const total = parseInt(m[1], 10);
+    if (total <= 1) return null;
+    const descBase = descricao.replace(m[0], "").replace(/\s{2,}/g, " ").trim() || "Compra";
+    return { atual: 1, total, descBase };
+  }, diasParaVencimento2 = function(dia) {
+    const hoje = /* @__PURE__ */ new Date();
+    let venc = new Date(hoje.getFullYear(), hoje.getMonth(), dia);
+    if (venc < hoje) venc = new Date(hoje.getFullYear(), hoje.getMonth() + 1, dia);
+    return Math.ceil((venc - hoje) / 864e5);
+  }, parseRapido2 = function(texto, contasFixas, bancos) {
+    const palavras = texto.trim().split(/\s+/);
+    if (!texto.trim()) return null;
+    const norm = palavras.map(normalizar2);
+    const fixaFlag = norm.some((w) => w === "fixa" || w === "fixo");
+    let tipo = null;
+    if (fixaFlag) tipo = "conta";
+    else if (norm.some((w) => w === "entrada" || w === "recebi" || w === "receita")) tipo = "entrada";
+    else if (norm.some((w) => w === "debito")) tipo = "debito";
+    else if (norm.some((w) => w === "pix")) tipo = "pix";
+    else if (norm.some((w) => w === "conta")) tipo = "conta";
+    else if (norm.some((w) => w === "credito" || w === "cartao")) tipo = "cartao";
+    const PALAVRAS_TIPO = /* @__PURE__ */ new Set(["fixa", "fixo", "entrada", "recebi", "receita", "debito", "pix", "conta", "credito", "cartao"]);
+    let valor = null, cartaoId = null, bancoId = null, contaId = null, data = null, diaFixa = null, terceiro = null, parcelasCount = null;
+    const restantes = [];
+    for (let i = 0; i < palavras.length; i++) {
+      const p = palavras[i];
+      const pNorm = norm[i];
+      const pNum = pNorm.replace(",", ".");
+      const matchData = p.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/);
+      if (!data && matchData) {
+        const hoje = /* @__PURE__ */ new Date();
+        let [_, dd, mm, aa] = matchData;
+        let ano = aa ? aa.length === 2 ? 2e3 + parseInt(aa, 10) : parseInt(aa, 10) : hoje.getFullYear();
+        const d = new Date(ano, parseInt(mm, 10) - 1, parseInt(dd, 10));
+        if (!isNaN(d.getTime())) {
+          data = d.toISOString().slice(0, 10);
+          continue;
+        }
+      }
+      if (!terceiro && p.startsWith("@") && p.length > 1) {
+        terceiro = p.slice(1).replace(/^\w/, (c) => c.toUpperCase());
+        continue;
+      }
+      const matchDiaGrudado = pNorm.match(/^dia(\d{1,2})$/);
+      if (!diaFixa && matchDiaGrudado) {
+        diaFixa = parseInt(matchDiaGrudado[1], 10);
+        continue;
+      }
+      if (!diaFixa && pNorm === "dia" && palavras[i + 1] && /^\d{1,2}$/.test(palavras[i + 1])) {
+        diaFixa = parseInt(palavras[i + 1], 10);
+        i += 1;
+        continue;
+      }
+      const matchVezesGrudado = pNorm.match(/^(\d+)x$/);
+      if (!parcelasCount && matchVezesGrudado) {
+        const n = parseInt(matchVezesGrudado[1], 10);
+        if (n > 1) {
+          parcelasCount = n;
+          continue;
+        }
+      }
+      if (!parcelasCount && /^\d+$/.test(p) && palavras[i + 1] && (norm[i + 1] === "x" || norm[i + 1] === "vezes")) {
+        const n = parseInt(p, 10);
+        if (n > 1) {
+          parcelasCount = n;
+          i += 1;
+          continue;
+        }
+      }
+      if (valor === null && /^\d+([.,]\d+)?$/.test(p)) {
+        valor = parseFloat(pNum);
+        continue;
+      }
+      if (PALAVRAS_TIPO.has(pNorm)) continue;
+      if (!cartaoId && (tipo === null || tipo === "cartao") && APELIDOS_CARTAO[pNorm]) {
+        cartaoId = APELIDOS_CARTAO[pNorm];
+        continue;
+      }
+      restantes.push(p);
+    }
+    if (valor === null) return null;
+    if (!tipo) tipo = "cartao";
+    let descricao = restantes.join(" ").trim() || (tipo === "entrada" ? "Entrada" : tipo === "conta" ? "Conta" : tipo === "debito" ? "D\xE9bito" : tipo === "pix" ? "Pix" : "Gasto");
+    let valorFinal = valor;
+    let parcelaInfo = null;
+    if (parcelasCount) {
+      valorFinal = Math.round(valor / parcelasCount * 100) / 100;
+      const descBaseLimpa = descricao;
+      descricao = `${descBaseLimpa} parcela 1 de ${parcelasCount}`;
+      parcelaInfo = { atual: 1, total: parcelasCount, descBase: descBaseLimpa };
+    } else {
+      parcelaInfo = detectarParcela2(descricao);
+    }
+    if (tipo === "conta" && !fixaFlag && contasFixas && contasFixas.length) {
+      const descNorm = normalizar2(descricao);
+      const match = contasFixas.find((c) => descNorm.includes(normalizar2(c.nome)) || normalizar2(c.nome).includes(descNorm));
+      if (match) contaId = match.id;
+    }
+    if (tipo === "cartao" && !cartaoId) cartaoId = CARTOES[0].id;
+    if ((tipo === "debito" || tipo === "pix" || tipo === "entrada") && bancos && bancos.length) {
+      const descNorm = normalizar2(descricao);
+      const palavrasDesc = descNorm.split(/\s+/).filter((w) => w.length >= 3);
+      const matchBanco = bancos.find((b) => {
+        const nomeNorm = normalizar2(b.nome);
+        if (descNorm.includes(nomeNorm) || nomeNorm.includes(descNorm)) return true;
+        const palavrasBanco = nomeNorm.split(/\s+/).filter((w) => w.length >= 3);
+        return palavrasBanco.some((pb) => palavrasDesc.includes(pb));
+      });
+      bancoId = matchBanco ? matchBanco.id : bancos[0].id;
+    }
+    if (fixaFlag && !diaFixa && data) diaFixa = parseInt(data.slice(8, 10), 10);
+    return { tipo, valor: valorFinal, descricao, cartaoId, contaId, bancoId, data, fixaFlag, diaFixa, terceiro, parcelaInfo };
+  }, App2 = function() {
+    const [lancamentos, setLancamentos] = useState([]);
+    const [contasFixas, setContasFixas] = useState([]);
+    const [bancos, setBancos] = useState([]);
+    const [investimentos, setInvestimentos] = useState([]);
+    const [parcelamentos, setParcelamentos] = useState([]);
+    const [cartoesPagos, setCartoesPagos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [saveError, setSaveError] = useState(false);
+    const [mesAtual, setMesAtual] = useState((/* @__PURE__ */ new Date()).getMonth());
+    const [anoAtual, setAnoAtual] = useState((/* @__PURE__ */ new Date()).getFullYear());
+    const [showForm, setShowForm] = useState(false);
+    const [cartaoDetalhe, setCartaoDetalhe] = useState(null);
+    const [showContaForm, setShowContaForm] = useState(false);
+    const [showBancoForm, setShowBancoForm] = useState(false);
+    const [showInvestimentoForm, setShowInvestimentoForm] = useState(false);
+    const [paginaAtual, setPaginaAtual] = useState("financas");
+    const [novaConta, setNovaConta] = useState({ nome: "", valor: "", dia: "", terceiro: "" });
+    const [novoBanco, setNovoBanco] = useState({ nome: "", saldoInicial: "" });
+    const [novoInvestimento, setNovoInvestimento] = useState({ nome: "", instituicao: "", valorInvestido: "", valorAtual: "", rendimentoMes: "" });
+    const [textoRapido, setTextoRapido] = useState("");
+    const [erroRapido, setErroRapido] = useState(false);
+    const [importStatus, setImportStatus] = useState(null);
+    const fileInputRef = useRef(null);
+    const [showLote, setShowLote] = useState(false);
+    const [textoLote, setTextoLote] = useState("");
+    const [resultadoLote, setResultadoLote] = useState(null);
+    const [form, setForm] = useState({
+      tipo: "cartao",
+      descricao: "",
+      valor: "",
+      data: todayISO2(),
+      cartaoId: CARTOES[0].id,
+      contaId: "",
+      bancoId: "",
+      terceiro: ""
+    });
+    useEffect(() => {
+      (async () => {
+        try {
+          const { data, error } = await supabaseClient.from("financas").select("dados").eq("id", "principal").single();
+          if (!error && data && data.dados) {
+            const lancsCarregados = data.dados.lancamentos || [];
+            const contasCarregadas = data.dados.contasFixas || [];
+            const bancosCarregados = data.dados.bancos || [];
+            const investimentosCarregados = data.dados.investimentos || [];
+            const parcelamentosCarregados = data.dados.parcelamentos || [];
+            const cartoesPagosCarregados = data.dados.cartoesPagos || [];
+            const parcelamentosFinal = escanearParcelamentosRetroativos(lancsCarregados, parcelamentosCarregados);
+            setLancamentos(lancsCarregados);
+            setContasFixas(contasCarregadas);
+            setBancos(bancosCarregados);
+            setInvestimentos(investimentosCarregados);
+            setParcelamentos(parcelamentosFinal);
+            setCartoesPagos(cartoesPagosCarregados);
+            if (parcelamentosFinal.length !== parcelamentosCarregados.length) {
+              supabaseClient.from("financas").update({
+                dados: { lancamentos: lancsCarregados, contasFixas: contasCarregadas, bancos: bancosCarregados, investimentos: investimentosCarregados, parcelamentos: parcelamentosFinal, cartoesPagos: cartoesPagosCarregados },
+                atualizado_em: (/* @__PURE__ */ new Date()).toISOString()
+              }).eq("id", "principal").then(({ error: err2 }) => {
+                if (err2) setSaveError(true);
+              });
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }, []);
+    async function salvar(next) {
+      const novoLancamentos = next.lancamentos !== void 0 ? next.lancamentos : lancamentos;
+      const novoContasFixas = next.contasFixas !== void 0 ? next.contasFixas : contasFixas;
+      const novoBancos = next.bancos !== void 0 ? next.bancos : bancos;
+      const novoInvestimentos = next.investimentos !== void 0 ? next.investimentos : investimentos;
+      const novoParcelamentos = next.parcelamentos !== void 0 ? next.parcelamentos : parcelamentos;
+      const novoCartoesPagos = next.cartoesPagos !== void 0 ? next.cartoesPagos : cartoesPagos;
+      setLancamentos(novoLancamentos);
+      setContasFixas(novoContasFixas);
+      setBancos(novoBancos);
+      setInvestimentos(novoInvestimentos);
+      setParcelamentos(novoParcelamentos);
+      setCartoesPagos(novoCartoesPagos);
+      try {
+        const { error } = await supabaseClient.from("financas").update({
+          dados: { lancamentos: novoLancamentos, contasFixas: novoContasFixas, bancos: novoBancos, investimentos: novoInvestimentos, parcelamentos: novoParcelamentos, cartoesPagos: novoCartoesPagos },
+          atualizado_em: (/* @__PURE__ */ new Date()).toISOString()
+        }).eq("id", "principal");
+        setSaveError(!!error);
+      } catch (e) {
+        setSaveError(true);
+      }
+    }
+    function exportarBackup() {
+      try {
+        const dados = { lancamentos, contasFixas, bancos, investimentos, parcelamentos, cartoesPagos, exportadoEm: (/* @__PURE__ */ new Date()).toISOString() };
+        const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `financas-backup-${todayISO2()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        setImportStatus({ ok: true, msg: "Backup baixado. Guarde esse arquivo em algum lugar seguro do seu celular." });
+      } catch (e) {
+        setImportStatus({ ok: false, msg: "N\xE3o consegui gerar o arquivo de backup." });
+      }
+    }
+    function importarBackup(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const dados = JSON.parse(ev.target.result);
+          const novoLancamentos = Array.isArray(dados.lancamentos) ? dados.lancamentos : lancamentos;
+          const novoContasFixas = Array.isArray(dados.contasFixas) ? dados.contasFixas : contasFixas;
+          const novoBancos = Array.isArray(dados.bancos) ? dados.bancos : bancos;
+          const novoInvestimentos = Array.isArray(dados.investimentos) ? dados.investimentos : investimentos;
+          const novoParcelamentos = Array.isArray(dados.parcelamentos) ? dados.parcelamentos : parcelamentos;
+          const novoCartoesPagos = Array.isArray(dados.cartoesPagos) ? dados.cartoesPagos : cartoesPagos;
+          salvar({ lancamentos: novoLancamentos, contasFixas: novoContasFixas, bancos: novoBancos, investimentos: novoInvestimentos, parcelamentos: novoParcelamentos, cartoesPagos: novoCartoesPagos });
+          setImportStatus({ ok: true, msg: `Backup importado: ${novoLancamentos.length} lan\xE7amento(s) carregado(s).` });
+        } catch (err) {
+          setImportStatus({ ok: false, msg: "Esse arquivo n\xE3o parece ser um backup v\xE1lido." });
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    }
+    function registrarParcelamento(info, base, listaAtual) {
+      const dataBase = base.data || todayISO2();
+      const [anoRaw, mesRaw1, diaBase] = dataBase.split("-").map(Number);
+      let anoBase = anoRaw, mesBaseIdx = mesRaw1 - 1;
+      if (base.tipo === "cartao" && base.cartaoId) {
+        const cartaoInfo = CARTOES.find((c) => c.id === base.cartaoId);
+        if (cartaoInfo) {
+          const fat = mesDaFatura2(dataBase, cartaoInfo.fechamento, cartaoInfo.vencimento);
+          anoBase = fat.ano;
+          mesBaseIdx = fat.mes;
+        }
+      }
+      const chave = `${info.descBase}|${base.cartaoId || ""}|${base.terceiro || ""}|${info.total}`.toLowerCase();
+      const existente = listaAtual.find((p) => p.chave === chave);
+      if (existente) {
+        if (info.atual > existente.parcelaBase) {
+          return listaAtual.map((p) => p === existente ? { ...p, parcelaBase: info.atual, anoBase, mesBase: mesBaseIdx, dia: diaBase } : p);
+        }
+        return listaAtual;
+      }
+      const novo = {
+        id: Date.now().toString() + "p" + Math.random().toString(36).slice(2, 5),
+        chave,
+        descBase: info.descBase,
+        valor: base.valor,
+        tipo: base.tipo,
+        cartaoId: base.cartaoId || null,
+        terceiro: base.terceiro || null,
+        anoBase,
+        mesBase: mesBaseIdx,
+        dia: diaBase,
+        parcelaBase: info.atual,
+        totalParcelas: info.total
+      };
+      return [...listaAtual, novo];
+    }
+    function escanearParcelamentosRetroativos(lancs, parcelamentosIniciais) {
+      let resultado = parcelamentosIniciais;
+      for (const l of lancs) {
+        if (!l.descricao) continue;
+        const info = detectarParcelaFormal2(l.descricao);
+        if (!info) continue;
+        resultado = registrarParcelamento(info, l, resultado);
+      }
+      return resultado;
+    }
+    function gerarParcelasVirtuais(ano, mes, listaParcelamentos) {
+      const virtuais = [];
+      for (const p of listaParcelamentos) {
+        const mesesAFrente = ano * 12 + mes - (p.anoBase * 12 + p.mesBase);
+        const parcelaAlvo = p.parcelaBase + mesesAFrente;
+        if (mesesAFrente >= 1 && parcelaAlvo <= p.totalParcelas) {
+          const dia = Math.min(p.dia, 28);
+          const dataVirtual = new Date(ano, mes, dia).toISOString().slice(0, 10);
+          virtuais.push({
+            id: `virtual-${p.id}-${parcelaAlvo}`,
+            tipo: p.tipo,
+            cartaoId: p.cartaoId,
+            terceiro: p.terceiro,
+            contaId: null,
+            bancoId: null,
+            valor: p.valor,
+            data: dataVirtual,
+            descricao: `${p.descBase} parcela ${parcelaAlvo} de ${p.totalParcelas}`,
+            virtual: true,
+            parcelamentoId: p.id,
+            parcelaAlvo
+          });
+        }
+      }
+      return virtuais;
+    }
+    function addContaFixa(e) {
+      e.preventDefault();
+      const valorNum = parseFloat((novaConta.valor || "0").replace(",", "."));
+      const diaNum = parseInt(novaConta.dia, 10);
+      if (!novaConta.nome || isNaN(diaNum) || diaNum < 1 || diaNum > 31) return;
+      const nova = { id: Date.now().toString(), nome: novaConta.nome, valor: isNaN(valorNum) ? 0 : valorNum, dia: diaNum, terceiro: novaConta.terceiro ? novaConta.terceiro.trim() : null };
+      salvar({ contasFixas: [...contasFixas, nova] });
+      setNovaConta({ nome: "", valor: "", dia: "", terceiro: "" });
+      setShowContaForm(false);
+    }
+    function removerContaFixa(id) {
+      salvar({ contasFixas: contasFixas.filter((c) => c.id !== id) });
+    }
+    function addBanco(e) {
+      e.preventDefault();
+      const saldoNum = parseFloat((novoBanco.saldoInicial || "0").replace(",", "."));
+      if (!novoBanco.nome) return;
+      const novo = { id: Date.now().toString(), nome: novoBanco.nome, saldoInicial: isNaN(saldoNum) ? 0 : saldoNum };
+      salvar({ bancos: [...bancos, novo] });
+      setNovoBanco({ nome: "", saldoInicial: "" });
+      setShowBancoForm(false);
+    }
+    function removerBanco(id) {
+      salvar({ bancos: bancos.filter((b) => b.id !== id) });
+    }
+    function addInvestimento(e) {
+      e.preventDefault();
+      const valorInvestidoNum = parseFloat((novoInvestimento.valorInvestido || "0").replace(",", "."));
+      const valorAtualNum = parseFloat((novoInvestimento.valorAtual || "0").replace(",", "."));
+      const rendimentoMesNum = parseFloat((novoInvestimento.rendimentoMes || "0").replace(",", "."));
+      if (!novoInvestimento.nome) return;
+      const novo = {
+        id: Date.now().toString(),
+        nome: novoInvestimento.nome,
+        instituicao: novoInvestimento.instituicao ? novoInvestimento.instituicao.trim() : "",
+        valorInvestido: isNaN(valorInvestidoNum) ? 0 : valorInvestidoNum,
+        valorAtual: isNaN(valorAtualNum) ? 0 : valorAtualNum,
+        rendimentoMes: isNaN(rendimentoMesNum) ? 0 : rendimentoMesNum
+      };
+      salvar({ investimentos: [...investimentos, novo] });
+      setNovoInvestimento({ nome: "", instituicao: "", valorInvestido: "", valorAtual: "", rendimentoMes: "" });
+      setShowInvestimentoForm(false);
+    }
+    function removerInvestimento(id) {
+      salvar({ investimentos: investimentos.filter((i) => i.id !== id) });
+    }
+    function toggleContaPaga(conta, doMesAtual) {
+      const existentes = doMesAtual.filter((l) => l.tipo === "conta" && l.contaId === conta.id).map((l) => l.id);
+      if (existentes.length > 0) {
+        salvar({ lancamentos: lancamentos.filter((l) => !existentes.includes(l.id)) });
+      } else {
+        const novo = { id: Date.now().toString(), tipo: "conta", descricao: conta.nome, valor: conta.valor || 0, data: todayISO2(), cartaoId: null, contaId: conta.id, bancoId: null, terceiro: conta.terceiro || null };
+        salvar({ lancamentos: [novo, ...lancamentos] });
+      }
+    }
+    function chaveCartaoMes(cartaoId, ano, mes) {
+      return `${cartaoId}-${ano}-${mes}`;
+    }
+    function toggleCartaoPago(cartaoId) {
+      const chave = chaveCartaoMes(cartaoId, anoAtual, mesAtual);
+      const jaPago = cartoesPagos.includes(chave);
+      salvar({ cartoesPagos: jaPago ? cartoesPagos.filter((k) => k !== chave) : [...cartoesPagos, chave] });
+    }
+    function addLancamento(e) {
+      e.preventDefault();
+      const valorNum = parseFloat(form.valor.replace(",", "."));
+      if (!form.descricao || isNaN(valorNum) || valorNum <= 0) return;
+      const novo = {
+        id: Date.now().toString(),
+        tipo: form.tipo,
+        descricao: form.descricao,
+        valor: valorNum,
+        data: form.data,
+        cartaoId: form.tipo === "cartao" ? form.cartaoId : null,
+        contaId: form.tipo === "conta" && form.contaId ? form.contaId : null,
+        bancoId: (form.tipo === "debito" || form.tipo === "pix" || form.tipo === "entrada") && form.bancoId ? form.bancoId : null,
+        terceiro: form.terceiro ? form.terceiro.trim() : null
+      };
+      let parcelamentosFinal = parcelamentos;
+      const infoManual = detectarParcela2(form.descricao);
+      if (infoManual) {
+        parcelamentosFinal = registrarParcelamento(infoManual, novo, parcelamentos);
+      }
+      salvar({ lancamentos: [novo, ...lancamentos], parcelamentos: parcelamentosFinal });
+      setForm({ ...form, descricao: "", valor: "", contaId: "", terceiro: "" });
+      setShowForm(false);
+    }
+    function removerLancamento(id) {
+      if (typeof id === "string" && id.startsWith("virtual-")) {
+        const item = doMes.find((l) => l.id === id);
+        if (item) {
+          salvar({ parcelamentos: parcelamentos.map((p) => p.id === item.parcelamentoId ? { ...p, totalParcelas: item.parcelaAlvo - 1 } : p) });
+        }
+        return;
+      }
+      salvar({ lancamentos: lancamentos.filter((l) => l.id !== id) });
+    }
+    function enviarRapido(e) {
+      e.preventDefault();
+      const resultado = parseRapido2(textoRapido, contasFixas, todosBancos);
+      if (!resultado) {
+        setErroRapido("valor");
+        return;
+      }
+      if (resultado.fixaFlag && !resultado.diaFixa) {
+        setErroRapido("dia");
+        return;
+      }
+      let contaIdFinal = resultado.contaId;
+      let contasFixasFinal = contasFixas;
+      if (resultado.fixaFlag) {
+        const descNorm = normalizar2(resultado.descricao);
+        const jaExiste = contasFixas.find((c) => normalizar2(c.nome) === descNorm);
+        if (jaExiste) contaIdFinal = jaExiste.id;
+        else {
+          const novaContaFixa = { id: Date.now().toString() + "f", nome: resultado.descricao, valor: resultado.valor, dia: resultado.diaFixa, terceiro: resultado.terceiro || null };
+          contasFixasFinal = [...contasFixas, novaContaFixa];
+          contaIdFinal = novaContaFixa.id;
+        }
+      }
+      const novo = {
+        id: Date.now().toString(),
+        tipo: resultado.tipo,
+        descricao: resultado.descricao,
+        valor: resultado.valor,
+        data: resultado.data || todayISO2(),
+        cartaoId: resultado.cartaoId,
+        contaId: contaIdFinal,
+        bancoId: resultado.bancoId,
+        terceiro: resultado.terceiro || null
+      };
+      let parcelamentosFinal = parcelamentos;
+      if (resultado.parcelaInfo) {
+        parcelamentosFinal = registrarParcelamento(resultado.parcelaInfo, novo, parcelamentos);
+      }
+      salvar({ lancamentos: [novo, ...lancamentos], contasFixas: contasFixasFinal, parcelamentos: parcelamentosFinal });
+      setTextoRapido("");
+      setErroRapido(false);
+    }
+    function processarLote(e) {
+      e.preventDefault();
+      const linhas = textoLote.split("\n").map((l) => l.trim()).filter(Boolean);
+      const novos = [];
+      let parcelamentosFinal = parcelamentos;
+      let falhas = 0;
+      for (const linha of linhas) {
+        const r = parseRapido2(linha, contasFixas, todosBancos);
+        if (!r) {
+          falhas += 1;
+          continue;
+        }
+        const novo = {
+          id: Date.now().toString() + Math.random().toString(36).slice(2, 7),
+          tipo: r.tipo,
+          descricao: r.descricao,
+          valor: r.valor,
+          data: r.data || todayISO2(),
+          cartaoId: r.cartaoId,
+          contaId: r.contaId,
+          bancoId: r.bancoId,
+          terceiro: r.terceiro || null
+        };
+        if (r.parcelaInfo) {
+          parcelamentosFinal = registrarParcelamento(r.parcelaInfo, novo, parcelamentosFinal);
+        }
+        novos.push(novo);
+      }
+      if (novos.length > 0) salvar({ lancamentos: [...novos, ...lancamentos], parcelamentos: parcelamentosFinal });
+      setResultadoLote({ importados: novos.length, falhas });
+      if (falhas === 0) setTextoLote("");
+    }
+    const doMes = useMemo(() => {
+      const reais = lancamentos.filter((l) => {
+        if (l.tipo === "cartao" && l.cartaoId) {
+          const cartaoInfo = CARTOES.find((c) => c.id === l.cartaoId);
+          if (cartaoInfo) {
+            const { ano, mes } = mesDaFatura2(l.data, cartaoInfo.fechamento, cartaoInfo.vencimento);
+            return mes === mesAtual && ano === anoAtual;
+          }
+        }
+        const d = /* @__PURE__ */ new Date(l.data + "T00:00:00");
+        return d.getMonth() === mesAtual && d.getFullYear() === anoAtual;
+      });
+      const virtuais = gerarParcelasVirtuais(anoAtual, mesAtual, parcelamentos);
+      return [...reais, ...virtuais];
+    }, [lancamentos, parcelamentos, mesAtual, anoAtual]);
+    const mesAnteriorIdx = mesAtual === 0 ? 11 : mesAtual - 1;
+    const anoDoMesAnterior = mesAtual === 0 ? anoAtual - 1 : anoAtual;
+    const doMesAnterior = useMemo(() => {
+      const reais = lancamentos.filter((l) => {
+        if (l.tipo === "cartao" && l.cartaoId) {
+          const cartaoInfo = CARTOES.find((c) => c.id === l.cartaoId);
+          if (cartaoInfo) {
+            const { ano, mes } = mesDaFatura2(l.data, cartaoInfo.fechamento, cartaoInfo.vencimento);
+            return mes === mesAnteriorIdx && ano === anoDoMesAnterior;
+          }
+        }
+        const d = /* @__PURE__ */ new Date(l.data + "T00:00:00");
+        return d.getMonth() === mesAnteriorIdx && d.getFullYear() === anoDoMesAnterior;
+      });
+      const virtuais = gerarParcelasVirtuais(anoDoMesAnterior, mesAnteriorIdx, parcelamentos);
+      return [...reais, ...virtuais];
+    }, [lancamentos, parcelamentos, mesAnteriorIdx, anoDoMesAnterior]);
+    const totalEntradas = doMes.filter((l) => l.tipo === "entrada").reduce((s, l) => s + l.valor, 0);
+    const totalContas = doMes.filter((l) => l.tipo === "conta" && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const totalCartoes = doMes.filter((l) => l.tipo === "cartao" && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const totalDebitoPix = doMes.filter((l) => (l.tipo === "debito" || l.tipo === "pix") && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const totalGastosPuros = doMes.filter((l) => !l.virtual && GRUPO_GASTO.includes(l.tipo) && !l.terceiro && !detectarParcelaFormal2(l.descricao)).reduce((s, l) => s + l.valor, 0);
+    const saldo = totalEntradas - totalContas - totalCartoes - totalDebitoPix;
+    const totalGastosMes = totalContas + totalCartoes + totalDebitoPix;
+    const totalEntradasAnt = doMesAnterior.filter((l) => l.tipo === "entrada").reduce((s, l) => s + l.valor, 0);
+    const totalGastosAnt = doMesAnterior.filter((l) => (l.tipo === "conta" || l.tipo === "cartao" || l.tipo === "debito" || l.tipo === "pix") && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const gastosPorCategoria = ["cartao", "debito", "pix", "conta"].map((tp) => {
+      const total = doMes.filter((l) => l.tipo === tp && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+      return { tipo: tp, label: TIPOS[tp].label, cor: TIPOS[tp].cor, total, pct: totalGastosMes > 0 ? total / totalGastosMes * 100 : 0 };
+    }).filter((g) => g.total > 0);
+    const gastosPorCartao = CARTOES.map((c) => {
+      const doCartao = doMes.filter((l) => l.tipo === "cartao" && l.cartaoId === c.id);
+      const totalTerceiros = doCartao.filter((l) => l.terceiro).reduce((s, l) => s + l.valor, 0);
+      return {
+        ...c,
+        total: doCartao.reduce((s, l) => s + l.valor, 0),
+        totalTerceiros,
+        totalProprio: doCartao.reduce((s, l) => s + l.valor, 0) - totalTerceiros,
+        pago: cartoesPagos.includes(chaveCartaoMes(c.id, anoAtual, mesAtual))
+      };
+    });
+    const statusContasFixas = contasFixas.map((c) => {
+      const lancsDaConta = doMes.filter((l) => l.tipo === "conta" && l.contaId === c.id);
+      return { ...c, pago: lancsDaConta.reduce((s, l) => s + l.valor, 0), paga: lancsDaConta.length > 0 };
+    });
+    const nomesFixosNorm = BANCOS_PADRAO.map((b) => normalizar2(b.nome));
+    const fixosComHistorico = BANCOS_PADRAO.map((padrao) => {
+      const existente = bancos.find((b) => normalizar2(b.nome) === normalizar2(padrao.nome));
+      return existente || padrao;
+    });
+    const extras = bancos.filter((b) => !nomesFixosNorm.includes(normalizar2(b.nome)));
+    const todosBancos = [...fixosComHistorico, ...extras];
+    const statusBancos = todosBancos.map((b) => {
+      const entradas = lancamentos.filter((l) => l.tipo === "entrada" && l.bancoId === b.id).reduce((s, l) => s + l.valor, 0);
+      const saidas = lancamentos.filter((l) => (l.tipo === "debito" || l.tipo === "pix") && l.bancoId === b.id && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+      return { ...b, saldoAtual: (b.saldoInicial || 0) + entradas - saidas, fixo: nomesFixosNorm.includes(normalizar2(b.nome)) };
+    });
+    const totalInvestido = investimentos.reduce((s, i) => s + (i.valorInvestido || 0), 0);
+    const patrimonioInvestido = investimentos.reduce((s, i) => s + (i.valorAtual || 0), 0);
+    const rendimentoTotalInvestido = patrimonioInvestido - totalInvestido;
+    const rendimentoTotalPct = totalInvestido > 0 ? rendimentoTotalInvestido / totalInvestido * 100 : 0;
+    const rendimentoMesInvestido = investimentos.reduce((s, i) => s + (i.rendimentoMes || 0), 0);
+    const lancamentosTerceiros = doMes.filter((l) => l.terceiro);
+    const terceirosPorPessoa = Object.values(lancamentosTerceiros.reduce((acc, l) => {
+      if (!acc[l.terceiro]) acc[l.terceiro] = { nome: l.terceiro, total: 0, itens: [], porCartao: {} };
+      acc[l.terceiro].total += l.valor;
+      acc[l.terceiro].itens.push(l);
+      if (l.tipo === "cartao" && l.cartaoId) {
+        acc[l.terceiro].porCartao[l.cartaoId] = (acc[l.terceiro].porCartao[l.cartaoId] || 0) + l.valor;
+      }
+      return acc;
+    }, {}));
+    function mudarMes(delta) {
+      let m = mesAtual + delta, a = anoAtual;
+      if (m < 0) {
+        m = 11;
+        a -= 1;
+      }
+      if (m > 11) {
+        m = 0;
+        a += 1;
+      }
+      setMesAtual(m);
+      setAnoAtual(a);
+    }
+    if (loading) {
+      return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#E7E2D3" } }, "Carregando…");
+    }
+    return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", paddingBottom: 100 } }, /* @__PURE__ */ React.createElement("div", { style: { padding: "28px 20px 16px", borderBottom: "1px solid #262922" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 720, margin: "0 auto" } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, letterSpacing: 2, color: "#7A8071", textTransform: "uppercase" } }, "Livro-caixa"), /* @__PURE__ */ React.createElement("h1", { className: "disp", style: { margin: "4px 0 0", fontSize: 26, fontWeight: 700 } }, "Controle financeiro"))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginTop: 16, maxWidth: 720, margin: "16px auto 0" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setPaginaAtual("financas"), style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${paginaAtual === "financas" ? "#7FB069" : "#262922"}`, background: paginaAtual === "financas" ? "rgba(127,176,105,0.15)" : "#181B15", color: paginaAtual === "financas" ? "#9ED08A" : "#A6ABA0", fontWeight: 700, fontSize: 13, cursor: "pointer" } }, "\uD83D\uDCB3 Financeiro"), /* @__PURE__ */ React.createElement("button", { onClick: () => setPaginaAtual("investimentos"), style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${paginaAtual === "investimentos" ? "#5B9BD5" : "#262922"}`, background: paginaAtual === "investimentos" ? "rgba(91,155,213,0.15)" : "#181B15", color: paginaAtual === "investimentos" ? "#8FC1E8" : "#A6ABA0", fontWeight: 700, fontSize: 13, cursor: "pointer" } }, "\uD83D\uDCC8 Investimentos"), /* @__PURE__ */ React.createElement("button", { onClick: () => setPaginaAtual("relatorio"), style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${paginaAtual === "relatorio" ? "#E0A458" : "#262922"}`, background: paginaAtual === "relatorio" ? "rgba(224,164,88,0.15)" : "#181B15", color: paginaAtual === "relatorio" ? "#E0A458" : "#A6ABA0", fontWeight: 700, fontSize: 13, cursor: "pointer" } }, "\uD83D\uDCC4 Relat\xF3rio")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginTop: 14 } }, /* @__PURE__ */ React.createElement("button", { onClick: exportarBackup, style: { display: "flex", alignItems: "center", gap: 5, background: "#181B15", border: "1px solid #262922", color: "#A6ABA0", fontSize: 11.5, padding: "6px 12px", borderRadius: 20, cursor: "pointer" } }, "⬇ Exportar backup"), /* @__PURE__ */ React.createElement("button", { onClick: () => fileInputRef.current && fileInputRef.current.click(), style: { display: "flex", alignItems: "center", gap: 5, background: "#181B15", border: "1px solid #262922", color: "#A6ABA0", fontSize: 11.5, padding: "6px 12px", borderRadius: 20, cursor: "pointer" } }, "⬆ Importar backup"), /* @__PURE__ */ React.createElement("input", { ref: fileInputRef, type: "file", accept: "application/json", onChange: importarBackup, style: { display: "none" } })), importStatus && /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", fontSize: 11, marginTop: 8, color: importStatus.ok ? "#9ED08A" : "#E08A7B" } }, importStatus.msg), (paginaAtual === "financas" || paginaAtual === "relatorio") && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginTop: 18 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => mudarMes(-1), style: navBtnStyle }, "‹"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 15, minWidth: 120, textAlign: "center", fontWeight: 700 } }, MESES[mesAtual], " / ", anoAtual), /* @__PURE__ */ React.createElement("button", { onClick: () => mudarMes(1), style: navBtnStyle }, "›"))), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: 20, display: paginaAtual === "financas" ? "block" : "none" } }, /* @__PURE__ */ React.createElement("form", { onSubmit: enviarRapido, style: { marginBottom: 20 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8 } }, /* @__PURE__ */ React.createElement(
+      "input",
+      {
+        value: textoRapido,
+        onChange: (e) => {
+          setTextoRapido(e.target.value);
+          setErroRapido(false);
+        },
+        placeholder: "Ex: bradesco 45,90 mercado",
+        style: { ...inputStyle, flex: 1 }
+      }
+    ), /* @__PURE__ */ React.createElement("button", { type: "submit", style: { background: "#7FB069", border: "none", color: "#12140F", borderRadius: 8, padding: "0 16px", cursor: "pointer" } }, "+")), erroRapido === "dia" ? /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#E08A7B", marginTop: 6 } }, 'Pra criar conta fixa, diga o dia do vencimento. Ex: "fixa 120 dia 10 internet".') : erroRapido ? /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#E08A7B", marginTop: 6 } }, "N\xE3o entendi o valor — inclua um n\xFAmero.") : /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#6E7466", marginTop: 6, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 } }, /* @__PURE__ */ React.createElement("span", null, 'Cart\xE3o, d\xE9bito, pix, conta ou entrada + valor + descri\xE7\xE3o. "fixa"+"dia 10" cria conta fixa. "@Nome" marca gasto de terceiro.'), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setShowLote(true), style: { background: "none", border: "none", color: "#7FB069", cursor: "pointer", whiteSpace: "nowrap", fontSize: 11, textDecoration: "underline", flexShrink: 0 } }, "importar v\xE1rios"))), saveError && /* @__PURE__ */ React.createElement("div", { style: { background: "#2A1B1B", border: "1px solid #5B3434", borderRadius: 8, padding: "8px 12px", fontSize: 12, color: "#E08A7B", textAlign: "center", marginBottom: 16 } }, "N\xE3o consegui salvar agora — confira a conex\xE3o com o Supabase."), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 22 } }, /* @__PURE__ */ React.createElement(ResumoCard2, { label: "Entradas", valor: totalEntradas, cor: "#7FB069" }), /* @__PURE__ */ React.createElement(ResumoCard2, { label: "Contas+cart\xF5es+d\xE9b/pix", valor: totalContas + totalCartoes + totalDebitoPix, cor: "#D9705A" }), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: saldo >= 0 ? "#1B2A1E" : "#2A1B1B", border: `1px solid ${saldo >= 0 ? "#345B3C" : "#5B3434"}`, borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Saldo do m\xEAs"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 20, fontWeight: 700, color: saldo >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(saldo)))), /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Saldo em conta", onAdd: () => setShowBancoForm(true), addLabel: "nova conta banc\xE1ria" }, statusBancos.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhuma conta banc\xE1ria cadastrada." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, overflowX: "auto", paddingBottom: 6 } }, statusBancos.map((b) => /* @__PURE__ */ React.createElement("div", { key: b.id, style: { minWidth: 168, borderRadius: 12, padding: 14, background: "#182430", border: "1px solid #26343F", flexShrink: 0, position: "relative" } }, !b.fixo && /* @__PURE__ */ React.createElement("button", { onClick: () => removerBanco(b.id), style: xBtnStyle }, "\xD7"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, marginBottom: 10 } }, b.nome), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#8DA3B0", marginBottom: 4, textTransform: "uppercase" } }, "Saldo atual"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 18, fontWeight: 700, color: b.saldoAtual >= 0 ? "#E7E2D3" : "#E08A7B" } }, formatBRL2(b.saldoAtual)))))), /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Cart\xF5es" }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, overflowX: "auto", paddingBottom: 6 } }, gastosPorCartao.map((c) => {
+      const dias = diasParaVencimento2(c.vencimento);
+      return /* @__PURE__ */ React.createElement("div", { key: c.id, onClick: () => setCartaoDetalhe(c.id), style: { minWidth: 168, borderRadius: 12, padding: 14, background: c.cor, color: c.texto, flexShrink: 0, position: "relative", cursor: "pointer" } }, /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          onClick: (e) => { e.stopPropagation(); toggleCartaoPago(c.id); },
+          title: c.pago ? "Desmarcar fatura como paga" : "Marcar fatura como paga",
+          style: {
+            position: "absolute",
+            top: 8,
+            left: 8,
+            width: 20,
+            height: 20,
+            borderRadius: 6,
+            cursor: "pointer",
+            padding: 0,
+            border: `1.5px solid ${c.pago ? "#FFFFFF" : "rgba(255,255,255,0.5)"}`,
+            background: c.pago ? "rgba(255,255,255,0.9)" : "transparent",
+            color: c.cor,
+            fontSize: 12,
+            lineHeight: "16px",
+            fontWeight: 700
+          }
+        },
+        c.pago ? "✓" : ""
+      ), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, opacity: 0.85, textAlign: "right" } }, "Vence dia ", c.vencimento), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, margin: "12px 0 14px" } }, c.nome), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 17, fontWeight: 600 } }, formatBRL2(c.total)), c.totalTerceiros > 0 && /* @__PURE__ */ React.createElement("div", { style: { fontSize: 10.5, opacity: 0.9, marginTop: 6, display: "flex", flexDirection: "column", gap: 1 } }, /* @__PURE__ */ React.createElement("span", null, "Seu: ", formatBRL2(c.totalProprio)), /* @__PURE__ */ React.createElement("span", null, "Terceiros: ", formatBRL2(c.totalTerceiros))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 8, fontSize: 11, display: "inline-block", padding: "2px 8px", borderRadius: 20, background: c.pago ? "rgba(255,255,255,0.35)" : dias <= 5 ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.18)" } }, c.pago ? "fatura paga" : dias === 0 ? "vence hoje" : `${dias} dia${dias > 1 ? "s" : ""} p/ vencer`));
+    }))), /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Contas fixas", onAdd: () => setShowContaForm(true), addLabel: "nova conta" }, statusContasFixas.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhuma conta fixa cadastrada." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, overflowX: "auto", paddingBottom: 6 } }, statusContasFixas.map((c) => {
+      const dias = diasParaVencimento2(c.dia);
+      return /* @__PURE__ */ React.createElement("div", { key: c.id, style: { minWidth: 168, borderRadius: 12, padding: 14, background: "#1E2A1E", border: `1px solid ${c.paga ? "#345B3C" : "#262922"}`, flexShrink: 0, position: "relative" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => removerContaFixa(c.id), style: xBtnStyle }, "\xD7"), /* @__PURE__ */ React.createElement("button", { onClick: () => toggleContaPaga(c, doMes), style: { position: "absolute", top: 8, left: 8, width: 20, height: 20, borderRadius: 6, cursor: "pointer", border: `1.5px solid ${c.paga ? "#7FB069" : "#4A4F42"}`, background: c.paga ? "#7FB069" : "transparent", color: "#12140F", fontSize: 12, lineHeight: "16px", padding: 0 } }, c.paga ? "✓" : ""), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: "#A6ABA0", textAlign: "right" } }, "Vence dia ", c.dia), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, margin: "12px 0 14px" } }, c.nome), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 17, fontWeight: 600 } }, formatBRL2(c.valor)), c.terceiro && /* @__PURE__ */ React.createElement("div", { style: { fontSize: 10.5, color: "#E0A458", marginTop: 2 } }, "de ", c.terceiro), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 8, fontSize: 11, display: "inline-block", padding: "2px 8px", borderRadius: 20, background: c.paga ? "rgba(127,176,105,0.2)" : "rgba(255,255,255,0.08)", color: c.paga ? "#9ED08A" : "#A6ABA0" } }, c.paga ? "paga este m\xEAs" : dias === 0 ? "vence hoje" : `${dias} dia${dias > 1 ? "s" : ""} p/ vencer`));
+    }))), terceirosPorPessoa.length > 0 && /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Terceiros (n\xE3o \xE9 seu)" }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 6 } }, terceirosPorPessoa.map((p) => /* @__PURE__ */ React.createElement("div", { key: p.nome, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, fontSize: 14 } }, p.nome), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, fontSize: 15, color: "#E0A458" } }, formatBRL2(p.total))), Object.keys(p.porCartao).length > 0 && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 } }, Object.entries(p.porCartao).map(([cid, val]) => {
+      const cInfo = CARTOES.find((c) => c.id === cid);
+      return /* @__PURE__ */ React.createElement("div", { key: cid, style: { background: cInfo ? cInfo.cor : "#262922", color: cInfo ? cInfo.texto : "#E7E2D3", borderRadius: 8, padding: "4px 10px", fontSize: 11.5, fontWeight: 700, display: "flex", alignItems: "center", gap: 6 } }, cInfo ? cInfo.nome : cid, /* @__PURE__ */ React.createElement("span", { style: { opacity: 0.85, fontWeight: 600 } }, formatBRL2(val)));
+    })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 6, display: "flex", flexDirection: "column", gap: 4 } }, p.itens.map((it) => /* @__PURE__ */ React.createElement("div", { key: it.id, style: { display: "flex", justifyContent: "space-between", fontSize: 12, color: "#7A8071" } }, /* @__PURE__ */ React.createElement("span", null, it.descricao), /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 6 } }, formatBRL2(it.valor), /* @__PURE__ */ React.createElement("button", { onClick: () => removerLancamento(it.id), style: { background: "none", border: "none", color: "#6E7466", cursor: "pointer", fontSize: 13 } }, "\xD7"))))))))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Lan\xE7amentos do m\xEAs"), /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px", marginBottom: 12, display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11.5, color: "#A6ABA0" } }, "Gastos \xE0 vista deste m\xEAs (sem parcelados)"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, fontSize: 15, color: "#D9705A" } }, formatBRL2(totalGastosPuros))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 } }, Object.entries(TIPOS).map(([key, tp]) => /* @__PURE__ */ React.createElement("div", { key, style: { display: "flex", alignItems: "center", gap: 5, background: "#181B15", border: "1px solid #262922", borderRadius: 20, padding: "4px 9px" } }, /* @__PURE__ */ React.createElement("div", { style: { width: 8, height: 8, borderRadius: 99, background: tp.cor, flexShrink: 0 } }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10.5, color: "#A6ABA0" } }, tp.label)))), doMes.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nada lan\xE7ado neste m\xEAs ainda." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 6 } }, [...doMes].sort((a, b) => b.data.localeCompare(a.data)).map((l) => {
+      const t = TIPOS[l.tipo] || TIPOS.conta;
+      const cartao = l.cartaoId ? CARTOES.find((c) => c.id === l.cartaoId) : null;
+      const banco = l.bancoId ? todosBancos.find((b) => b.id === l.bancoId) : null;
+      return /* @__PURE__ */ React.createElement("div", { key: l.id, style: { display: "flex", alignItems: "center", gap: 10, background: "#181B15", border: `1px solid ${l.virtual ? "#3A4A2E" : "#262922"}`, borderRadius: 10, padding: "10px 12px", opacity: l.virtual ? 0.85 : 1 } }, /* @__PURE__ */ React.createElement("div", { style: {
+        fontSize: 9.5,
+        fontWeight: 700,
+        textTransform: "uppercase",
+        letterSpacing: 0.3,
+        flexShrink: 0,
+        padding: "3px 6px",
+        borderRadius: 5,
+        color: t.cor,
+        background: t.cor + "22",
+        minWidth: 44,
+        textAlign: "center"
+      } }, t.label), /* @__PURE__ */ React.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13.5, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, l.descricao, l.virtual ? " \u{1F501}" : ""), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#7A8071" } }, (/* @__PURE__ */ new Date(l.data + "T00:00:00")).toLocaleDateString("pt-BR"), cartao ? ` \xB7 ${cartao.nome}` : "", banco ? ` \xB7 ${banco.nome}` : "", l.terceiro ? ` \xB7 de ${l.terceiro}` : "", l.virtual ? " \xB7 parcela autom\xE1tica" : "")), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, color: l.tipo === "entrada" ? "#9ED08A" : "#E08A7B" } }, l.tipo === "entrada" ? "+" : "−", formatBRL2(l.valor)), /* @__PURE__ */ React.createElement("button", { onClick: () => removerLancamento(l.id), title: l.virtual ? "Encerrar parcelamento a partir daqui" : "Remover", style: { background: "none", border: "none", color: "#6E7466", cursor: "pointer", fontSize: 16 } }, "\xD7"));
+    })))), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: 20, display: paginaAtual === "investimentos" ? "block" : "none" } }, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 14, fontWeight: 700 } }, "Seus investimentos"), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "14px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Total investido"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 18, fontWeight: 700 } }, formatBRL2(totalInvestido))), /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "14px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Patrim\xF4nio atual"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 18, fontWeight: 700, color: "#5B9BD5" } }, formatBRL2(patrimonioInvestido))), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: rendimentoTotalInvestido >= 0 ? "#1B2A1E" : "#2A1B1B", border: `1px solid ${rendimentoTotalInvestido >= 0 ? "#345B3C" : "#5B3434"}`, borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Rendimento total"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 18, fontWeight: 700, color: rendimentoTotalInvestido >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(rendimentoTotalInvestido), " (", rendimentoTotalPct.toFixed(1), "%)")), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Rende por m\xEAs"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 18, fontWeight: 700, color: rendimentoMesInvestido >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(rendimentoMesInvestido)))), investimentos.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhum investimento cadastrado. Toque no + pra adicionar." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10 } }, investimentos.map((i) => {
+      const ganho = (i.valorAtual || 0) - (i.valorInvestido || 0);
+      const ganhoPct = i.valorInvestido > 0 ? ganho / i.valorInvestido * 100 : 0;
+      return /* @__PURE__ */ React.createElement("div", { key: i.id, style: { borderRadius: 12, padding: 16, background: "#181B15", border: "1px solid #262922", position: "relative" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => removerInvestimento(i.id), style: xBtnStyle }, "\xD7"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 16 } }, i.nome), i.instituicao && /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11.5, color: "#7A8071", marginBottom: 10 } }, i.instituicao), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: 10 } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 10.5, color: "#8FA88A", textTransform: "uppercase" } }, "Valor atual"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 22, fontWeight: 700 } }, formatBRL2(i.valorAtual))), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "right", fontSize: 11, display: "inline-block", padding: "3px 9px", borderRadius: 20, background: "rgba(158,208,138,0.15)", color: "#9ED08A", fontWeight: 700 } }, "+", formatBRL2(i.rendimentoMes), "/m\xEAs")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 12, paddingTop: 12, borderTop: "1px solid #262922", fontSize: 12.5 } }, /* @__PURE__ */ React.createElement("span", { style: { color: "#7A8071" } }, "Investido: ", formatBRL2(i.valorInvestido)), /* @__PURE__ */ React.createElement("span", { style: { color: ganho >= 0 ? "#9ED08A" : "#E08A7B", fontWeight: 700 } }, ganho >= 0 ? "+" : "", formatBRL2(ganho), " (", ganhoPct.toFixed(1), "%)")));
+    }))), /* @__PURE__ */ React.createElement("div", { className: "relatorio-print-area", style: { maxWidth: 720, margin: "0 auto", padding: 20, display: paginaAtual === "relatorio" ? "block" : "none" } }, /* @__PURE__ */ React.createElement("div", { className: "no-print", style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 } }, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", fontWeight: 700 } }, "Relat\xF3rio mensal"), /* @__PURE__ */ React.createElement("button", { onClick: () => window.print(), style: { background: "#181B15", border: "1px solid #262922", color: "#E0A458", fontSize: 12, padding: "8px 14px", borderRadius: 20, cursor: "pointer", fontWeight: 700 } }, "\u2B07 Baixar / Compartilhar PDF")), /* @__PURE__ */ React.createElement("h2", { className: "disp", style: { fontSize: 22, fontWeight: 700, margin: "0 0 2px" } }, MESES[mesAtual], " / ", anoAtual), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#7A8071", marginBottom: 20 } }, "Gerado em ", (/* @__PURE__ */ new Date()).toLocaleDateString("pt-BR")), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Entradas"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 17, fontWeight: 700, color: "#7FB069" } }, formatBRL2(totalEntradas))), /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Sa\xEDdas totais"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 17, fontWeight: 700, color: "#D9705A" } }, formatBRL2(totalGastosMes))), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: saldo >= 0 ? "#1B2A1E" : "#2A1B1B", border: `1px solid ${saldo >= 0 ? "#345B3C" : "#5B3434"}`, borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Saldo do m\xEAs"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 20, fontWeight: 700, color: saldo >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(saldo)))), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Comparado com ", MESES[mesAnteriorIdx]), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8, marginBottom: 22 } }, [{ label: "Entradas", atual: totalEntradas, ant: totalEntradasAnt, corBoa: "#9ED08A" }, { label: "Gastos", atual: totalGastosMes, ant: totalGastosAnt, corBoa: "#E08A7B", invertido: true }].map((c, idx) => {
+      const delta = c.atual - c.ant;
+      const pct = c.ant > 0 ? delta / c.ant * 100 : c.atual > 0 ? 100 : 0;
+      const melhorou = c.invertido ? delta <= 0 : delta >= 0;
+      return /* @__PURE__ */ React.createElement("div", { key: idx, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13, color: "#A6ABA0" } }, c.label), /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 8 } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#6E7466" } }, "antes: ", formatBRL2(c.ant)), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 13, fontWeight: 700, color: melhorou ? "#9ED08A" : "#E08A7B" } }, delta >= 0 ? "\u2191" : "\u2193", " ", Math.abs(pct).toFixed(0), "%")));
+    })), gastosPorCategoria.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Gastos por categoria"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8, marginBottom: 22 } }, gastosPorCategoria.map((g) => /* @__PURE__ */ React.createElement("div", { key: g.tipo, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 6 } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13, display: "flex", alignItems: "center", gap: 6 } }, /* @__PURE__ */ React.createElement("span", { style: { width: 8, height: 8, borderRadius: 99, background: g.cor, display: "inline-block" } }), g.label), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 13, fontWeight: 700 } }, formatBRL2(g.total), " \xB7 ", g.pct.toFixed(0), "%")), /* @__PURE__ */ React.createElement("div", { style: { height: 5, background: "#262922", borderRadius: 3, overflow: "hidden" } }, /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: `${g.pct}%`, background: g.cor } })))))), gastosPorCartao.filter((c) => c.total > 0).length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Gastos por cart\xE3o"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } }, gastosPorCartao.filter((c) => c.total > 0).map((c) => /* @__PURE__ */ React.createElement("div", { key: c.id, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13 } }, c.nome), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 14, fontWeight: 700 } }, formatBRL2(c.total))))))), paginaAtual !== "relatorio" && /* @__PURE__ */ React.createElement("button", { onClick: () => paginaAtual === "financas" ? setShowForm(true) : setShowInvestimentoForm(true), style: { position: "fixed", bottom: 24, right: 20, width: 54, height: 54, borderRadius: "50%", background: "#7FB069", border: "none", color: "#12140F", fontSize: 26, cursor: "pointer", boxShadow: "0 6px 18px rgba(127,176,105,0.4)" } }, "+"), showForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addLancamento }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Novo lan\xE7amento", onClose: () => setShowForm(false) }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, marginBottom: 8 } }, ["entrada", "conta"].map((k) => /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        type: "button",
+        key: k,
+        onClick: () => setForm({ ...form, tipo: k }),
+        style: tipoBtnStyle2(form.tipo === k, TIPOS[k].cor)
+      },
+      TIPOS[k].label
+    )), /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        type: "button",
+        onClick: () => setForm({ ...form, tipo: GRUPO_GASTO.includes(form.tipo) ? form.tipo : "cartao" }),
+        style: tipoBtnStyle2(GRUPO_GASTO.includes(form.tipo), "#D9705A")
+      },
+      "Gasto"
+    )), GRUPO_GASTO.includes(form.tipo) && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, marginBottom: 14 } }, GRUPO_GASTO.map((k) => /* @__PURE__ */ React.createElement("button", { type: "button", key: k, onClick: () => setForm({ ...form, tipo: k }), style: tipoBtnStyle2(form.tipo === k, TIPOS[k].cor) }, TIPOS[k].label))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Descri\xE7\xE3o"), /* @__PURE__ */ React.createElement("input", { required: true, value: form.descricao, onChange: (e) => setForm({ ...form, descricao: e.target.value }), placeholder: "Ex: Supermercado", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10 } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor (R$)"), /* @__PURE__ */ React.createElement("input", { required: true, value: form.valor, onChange: (e) => setForm({ ...form, valor: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle })), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Data"), /* @__PURE__ */ React.createElement("input", { required: true, type: "date", value: form.data, onChange: (e) => setForm({ ...form, data: e.target.value }), style: inputStyle }))), form.tipo === "cartao" && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Cart\xE3o"), /* @__PURE__ */ React.createElement("select", { value: form.cartaoId, onChange: (e) => setForm({ ...form, cartaoId: e.target.value }), style: inputStyle }, CARTOES.map((c) => /* @__PURE__ */ React.createElement("option", { key: c.id, value: c.id }, c.nome, " (vence dia ", c.vencimento, ")")))), (form.tipo === "debito" || form.tipo === "pix" || form.tipo === "entrada") && todosBancos.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Conta banc\xE1ria"), /* @__PURE__ */ React.createElement("select", { value: form.bancoId, onChange: (e) => setForm({ ...form, bancoId: e.target.value }), style: inputStyle }, /* @__PURE__ */ React.createElement("option", { value: "" }, "Selecione"), todosBancos.map((b) => /* @__PURE__ */ React.createElement("option", { key: b.id, value: b.id }, b.nome)))), form.tipo === "conta" && contasFixas.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Vincular a conta fixa (opcional)"), /* @__PURE__ */ React.createElement("select", { value: form.contaId, onChange: (e) => {
+      const id = e.target.value;
+      const conta = contasFixas.find((c) => c.id === id);
+      setForm({ ...form, contaId: id, descricao: conta ? conta.nome : form.descricao, valor: conta && conta.valor ? String(conta.valor) : form.valor });
+    }, style: inputStyle }, /* @__PURE__ */ React.createElement("option", { value: "" }, "Avulsa / outra"), contasFixas.map((c) => /* @__PURE__ */ React.createElement("option", { key: c.id, value: c.id }, c.nome, " (vence dia ", c.dia, ")")))), GRUPO_GASTO.includes(form.tipo) && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "N\xE3o \xE9 seu? De quem \xE9 (opcional)"), /* @__PURE__ */ React.createElement("input", { value: form.terceiro, onChange: (e) => setForm({ ...form, terceiro: e.target.value }), placeholder: "Ex: Jo\xE3o, Maria", style: inputStyle })), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#7FB069") }, "Salvar lan\xE7amento"))), showContaForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowContaForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addContaFixa }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Nova conta fixa", onClose: () => setShowContaForm(false) }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Nome"), /* @__PURE__ */ React.createElement("input", { required: true, value: novaConta.nome, onChange: (e) => setNovaConta({ ...novaConta, nome: e.target.value }), placeholder: "Ex: Aluguel, Internet", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10 } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor aprox. (R$)"), /* @__PURE__ */ React.createElement("input", { value: novaConta.valor, onChange: (e) => setNovaConta({ ...novaConta, valor: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle })), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Dia do vencimento"), /* @__PURE__ */ React.createElement("input", { required: true, type: "number", min: "1", max: "31", value: novaConta.dia, onChange: (e) => setNovaConta({ ...novaConta, dia: e.target.value }), placeholder: "Ex: 5", style: inputStyle }))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "N\xE3o \xE9 sua? De quem \xE9 (opcional)"), /* @__PURE__ */ React.createElement("input", { value: novaConta.terceiro, onChange: (e) => setNovaConta({ ...novaConta, terceiro: e.target.value }), placeholder: "Ex: M\xE3e, Jo\xE3o", style: inputStyle }), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#E0A458") }, "Salvar conta"))), showBancoForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowBancoForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addBanco }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Nova conta banc\xE1ria", onClose: () => setShowBancoForm(false) }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Nome do banco"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoBanco.nome, onChange: (e) => setNovoBanco({ ...novoBanco, nome: e.target.value }), placeholder: "Ex: Nubank, Ita\xFA", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 } }, CARTOES.filter((c) => !todosBancos.some((b) => normalizar2(b.nome) === normalizar2(c.nome))).map((c) => /* @__PURE__ */ React.createElement("button", { type: "button", key: c.id, onClick: () => setNovoBanco({ ...novoBanco, nome: c.nome }), style: chipStyle }, "+ ", c.nome))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Saldo atual (R$)"), /* @__PURE__ */ React.createElement("input", { value: novoBanco.saldoInicial, onChange: (e) => setNovoBanco({ ...novoBanco, saldoInicial: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle }), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#5B9BD5") }, "Salvar conta banc\xE1ria"))), showInvestimentoForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowInvestimentoForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addInvestimento }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Novo investimento", onClose: () => setShowInvestimentoForm(false) }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Nome"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoInvestimento.nome, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, nome: e.target.value }), placeholder: "Ex: Tesouro Selic, CDB Bradesco", style: inputStyle }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Institui\xE7\xE3o (opcional)"), /* @__PURE__ */ React.createElement("input", { value: novoInvestimento.instituicao, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, instituicao: e.target.value }), placeholder: "Ex: XP, Bradesco, Nubank", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10 } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor investido (R$)"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoInvestimento.valorInvestido, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, valorInvestido: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle })), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor atual (R$)"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoInvestimento.valorAtual, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, valorAtual: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle }))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Quanto rende por m\xEAs (R$)"), /* @__PURE__ */ React.createElement("input", { value: novoInvestimento.rendimentoMes, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, rendimentoMes: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle }), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#5B9BD5") }, "Salvar investimento"))), showLote && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => {
+      setShowLote(false);
+      setResultadoLote(null);
+    } }, /* @__PURE__ */ React.createElement("form", { onSubmit: processarLote }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Importar v\xE1rios lan\xE7amentos", onClose: () => {
+      setShowLote(false);
+      setResultadoLote(null);
+    } }), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: "#7A8071", marginBottom: 10, lineHeight: 1.5 } }, "Uma linha por lan\xE7amento, com data opcional (dd/mm):", /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { style: { color: "#A6ABA0" } }, "bradesco 45,90 12/07 mercado"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { style: { color: "#A6ABA0" } }, "conta 120 08/07 internet"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { style: { color: "#A6ABA0" } }, "entrada 3000 05/07 salario")), /* @__PURE__ */ React.createElement(
+      "textarea",
+      {
+        value: textoLote,
+        onChange: (e) => {
+          setTextoLote(e.target.value);
+          setResultadoLote(null);
+        },
+        placeholder: "bradesco 45,90 12/07 mercado\nc6 89,00 14/07 farmacia\nconta 120 08/07 internet",
+        rows: 8,
+        style: { ...inputStyle, resize: "vertical", fontSize: 13, lineHeight: 1.6 }
+      }
+    ), resultadoLote && /* @__PURE__ */ React.createElement("div", { style: {
+      marginTop: 10,
+      fontSize: 12,
+      padding: "8px 12px",
+      borderRadius: 8,
+      background: resultadoLote.falhas > 0 ? "rgba(224,138,123,0.15)" : "rgba(127,176,105,0.15)",
+      color: resultadoLote.falhas > 0 ? "#E08A7B" : "#9ED08A"
+    } }, resultadoLote.importados, " lan\xE7amento", resultadoLote.importados !== 1 ? "s" : "", " importado", resultadoLote.importados !== 1 ? "s" : "", ".", resultadoLote.falhas > 0 ? ` ${resultadoLote.falhas} linha${resultadoLote.falhas > 1 ? "s" : ""} n\xE3o reconhecida${resultadoLote.falhas > 1 ? "s" : ""}.` : ""), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#7FB069") }, "Importar tudo"))), cartaoDetalhe && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setCartaoDetalhe(null) }, (() => {
+      const cInfo = CARTOES.find((c) => c.id === cartaoDetalhe);
+      const itensCartao = doMes.filter((l) => l.tipo === "cartao" && l.cartaoId === cartaoDetalhe);
+      const totalC = itensCartao.reduce((s, l) => s + l.valor, 0);
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(ModalHeader2, { title: (cInfo ? cInfo.nome : "Cart\xE3o") + " \xB7 " + MESES[mesAtual] + "/" + anoAtual, onClose: () => setCartaoDetalhe(null) }), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13, color: "#A6ABA0", marginBottom: 12, display: "flex", justifyContent: "space-between" } }, /* @__PURE__ */ React.createElement("span", null, itensCartao.length + " lan\xE7amento" + (itensCartao.length !== 1 ? "s" : "")), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, color: "#E7E2D3" } }, formatBRL2(totalC))), itensCartao.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhum lan\xE7amento neste cart\xE3o este m\xEAs." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 6 } }, [...itensCartao].sort((a, b) => b.data.localeCompare(a.data)).map((l) => /* @__PURE__ */ React.createElement("div", { key: l.id, style: { display: "flex", alignItems: "center", gap: 10, background: "#12140F", border: `1px solid ${l.virtual ? "#3A4A2E" : "#262922"}`, borderRadius: 10, padding: "10px 12px" } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13.5, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, l.descricao, l.virtual ? " \u{1F501}" : ""), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#7A8071" } }, (/* @__PURE__ */ new Date(l.data + "T00:00:00")).toLocaleDateString("pt-BR"), l.terceiro ? ` \xB7 de ${l.terceiro}` : "")), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, color: "#E08A7B" } }, formatBRL2(l.valor))))));
+    })()));
+  }, ResumoCard2 = function({ label, valor, cor }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, label), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 17, fontWeight: 700, color: cor } }, formatBRL2(valor)));
+  }, SectionBlock2 = function({ title, onAdd, addLabel, children }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } }, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, title), onAdd && /* @__PURE__ */ React.createElement("button", { onClick: onAdd, style: { background: "none", border: "none", color: "#7FB069", fontSize: 12, cursor: "pointer", marginBottom: 10 } }, "+ ", addLabel)), children);
+  }, EmptyHint2 = function({ text }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", padding: "20px 10px", color: "#6E7466", fontSize: 13, border: "1px dashed #262922", borderRadius: 10 } }, text);
+  }, Modal2 = function({ onClose, children }) {
+    useEffect(() => {
+      const overflowAnterior = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = overflowAnterior;
+      };
+    }, []);
+    return /* @__PURE__ */ React.createElement("div", { style: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "flex-end", zIndex: 50, overscrollBehavior: "contain" }, onClick: onClose }, /* @__PURE__ */ React.createElement("div", { onClick: (e) => e.stopPropagation(), style: { background: "#181B15", borderTopLeftRadius: 18, borderTopRightRadius: 18, padding: "20px 20px 28px", width: "100%", maxWidth: 720, margin: "0 auto", border: "1px solid #262922", borderBottom: "none", maxHeight: "85vh", overflowY: "auto", overscrollBehavior: "contain" } }, children));
+  }, ModalHeader2 = function({ title, onClose }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 } }, /* @__PURE__ */ React.createElement("h2", { className: "disp", style: { margin: 0, fontSize: 17 } }, title), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, style: { background: "none", border: "none", color: "#A6ABA0", cursor: "pointer", fontSize: 18 } }, "\xD7"));
+  }, tipoBtnStyle2 = function(ativo, cor) {
+    return { flex: 1, padding: "8px 4px", borderRadius: 8, fontSize: 12, cursor: "pointer", border: `1px solid ${ativo ? cor : "#262922"}`, background: ativo ? cor + "22" : "transparent", color: ativo ? cor : "#A6ABA0" };
+  }, submitBtnStyle2 = function(cor) {
+    return { marginTop: 16, width: "100%", padding: 13, borderRadius: 10, border: "none", background: cor, color: "#12140F", fontWeight: 700, fontSize: 14, cursor: "pointer" };
+  };
+  var mesDaFatura = mesDaFatura2, formatBRL = formatBRL2, todayISO = todayISO2, normalizar = normalizar2, diasParaVencimento = diasParaVencimento2, parseRapido = parseRapido2, App = App2, ResumoCard = ResumoCard2, SectionBlock = SectionBlock2, EmptyHint = EmptyHint2, Modal = Modal2, ModalHeader = ModalHeader2, tipoBtnStyle = tipoBtnStyle2, submitBtnStyle = submitBtnStyle2;
+  if (!window.React || !window.ReactDOM) {
+    throw new Error("React n\xE3o carregou. Verifique sua conex\xE3o com a internet e recarregue a p\xE1gina.");
+  }
+  if (!window.supabase) {
+    throw new Error("A biblioteca do Supabase n\xE3o carregou. Verifique sua conex\xE3o com a internet e recarregue a p\xE1gina.");
+  }
+  const { useState, useEffect, useMemo, useRef } = React;
+  const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  const CARTOES = [
+    { id: "bradesco", nome: "Bradesco Visa", vencimento: 10, fechamento: 29, cor: "#CC092F", texto: "#FFFFFF" },
+    { id: "c6", nome: "C6 Bank", vencimento: 20, fechamento: 14, cor: "#111111", texto: "#FFDD00" },
+    { id: "mp", nome: "Mercado Pago", vencimento: 20, fechamento: 15, cor: "#009EE3", texto: "#FFFFFF" },
+    { id: "amex", nome: "Amex Platinum", vencimento: 25, fechamento: 13, cor: "#5C6670", texto: "#F1E7D0" },
+    { id: "viacredi", nome: "Viacredi", vencimento: 22, fechamento: 11, cor: "#00A551", texto: "#FFFFFF" }
+  ];
+  const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  const BANCOS_PADRAO = [
+    { id: "padrao-bradesco", nome: "Bradesco Visa", saldoInicial: 650.13 },
+    { id: "padrao-viacredi", nome: "Viacredi", saldoInicial: 0.1 },
+    { id: "padrao-mp", nome: "Mercado Pago", saldoInicial: 12.85 },
+    { id: "padrao-c6", nome: "C6 Bank", saldoInicial: 0 }
+  ];
+  const TIPOS = {
+    entrada: { label: "Entrada", cor: "#7FB069" },
+    conta: { label: "Conta", cor: "#E0A458" },
+    cartao: { label: "Cr\xE9dito", cor: "#D9705A" },
+    debito: { label: "D\xE9bito", cor: "#5B9BD5" },
+    pix: { label: "Pix", cor: "#32BCAD" }
+  };
+  const GRUPO_GASTO = ["cartao", "debito", "pix"];
+  const APELIDOS_CARTAO = {
+    bradesco: "bradesco",
+    visa: "bradesco",
+    c6: "c6",
+    mp: "mp",
+    mercadopago: "mp",
+    "mercado-pago": "mp",
+    amex: "amex",
+    amexplatinum: "amex",
+    platinum: "amex",
+    viacredi: "viacredi"
+  };
+  const navBtnStyle = { background: "#181B15", border: "1px solid #262922", color: "#E7E2D3", width: 32, height: 32, borderRadius: 8, fontSize: 18, cursor: "pointer" };
+  const labelStyle = { display: "block", fontSize: 11, color: "#7A8071", marginBottom: 4, marginTop: 10, textTransform: "uppercase" };
+  const inputStyle = { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid #262922", background: "#12140F", color: "#E7E2D3", fontSize: 14 };
+  const xBtnStyle = { position: "absolute", top: 8, right: 8, background: "none", border: "none", color: "#6E7466", cursor: "pointer", fontSize: 14 };
+  const chipStyle = { fontSize: 11, padding: "5px 10px", borderRadius: 20, cursor: "pointer", border: "1px solid #262922", background: "transparent", color: "#7A8071" };
+  ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ React.createElement(App2, null));
+} catch (e) {
+  document.getElementById("root").innerHTML = '<div style="padding:20px;color:#E08A7B;font-family:monospace;white-space:pre-wrap;">Erro ao iniciar o app:\n' + (e && e.message ? e.message : String(e)) + "</div>";
+}
+</script>
+</body>
+</html>
