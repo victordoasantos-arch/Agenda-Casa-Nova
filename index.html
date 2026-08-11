@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Agenda Cortinas e Persianas</title>
+<meta name="description" content="Agenda da equipe para instalação, medição e ambientação" />
+<!-- manifest injected dynamically below -->
+<meta name="theme-color" content="#20302E" />
+<link rel="icon" href="data:image/png;base64,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" />
+<link rel="apple-touch-icon" href="data:image/png;base64,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" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Agenda" />
+<style>
+  :root {
+    --ink: #20302E;
+    --canvas: #F7F3EB;
+    --card: #FFFFFF;
+    --border: #E3DDCC;
+    --accent: #B8863E;
+    --muted: #7C7566;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--canvas);
+    color: var(--ink);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .agenda-top { background: var(--ink); color: #F2EEE3; padding: calc(env(safe-area-inset-top) + 18px) 20px 16px; }
+  .agenda-title { font-family: Georgia, 'Times New Roman', serif; font-size: 21px; margin: 0 0 4px; letter-spacing: 0.2px; }
+  .agenda-title small { color: var(--accent); font-style: italic; }
+  .agenda-sub { font-size: 12px; color: #B7B2A2; margin: 0; }
+  .agenda-body { padding: 14px; max-width: 900px; margin: 0 auto; }
+
+  .install-banner {
+    display: none; align-items: center; justify-content: space-between; gap: 10px;
+    background: #EDE2CB; border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; margin-bottom: 12px; font-size: 12.5px;
+  }
+  .install-banner.show { display: flex; }
+  .install-banner button { border: none; background: var(--ink); color: #fff; border-radius: 8px; padding: 7px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .install-banner .close-x { background: transparent; color: var(--muted); padding: 4px; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .view-tabs { display: flex; background: #EDE7D8; border-radius: 10px; padding: 3px; }
+  .view-tabs button { border: none; background: transparent; padding: 7px 14px; font-size: 13px; border-radius: 8px; cursor: pointer; color: var(--muted); font-weight: 500; }
+  .view-tabs button.active { background: var(--ink); color: #F2EEE3; }
+  .nav-group { display: flex; align-items: center; gap: 6px; }
+  .nav-btn { border: 1px solid var(--border); background: var(--card); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink); font-size: 15px; }
+  .nav-btn:active { background: #F0EAD9; }
+  .nav-label { font-size: 14px; font-weight: 600; min-width: 150px; text-align: center; }
+  .today-btn { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 7px 10px; font-size: 12px; cursor: pointer; color: var(--ink); }
+  .actions-row { display: flex; gap: 8px; }
+  .add-btn { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 9px 14px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; flex: 1; justify-content: center; }
+  .export-btn { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; cursor: pointer; color: var(--ink); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+
+  .filters-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+  .type-toggle { display: flex; align-items: center; gap: 5px; border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 5px 10px; font-size: 12px; cursor: pointer; color: var(--muted); }
+  .type-toggle.on { color: var(--ink); border-color: currentColor; }
+  .type-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .search-box { display: flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 7px 10px; font-size: 13px; flex: 1; min-width: 160px; color: var(--muted); }
+  .search-box input { border: none; outline: none; background: transparent; font-size: 13px; width: 100%; color: var(--ink); }
+  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #5DCAA5; flex-shrink: 0; }
+  .sync-dot.off { background: #E24B4A; }
+  .sync-label { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+
+  .appt-list { display: flex; flex-direction: column; gap: 8px; }
+  .appt-row { background: var(--card); border-radius: 10px; padding: 10px 12px; display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--border); }
+  .appt-time { font-size: 13px; font-weight: 700; min-width: 44px; padding-top: 2px; }
+  .appt-main { flex: 1; min-width: 0; }
+  .appt-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .appt-name { font-size: 13px; font-weight: 600; }
+  .appt-chip { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .appt-sub { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+  .appt-notes { font-size: 12px; color: var(--muted); margin-top: 4px; font-style: italic; }
+  .appt-actions { display: flex; gap: 4px; flex-shrink: 0; }
+  .icon-btn { border: 1px solid var(--border); background: var(--card); border-radius: 6px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 13px; }
+  .icon-btn.danger:active { background: #F5E4E9; color: #8C3E52; }
+  .empty-day { font-size: 13px; color: var(--muted); padding: 24px 8px; text-align: center; }
+  .day-heading { font-size: 13px; font-weight: 600; color: var(--muted); margin: 18px 0 8px; text-transform: uppercase; letter-spacing: 0.4px; }
+
+  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .month-head { font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 4px; font-weight: 600; }
+  .month-cell { background: var(--card); border: 1px solid var(--border); border-radius: 8px; min-height: 78px; padding: 5px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; overflow: hidden; }
+  .month-cell.out { opacity: 0.35; }
+  .month-cell.today { border-color: var(--accent); }
+  .month-cell.selected { background: #EDE2CB; }
+  .month-num { font-size: 12px; font-weight: 600; }
+  .month-event { font-size: 9.5px; padding: 2px 4px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+  .month-more { font-size: 9.5px; color: var(--muted); padding: 0 4px; }
+  .month-day-panel { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
+
+  .timeline-wrap { display: flex; overflow-x: auto; }
+  .tl-gutter { position: relative; width: 40px; flex-shrink: 0; }
+  .tl-gutter-label { position: absolute; right: 6px; transform: translateY(-6px); font-size: 10px; color: var(--muted); }
+  .tl-body { display: flex; flex: 1; min-width: 0; }
+  .tl-col { position: relative; flex: 1; min-width: 104px; border-left: 1px solid var(--border); }
+  .tl-hourline { position: absolute; left: 0; right: 0; border-top: 1px solid var(--border); }
+  .tl-empty { position: absolute; top: 8px; left: 6px; right: 6px; font-size: 11px; color: var(--muted); }
+  .event-block { position: absolute; inset: 0; border-radius: 6px; padding: 3px 6px; display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+  .event-time { font-size: 10px; font-weight: 700; line-height: 1.2; }
+  .event-name { font-size: 11px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .week-headers { display: flex; margin-bottom: 4px; }
+  .week-header-gutter { width: 40px; flex-shrink: 0; }
+  .week-header-day { flex: 1; min-width: 104px; text-align: center; font-size: 12px; padding: 4px 0; }
+  .week-header-day .wd-name { font-weight: 700; }
+  .week-header-day .wd-num { color: var(--muted); font-size: 11px; }
+  .week-header-day.is-today .wd-name { color: var(--accent); }
+  .day-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+  .day-header .dh-name { font-size: 15px; font-weight: 700; }
+  .day-header .dh-num { font-size: 13px; color: var(--muted); }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(32,48,46,0.55); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
+  .modal { background: var(--card); border-radius: 14px; padding: 18px; width: 100%; max-width: 420px; max-height: 88vh; overflow-y: auto; }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .modal-head h3 { margin: 0; font-size: 16px; font-family: Georgia, serif; }
+  .modal-close { border: none; background: transparent; cursor: pointer; color: var(--muted); font-size: 18px; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+  .field input, .field textarea { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 9px 10px; font-size: 14px; font-family: inherit; background: #FBF9F3; color: var(--ink); }
+  .field textarea { resize: vertical; min-height: 50px; }
+  .row2 { display: flex; gap: 10px; }
+  .row2 .field { flex: 1; }
+  .type-picker { display: flex; gap: 6px; flex-wrap: wrap; }
+  .type-pill { border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px; font-size: 12px; cursor: pointer; background: var(--card); color: var(--muted); }
+  .type-pill.selected { color: #fff; border-color: transparent; }
+  .modal-actions { display: flex; gap: 8px; margin-top: 16px; align-items: center; }
+  .btn-primary { flex: 1; background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 11px; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .btn-secondary { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 11px 14px; font-size: 13px; cursor: pointer; color: var(--ink); }
+  .btn-full { width: 100%; margin-bottom: 4px; }
+  .btn-text-danger { border: none; background: transparent; color: #8C3E52; font-size: 12px; cursor: pointer; margin-right: auto; padding: 8px 0; }
+  .confirm-actions { display: flex; gap: 8px; margin-top: 10px; }
+
+  @media (min-width: 640px) {
+    .agenda-body { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="agenda-top">
+    <p class="agenda-title">Agenda <small>cortinas &amp; persianas</small></p>
+    <p class="agenda-sub">Agenda compartilhada da equipe — instalação, medição e ambientação</p>
+  </div>
+
+  <div class="agenda-body">
+
+    <div id="installBanner" class="install-banner">
+      <span id="installText">Instale esse app na tela inicial do celular para acesso rápido.</span>
+      <button id="installBtn">Instalar</button>
+      <button class="close-x" id="installClose">✕</button>
+    </div>
+
+    <div class="toolbar">
+      <div class="view-tabs">
+        <button data-view="day">Dia</button>
+        <button data-view="week">Semana</button>
+        <button data-view="month">Mês</button>
+      </div>
+      <div class="nav-group">
+        <button class="nav-btn" id="navPrev">‹</button>
+        <span class="nav-label" id="navLabel"></span>
+        <button class="nav-btn" id="navNext">›</button>
+        <button class="today-btn" id="navToday">Hoje</button>
+      </div>
+    </div>
+
+    <div class="actions-row" style="margin-bottom:12px;">
+      <button class="add-btn" id="addBtn">+ Novo agendamento</button>
+      <button class="export-btn" id="exportAllBtn">Exportar agenda</button>
+    </div>
+
+    <div class="filters-row">
+      <div class="type-toggle on" data-type="instalacao" style="color:#2F5D58;border-color:#2F5D58;">
+        <span class="type-dot" style="background:#2F5D58;"></span>Instalação
+      </div>
+      <div class="type-toggle on" data-type="medicao" style="color:#95661E;border-color:#95661E;">
+        <span class="type-dot" style="background:#B8863E;"></span>Medição
+      </div>
+      <div class="type-toggle on" data-type="ambientacao" style="color:#8C3E52;border-color:#8C3E52;">
+        <span class="type-dot" style="background:#A8586B;"></span>Ambientação
+      </div>
+      <div class="search-box">
+        <span>🔎</span>
+        <input id="searchInput" placeholder="Buscar cliente, telefone ou endereço" />
+      </div>
+      <span class="sync-label"><span class="sync-dot" id="syncDot"></span><span id="syncText">conectado</span></span>
+    </div>
+
+    <div id="mainView"></div>
+  </div>
+
+  <div id="modalRoot"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+  <script>
+    // Manifest gerado na hora (para permitir instalar como app, mesmo sendo um arquivo único)
+    (function() {
+      const manifest = {
+        name: "Agenda Cortinas e Persianas",
+        short_name: "Agenda",
+        description: "Agenda da equipe para instalação, medição e ambientação",
+        start_url: ".",
+        scope: ".",
+        display: "standalone",
+        orientation: "portrait-primary",
+        background_color: "#F7F3EB",
+        theme_color: "#20302E",
+        icons: [
+          { src: "data:image/png;base64,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", sizes: "192x192", type: "image/png", purpose: "any" },
+          { src: "data:image/png;base64,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", sizes: "512x512", type: "image/png", purpose: "any maskable" }
+        ]
+      };
+      const blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
+      const link = document.createElement("link");
+      link.rel = "manifest";
+      link.href = URL.createObjectURL(blob);
+      document.head.appendChild(link);
+    })();
+  </script>
+  <script>
+// ---- Configuração do Supabase ----
+// A chave "publishable" abaixo é segura para ficar no código do app (front-end).
+// O acesso aos dados é controlado pelas políticas de RLS no banco, não por essa chave.
+const SUPABASE_URL = "https://fizosmjiwegepbizkjea.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpem9zbWppd2VnZXBiaXpramVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ1NzM4MzcsImV4cCI6MjEwMDE0OTgzN30.E5tx5xQEKr_vphVMsDjGn-hu56ODRe9SEbKSOsWrZ9k";
+const TABLE = "agendamentos";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ---- Constantes de domínio ----
+const TYPES = {
+  instalacao: { label: "Instalação", color: "#2F5D58", bg: "#E3EFED", dot: "#2F5D58" },
+  medicao: { label: "Medição", color: "#95661E", bg: "#F6ECD9", dot: "#B8863E" },
+  ambientacao: { label: "Ambientação", color: "#8C3E52", bg: "#F5E4E9", dot: "#A8586B" },
+};
+const WEEKDAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const MONTHS = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const HOUR_HEIGHT = 52;
+const DEFAULT_START = 7 * 60;
+const DEFAULT_END = 20 * 60;
+
+// ---- Estado ----
+let appointments = [];
+let view = "week";
+let currentDate = new Date();
+let activeTypes = new Set(Object.keys(TYPES));
+let search = "";
+let editingId = null;
+let confirmDeleteId = null;
+
+// ---- Utilitários de data ----
+function dateKey(d) {
+  const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,"0"), day = String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+function startOfWeek(d) { const r = new Date(d); r.setDate(r.getDate()-r.getDay()); r.setHours(0,0,0,0); return r; }
+function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
+function isSameDay(a,b) { return dateKey(a)===dateKey(b); }
+function monthMatrix(d) {
+  const first = new Date(d.getFullYear(), d.getMonth(), 1);
+  const gridStart = startOfWeek(first);
+  const weeks = [];
+  let cursor = new Date(gridStart);
+  for (let w=0; w<6; w++) {
+    const row = [];
+    for (let i=0;i<7;i++) { row.push(new Date(cursor)); cursor = addDays(cursor,1); }
+    weeks.push(row);
+  }
+  return weeks;
+}
+function toMinutes(t) { const [h,m] = t.split(":").map(Number); return h*60+(m||0); }
+function esc(s) {
+  return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function layoutItems(items) {
+  const sorted = [...items].sort((a,b) => toMinutes(a.time) - toMinutes(b.time));
+  const groups = [];
+  let currentGroup = [], currentEnd = -Infinity;
+  for (const it of sorted) {
+    const start = toMinutes(it.time);
+    if (currentGroup.length && start >= currentEnd) { groups.push(currentGroup); currentGroup = []; currentEnd = -Infinity; }
+    currentGroup.push(it);
+    currentEnd = Math.max(currentEnd, start+60);
+  }
+  if (currentGroup.length) groups.push(currentGroup);
+  const result = [];
+  for (const group of groups) {
+    const colEnds = [];
+    for (const it of group) {
+      const start = toMinutes(it.time);
+      let col = colEnds.findIndex((e) => e <= start);
+      if (col === -1) { col = colEnds.length; colEnds.push(start+60); } else colEnds[col] = start+60;
+      result.push({ ...it, col, maxCols: 0 });
+    }
+    const maxCols = colEnds.length;
+    for (let i=result.length-group.length; i<result.length; i++) result[i].maxCols = maxCols;
+  }
+  return result;
+}
+function getRange(itemsFlat) {
+  let start = DEFAULT_START, end = DEFAULT_END;
+  for (const it of itemsFlat) {
+    const s = toMinutes(it.time), e = s+60;
+    if (s < start) start = Math.floor(s/60)*60;
+    if (e > end) end = Math.ceil(e/60)*60;
+  }
+  return { start, end };
+}
+
+// ---- Dados: carregar e sincronizar ----
+async function loadData() {
+  setSyncStatus("loading");
+  try {
+    const { data, error } = await sb.from(TABLE).select("*").order("data").order("hora");
+    if (error) { setSyncStatus("error"); console.warn("Erro ao carregar agenda:", error.message || error); return; }
+    appointments = data.map(rowToAppt);
+    setSyncStatus("ok");
+    renderAll();
+  } catch (e) {
+    setSyncStatus("error");
+    console.warn("Sem conexao com o banco de dados no momento:", e && e.message ? e.message : e);
+  }
+}
+function rowToAppt(row) {
+  return {
+    id: row.id,
+    clientName: row.cliente_nome,
+    phone: row.telefone || "",
+    address: row.endereco || "",
+    type: row.tipo,
+    date: row.data,
+    time: (row.hora || "00:00:00").slice(0,5),
+    notes: row.observacoes || "",
+  };
+}
+function apptToRow(a) {
+  return {
+    cliente_nome: a.clientName,
+    telefone: a.phone || null,
+    endereco: a.address || null,
+    tipo: a.type,
+    data: a.date,
+    hora: a.time,
+    observacoes: a.notes || null,
+  };
+}
+function setSyncStatus(status) {
+  const dot = document.getElementById("syncDot");
+  const text = document.getElementById("syncText");
+  if (status === "ok") { dot.classList.remove("off"); text.textContent = "conectado"; }
+  else if (status === "loading") { dot.classList.remove("off"); text.textContent = "sincronizando…"; }
+  else { dot.classList.add("off"); text.textContent = "sem conexão"; }
+}
+
+async function saveAppointment(form) {
+  const row = apptToRow(form);
+  if (editingId) {
+    const { error } = await sb.from(TABLE).update(row).eq("id", editingId);
+    if (error) { alert("Não foi possível salvar. Tente novamente."); console.error(error); return false; }
+  } else {
+    const { error } = await sb.from(TABLE).insert(row);
+    if (error) { alert("Não foi possível salvar. Tente novamente."); console.error(error); return false; }
+  }
+  return true;
+}
+async function deleteAppointment(id) {
+  const { error } = await sb.from(TABLE).delete().eq("id", id);
+  if (error) { alert("Não foi possível excluir. Tente novamente."); console.error(error); return false; }
+  return true;
+}
+
+// Sincronização em tempo real: qualquer pessoa da equipe que mudar algo
+// aparece na hora nos outros aparelhos, sem precisar atualizar a página.
+try {
+  sb.channel("agendamentos-realtime")
+    .on("postgres_changes", { event: "*", schema: "public", table: TABLE }, () => loadData())
+    .subscribe((status) => { if (status === "CHANNEL_ERROR") setSyncStatus("error"); });
+} catch (e) {
+  console.warn("Realtime indisponivel, seguindo sem atualizacao automatica:", e);
+}
+
+// Evita que erros nao-criticos (ex: rede instavel, script de terceiros) quebrem a tela
+// ou aparecam como "Uncaught" no console.
+window.addEventListener("error", (e) => {
+  console.warn("Aviso (ignorado):", e.message || e);
+  e.preventDefault();
+  return true;
+});
+window.addEventListener("unhandledrejection", (e) => {
+  console.warn("Aviso (ignorado):", e.reason);
+  e.preventDefault();
+});
+
+// ---- Filtragem ----
+function getFiltered() {
+  const q = search.trim().toLowerCase();
+  return appointments.filter((a) => {
+    if (!activeTypes.has(a.type)) return false;
+    if (q && !(a.clientName.toLowerCase().includes(q) || (a.address||"").toLowerCase().includes(q) || (a.phone||"").toLowerCase().includes(q))) return false;
+    return true;
+  });
+}
+function getByDate() {
+  const map = {};
+  for (const a of getFiltered()) { (map[a.date] ||= []).push(a); }
+  for (const k in map) map[k].sort((x,y) => x.time.localeCompare(y.time));
+  return map;
+}
+
+// ---- Render ----
+function renderAll() {
+  renderNavLabel();
+  renderMainView();
+}
+function renderNavLabel() {
+  const el = document.getElementById("navLabel");
+  const weekDates = getWeekDates();
+  if (view === "day") el.textContent = `${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}, ${currentDate.getFullYear()}`;
+  else if (view === "week") {
+    const s = weekDates[0], e = weekDates[6];
+    el.textContent = s.getMonth()===e.getMonth() ? `${s.getDate()} – ${e.getDate()} de ${MONTHS[s.getMonth()]}` : `${s.getDate()} ${MONTHS[s.getMonth()].slice(0,3)} – ${e.getDate()} ${MONTHS[e.getMonth()].slice(0,3)}`;
+  } else el.textContent = `${MONTHS[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+}
+function getWeekDates() {
+  const start = startOfWeek(currentDate);
+  return Array.from({length:7}, (_,i) => addDays(start,i));
+}
+
+function apptRowHTML(a) {
+  const meta = TYPES[a.type];
+  return `
+    <div class="appt-row" style="border-left:3px solid ${meta.color}" data-id="${a.id}">
+      <div class="appt-time">${a.time}</div>
+      <div class="appt-main">
+        <div class="appt-top">
+          <span class="appt-name">${esc(a.clientName)}</span>
+          <span class="appt-chip" style="background:${meta.bg};color:${meta.color}">${meta.label}</span>
+        </div>
+        ${(a.phone || a.address) ? `<div class="appt-sub">${a.phone ? `<span>📞 ${esc(a.phone)}</span>` : ""}${a.address ? `<span>📍 ${esc(a.address)}</span>` : ""}</div>` : ""}
+        ${a.notes ? `<div class="appt-notes">${esc(a.notes)}</div>` : ""}
+      </div>
+      <div class="appt-actions">
+        <button class="icon-btn" data-action="ics" data-id="${a.id}" title="Adicionar lembrete">🔔</button>
+        <button class="icon-btn" data-action="edit" data-id="${a.id}" title="Editar">✎</button>
+        <button class="icon-btn danger" data-action="delete" data-id="${a.id}" title="Excluir">🗑</button>
+      </div>
+    </div>`;
+}
+function dayListHTML(date) {
+  const items = (getByDate()[dateKey(date)]) || [];
+  if (items.length === 0) return `<div class="empty-day">Nenhum agendamento nesse dia.</div>`;
+  return `<div class="appt-list">${items.map(apptRowHTML).join("")}</div>`;
+}
+
+function timelineColumnHTML(date, start, end) {
+  const items = (getByDate()[dateKey(date)]) || [];
+  const laidOut = layoutItems(items);
+  const hours = [];
+  for (let h = start/60; h <= end/60; h++) hours.push(h);
+  const hourlines = hours.slice(0,-1).map((h) =>
+    `<div class="tl-hourline" style="top:${(h*60-start)/60*HOUR_HEIGHT}px;height:${HOUR_HEIGHT}px"></div>`
+  ).join("");
+  const blocks = laidOut.map((a) => {
+    const s = toMinutes(a.time);
+    const top = ((s-start)/60)*HOUR_HEIGHT + 1;
+    const height = HOUR_HEIGHT - 3;
+    const meta = TYPES[a.type];
+    const left = `calc(${(a.col/a.maxCols)*100}% + 2px)`;
+    const width = `calc(${100/a.maxCols}% - 4px)`;
+    return `<div style="position:absolute;top:${top}px;height:${height}px;left:0;right:0;">
+      <div class="event-block" data-action="edit" data-id="${a.id}" style="left:${left};width:${width};background:${meta.bg};border-left:3px solid ${meta.color};color:${meta.color}">
+        <span class="event-time">${a.time}</span>
+        <span class="event-name">${esc(a.clientName)}</span>
+      </div>
+    </div>`;
+  }).join("");
+  const empty = items.length === 0 ? `<div class="tl-empty">Sem agendamentos</div>` : "";
+  return `<div class="tl-col" style="height:${((end-start)/60)*HOUR_HEIGHT}px">${hourlines}${blocks}${empty}</div>`;
+}
+function hourGutterHTML(start, end) {
+  const hours = [];
+  for (let h = start/60; h <= end/60; h++) hours.push(h);
+  return `<div class="tl-gutter" style="height:${((end-start)/60)*HOUR_HEIGHT}px">
+    ${hours.map((h) => `<div class="tl-gutter-label" style="top:${(h*60-start)/60*HOUR_HEIGHT}px">${String(h).padStart(2,"0")}:00</div>`).join("")}
+  </div>`;
+}
+
+function renderMainView() {
+  const root = document.getElementById("mainView");
+  const byDate = getByDate();
+
+  if (view === "day") {
+    const items = byDate[dateKey(currentDate)] || [];
+    const { start, end } = getRange(items);
+    root.innerHTML = `
+      <div class="day-header">
+        <span class="dh-name">${WEEKDAYS[currentDate.getDay()]}</span>
+        <span class="dh-num">${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}</span>
+      </div>
+      <div class="timeline-wrap">
+        ${hourGutterHTML(start,end)}
+        <div class="tl-body">${timelineColumnHTML(currentDate, start, end)}</div>
+      </div>`;
+  } else if (view === "week") {
+    const weekDates = getWeekDates();
+    const flat = weekDates.flatMap((d) => byDate[dateKey(d)] || []);
+    const { start, end } = getRange(flat);
+    const today = new Date();
+    root.innerHTML = `
+      <div class="week-headers">
+        <div class="week-header-gutter"></div>
+        ${weekDates.map((d) => `
+          <div class="week-header-day ${isSameDay(d,today)?"is-today":""}">
+            <div class="wd-name">${WEEKDAYS[d.getDay()]}</div>
+            <div class="wd-num">${d.getDate()}</div>
+          </div>`).join("")}
+      </div>
+      <div class="timeline-wrap">
+        ${hourGutterHTML(start,end)}
+        <div class="tl-body">${weekDates.map((d) => timelineColumnHTML(d,start,end)).join("")}</div>
+      </div>`;
+  } else {
+    const weeksM = monthMatrix(currentDate);
+    const today = new Date();
+    const cells = weeksM.flat().map((d) => {
+      const key = dateKey(d);
+      const items = byDate[key] || [];
+      const out = d.getMonth() !== currentDate.getMonth();
+      const isToday = isSameDay(d, today);
+      const isSelected = isSameDay(d, currentDate) && !isToday;
+      const shown = items.slice(0,3);
+      const extra = items.length - shown.length;
+      return `<div class="month-cell ${out?"out":""} ${isToday?"today":""} ${isSelected?"selected":""}" data-action="pick-day" data-date="${key}">
+        <span class="month-num">${d.getDate()}</span>
+        ${shown.map((a) => { const meta = TYPES[a.type]; return `<div class="month-event" style="background:${meta.bg};color:${meta.color}">${a.time} ${esc(a.clientName)}</div>`; }).join("")}
+        ${extra>0 ? `<div class="month-more">+${extra} mais</div>` : ""}
+      </div>`;
+    }).join("");
+    root.innerHTML = `
+      <div class="month-grid">
+        ${WEEKDAYS.map((w) => `<div class="month-head">${w}</div>`).join("")}
+        ${cells}
+      </div>
+      <div class="month-day-panel">
+        <div class="day-heading">${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}</div>
+        ${dayListHTML(currentDate)}
+      </div>`;
+  }
+  bindDynamicEvents();
+}
+
+function bindDynamicEvents() {
+  document.querySelectorAll('[data-action="edit"]').forEach((el) =>
+    el.addEventListener("click", () => openEditModal(el.dataset.id)));
+  document.querySelectorAll('[data-action="delete"]').forEach((el) =>
+    el.addEventListener("click", (e) => { e.stopPropagation(); openConfirmDelete(el.dataset.id); }));
+  document.querySelectorAll('[data-action="ics"]').forEach((el) =>
+    el.addEventListener("click", (e) => { e.stopPropagation(); const a = appointments.find((x) => x.id===el.dataset.id); if (a) exportOneICS(a); }));
+  document.querySelectorAll('[data-action="pick-day"]').forEach((el) =>
+    el.addEventListener("click", () => { currentDate = new Date(el.dataset.date + "T00:00:00"); renderAll(); }));
+}
+
+// ---- Navegação ----
+function goPrev() {
+  if (view === "day") currentDate = addDays(currentDate,-1);
+  else if (view === "week") currentDate = addDays(currentDate,-7);
+  else currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()-1, 1);
+  renderAll();
+}
+function goNext() {
+  if (view === "day") currentDate = addDays(currentDate,1);
+  else if (view === "week") currentDate = addDays(currentDate,7);
+  else currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 1);
+  renderAll();
+}
+function goToday() { currentDate = new Date(); renderAll(); }
+
+// ---- Modal: adicionar/editar ----
+const emptyForm = () => ({ clientName:"", phone:"", address:"", type:"instalacao", date: dateKey(currentDate), time:"09:00", notes:"" });
+let formState = emptyForm();
+
+function openNewModal() { editingId = null; formState = emptyForm(); renderModal(); }
+function openEditModal(id) {
+  const a = appointments.find((x) => x.id === id);
+  if (!a) return;
+  editingId = id;
+  formState = { ...a };
+  renderModal();
+}
+function closeModal() { document.getElementById("modalRoot").innerHTML = ""; }
+
+function renderModal() {
+  const root = document.getElementById("modalRoot");
+  root.innerHTML = `
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-head">
+          <h3>${editingId ? "Editar agendamento" : "Novo agendamento"}</h3>
+          <button class="modal-close" id="modalCloseBtn">✕</button>
+        </div>
+        <form id="apptForm">
+          <div class="field">
+            <label>Cliente</label>
+            <input required id="f_clientName" value="${esc(formState.clientName)}" placeholder="Nome do cliente" />
+          </div>
+          <div class="row2">
+            <div class="field"><label>Telefone</label><input id="f_phone" value="${esc(formState.phone)}" placeholder="(00) 00000-0000" /></div>
+            <div class="field"><label>Endereço</label><input id="f_address" value="${esc(formState.address)}" placeholder="Rua, bairro" /></div>
+          </div>
+          <div class="field">
+            <label>Tipo de atendimento</label>
+            <div class="type-picker" id="typePicker">
+              ${Object.entries(TYPES).map(([k,meta]) => `<div class="type-pill ${formState.type===k?"selected":""}" data-type="${k}" style="${formState.type===k?`background:${meta.color}`:""}">${meta.label}</div>`).join("")}
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Data</label><input required type="date" id="f_date" value="${formState.date}" /></div>
+            <div class="field"><label>Horário</label><input required type="time" id="f_time" value="${formState.time}" /></div>
+          </div>
+          <div class="field">
+            <label>Observações</label>
+            <textarea id="f_notes" placeholder="Detalhes do pedido, medidas, preferências...">${esc(formState.notes)}</textarea>
+          </div>
+          <button type="button" class="btn-secondary btn-full" id="icsFromModalBtn">🔔 Adicionar lembrete no celular (1h antes)</button>
+          <div class="modal-actions">
+            ${editingId ? `<button type="button" class="btn-text-danger" id="deleteFromModalBtn">Excluir</button>` : ""}
+            <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+            <button type="submit" class="btn-primary">${editingId ? "Salvar" : "Adicionar"}</button>
+          </div>
+        </form>
+      </div>
+    </div>`;
+
+  document.getElementById("modalOverlay").addEventListener("click", (e) => { if (e.target.id === "modalOverlay") closeModal(); });
+  document.getElementById("modalCloseBtn").addEventListener("click", closeModal);
+  document.getElementById("cancelBtn").addEventListener("click", closeModal);
+  document.querySelectorAll("#typePicker .type-pill").forEach((el) =>
+    el.addEventListener("click", () => { formState.type = el.dataset.type; renderModal(); syncFormFieldsFromInputs(); }));
+  if (editingId) document.getElementById("deleteFromModalBtn").addEventListener("click", () => { closeModal(); openConfirmDelete(editingId); });
+  document.getElementById("icsFromModalBtn").addEventListener("click", () => {
+    readFormIntoState();
+    if (!formState.clientName.trim() || !formState.date || !formState.time) { alert("Preencha ao menos o cliente, a data e o horário."); return; }
+    exportOneICS({ ...formState, id: editingId || "novo" });
+  });
+  document.getElementById("apptForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    readFormIntoState();
+    if (!formState.clientName.trim() || !formState.date || !formState.time) return;
+    const ok = await saveAppointment(formState);
+    if (ok) { closeModal(); loadData(); }
+  });
+}
+function readFormIntoState() {
+  formState.clientName = document.getElementById("f_clientName").value;
+  formState.phone = document.getElementById("f_phone").value;
+  formState.address = document.getElementById("f_address").value;
+  formState.date = document.getElementById("f_date").value;
+  formState.time = document.getElementById("f_time").value;
+  formState.notes = document.getElementById("f_notes").value;
+}
+function syncFormFieldsFromInputs() {
+  // re-render preserved values already handled via formState before re-render
+}
+
+// ---- Confirmação de exclusão ----
+function openConfirmDelete(id) {
+  confirmDeleteId = id;
+  const root = document.getElementById("modalRoot");
+  root.innerHTML = `
+    <div class="modal-overlay" id="confirmOverlay">
+      <div class="modal" style="max-width:320px;">
+        <div class="modal-head"><h3>Excluir agendamento</h3><button class="modal-close" id="confirmCloseBtn">✕</button></div>
+        <p style="font-size:13px;color:var(--muted);margin:0;">Essa ação não pode ser desfeita. Deseja continuar?</p>
+        <div class="confirm-actions">
+          <button class="btn-secondary" id="confirmCancelBtn">Cancelar</button>
+          <button class="btn-primary" style="background:#8C3E52" id="confirmDeleteBtn">Excluir</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById("confirmOverlay").addEventListener("click", (e) => { if (e.target.id === "confirmOverlay") closeModal(); });
+  document.getElementById("confirmCloseBtn").addEventListener("click", closeModal);
+  document.getElementById("confirmCancelBtn").addEventListener("click", closeModal);
+  document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+    const ok = await deleteAppointment(confirmDeleteId);
+    if (ok) { closeModal(); loadData(); }
+  });
+}
+
+// ---- Exportar lembrete (.ics) ----
+function pad2(n) { return String(n).padStart(2,"0"); }
+function icsDate(dateStr, timeStr) {
+  const [y,m,d] = dateStr.split("-").map(Number);
+  const [hh,mm] = timeStr.split(":").map(Number);
+  return `${y}${pad2(m)}${pad2(d)}T${pad2(hh)}${pad2(mm)}00`;
+}
+function icsDateEnd(dateStr, timeStr) {
+  const [y,m,d] = dateStr.split("-").map(Number);
+  const [hh,mm] = timeStr.split(":").map(Number);
+  const dt = new Date(y, m-1, d, hh, mm+60);
+  return `${dt.getFullYear()}${pad2(dt.getMonth()+1)}${pad2(dt.getDate())}T${pad2(dt.getHours())}${pad2(dt.getMinutes())}00`;
+}
+function icsEscape(s) { return String(s||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"); }
+function apptToICSBlock(a) {
+  const meta = TYPES[a.type];
+  const desc = [meta.label, a.phone?`Telefone: ${a.phone}`:"", a.notes||""].filter(Boolean).join(" | ");
+  return ["BEGIN:VEVENT",
+    `UID:${a.id}-${Date.now()}@agenda-cortinas`,
+    `DTSTAMP:${icsDate(a.date,a.time)}`,
+    `DTSTART:${icsDate(a.date,a.time)}`,
+    `DTEND:${icsDateEnd(a.date,a.time)}`,
+    `SUMMARY:${icsEscape(`${meta.label} - ${a.clientName}`)}`,
+    a.address ? `LOCATION:${icsEscape(a.address)}` : "",
+    `DESCRIPTION:${icsEscape(desc)}`,
+    "BEGIN:VALARM","TRIGGER:-PT1H","ACTION:DISPLAY","DESCRIPTION:Lembrete de agendamento","END:VALARM",
+    "END:VEVENT"].filter(Boolean).join("\r\n");
+}
+function downloadICS(filename, blocks) {
+  const content = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Agenda Cortinas e Persianas//PT-BR","CALSCALE:GREGORIAN",...blocks,"END:VCALENDAR"].join("\r\n");
+  const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url; link.download = filename;
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+function exportOneICS(a) { downloadICS(`${a.clientName.replace(/[^a-zA-Z0-9]+/g,"-")}.ics`, [apptToICSBlock(a)]); }
+function exportAllICS() { downloadICS("agenda-cortinas.ics", getFiltered().map(apptToICSBlock)); }
+
+// ---- Ligações da interface estática ----
+document.querySelectorAll(".view-tabs button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    view = btn.dataset.view;
+    document.querySelectorAll(".view-tabs button").forEach((b) => b.classList.toggle("active", b===btn));
+    renderAll();
+  });
+});
+document.querySelector('.view-tabs button[data-view="week"]').classList.add("active");
+document.getElementById("navPrev").addEventListener("click", goPrev);
+document.getElementById("navNext").addEventListener("click", goNext);
+document.getElementById("navToday").addEventListener("click", goToday);
+document.getElementById("addBtn").addEventListener("click", openNewModal);
+document.getElementById("exportAllBtn").addEventListener("click", exportAllICS);
+document.getElementById("searchInput").addEventListener("input", (e) => { search = e.target.value; renderMainView(); });
+document.querySelectorAll(".type-toggle").forEach((el) => {
+  el.addEventListener("click", () => {
+    const t = el.dataset.type;
+    if (activeTypes.has(t)) activeTypes.delete(t); else activeTypes.add(t);
+    el.classList.toggle("on");
+    renderMainView();
+  });
+});
+
+// ---- Instalação do app (Android/Chrome) ----
+let deferredInstallPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  if (!localStorage.getItem("installBannerDismissed")) {
+    document.getElementById("installBanner").classList.add("show");
+  }
+});
+document.getElementById("installBtn").addEventListener("click", async () => {
+  if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; }
+  document.getElementById("installBanner").classList.remove("show");
+});
+document.getElementById("installClose").addEventListener("click", () => {
+  document.getElementById("installBanner").classList.remove("show");
+  localStorage.setItem("installBannerDismissed", "1");
+});
+// iOS Safari não dispara beforeinstallprompt — mostramos instrução manual.
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+if (isIOS && !isStandalone && !localStorage.getItem("installBannerDismissed")) {
+  document.getElementById("installText").textContent = "Toque em Compartilhar e depois em \"Adicionar à Tela de Início\" para instalar o app.";
+  document.getElementById("installBtn").style.display = "none";
+  document.getElementById("installBanner").classList.add("show");
+}
+
+// ---- Início ----
+loadData();
+
+  </script>
+</body>
+</html>
