@@ -315,11 +315,16 @@ function getRange(itemsFlat) {
 // ---- Dados: carregar e sincronizar ----
 async function loadData() {
   setSyncStatus("loading");
-  const { data, error } = await sb.from(TABLE).select("*").order("data").order("hora");
-  if (error) { setSyncStatus("error"); console.error(error); return; }
-  appointments = data.map(rowToAppt);
-  setSyncStatus("ok");
-  renderAll();
+  try {
+    const { data, error } = await sb.from(TABLE).select("*").order("data").order("hora");
+    if (error) { setSyncStatus("error"); console.warn("Erro ao carregar agenda:", error.message || error); return; }
+    appointments = data.map(rowToAppt);
+    setSyncStatus("ok");
+    renderAll();
+  } catch (e) {
+    setSyncStatus("error");
+    console.warn("Sem conexao com o banco de dados no momento:", e && e.message ? e.message : e);
+  }
 }
 function rowToAppt(row) {
   return {
