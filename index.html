@@ -2,788 +2,936 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Agenda Cortinas e Persianas</title>
-<meta name="description" content="Agenda da equipe para instalação, medição e ambientação" />
-<!-- manifest injected dynamically below -->
-<meta name="theme-color" content="#20302E" />
-<link rel="icon" href="data:image/png;base64,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" />
-<link rel="apple-touch-icon" href="data:image/png;base64,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" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Agenda" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Controle financeiro</title>
+<link rel="icon" href="data:,">
 <style>
-  :root {
-    --ink: #20302E;
-    --canvas: #F7F3EB;
-    --card: #FFFFFF;
-    --border: #E3DDCC;
-    --accent: #B8863E;
-    --muted: #7C7566;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--canvas);
-    color: var(--ink);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  .agenda-top { background: var(--ink); color: #F2EEE3; padding: calc(env(safe-area-inset-top) + 18px) 20px 16px; }
-  .agenda-title { font-family: Georgia, 'Times New Roman', serif; font-size: 21px; margin: 0 0 4px; letter-spacing: 0.2px; }
-  .agenda-title small { color: var(--accent); font-style: italic; }
-  .agenda-sub { font-size: 12px; color: #B7B2A2; margin: 0; }
-  .agenda-body { padding: 14px; max-width: 900px; margin: 0 auto; }
-
-  .install-banner {
-    display: none; align-items: center; justify-content: space-between; gap: 10px;
-    background: #EDE2CB; border: 1px solid var(--border); border-radius: 10px;
-    padding: 10px 12px; margin-bottom: 12px; font-size: 12.5px;
-  }
-  .install-banner.show { display: flex; }
-  .install-banner button { border: none; background: var(--ink); color: #fff; border-radius: 8px; padding: 7px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
-  .install-banner .close-x { background: transparent; color: var(--muted); padding: 4px; }
-
-  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .view-tabs { display: flex; background: #EDE7D8; border-radius: 10px; padding: 3px; }
-  .view-tabs button { border: none; background: transparent; padding: 7px 14px; font-size: 13px; border-radius: 8px; cursor: pointer; color: var(--muted); font-weight: 500; }
-  .view-tabs button.active { background: var(--ink); color: #F2EEE3; }
-  .nav-group { display: flex; align-items: center; gap: 6px; }
-  .nav-btn { border: 1px solid var(--border); background: var(--card); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink); font-size: 15px; }
-  .nav-btn:active { background: #F0EAD9; }
-  .nav-label { font-size: 14px; font-weight: 600; min-width: 150px; text-align: center; }
-  .today-btn { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 7px 10px; font-size: 12px; cursor: pointer; color: var(--ink); }
-  .actions-row { display: flex; gap: 8px; }
-  .add-btn { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 9px 14px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; flex: 1; justify-content: center; }
-  .export-btn { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; cursor: pointer; color: var(--ink); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-
-  .filters-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
-  .type-toggle { display: flex; align-items: center; gap: 5px; border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 5px 10px; font-size: 12px; cursor: pointer; color: var(--muted); }
-  .type-toggle.on { color: var(--ink); border-color: currentColor; }
-  .type-dot { width: 8px; height: 8px; border-radius: 50%; }
-  .search-box { display: flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 7px 10px; font-size: 13px; flex: 1; min-width: 160px; color: var(--muted); }
-  .search-box input { border: none; outline: none; background: transparent; font-size: 13px; width: 100%; color: var(--ink); }
-  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #5DCAA5; flex-shrink: 0; }
-  .sync-dot.off { background: #E24B4A; }
-  .sync-label { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
-
-  .appt-list { display: flex; flex-direction: column; gap: 8px; }
-  .appt-row { background: var(--card); border-radius: 10px; padding: 10px 12px; display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--border); }
-  .appt-time { font-size: 13px; font-weight: 700; min-width: 44px; padding-top: 2px; }
-  .appt-main { flex: 1; min-width: 0; }
-  .appt-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 4px; }
-  .appt-name { font-size: 13px; font-weight: 600; }
-  .appt-chip { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
-  .appt-sub { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
-  .appt-notes { font-size: 12px; color: var(--muted); margin-top: 4px; font-style: italic; }
-  .appt-actions { display: flex; gap: 4px; flex-shrink: 0; }
-  .icon-btn { border: 1px solid var(--border); background: var(--card); border-radius: 6px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 13px; }
-  .icon-btn.danger:active { background: #F5E4E9; color: #8C3E52; }
-  .empty-day { font-size: 13px; color: var(--muted); padding: 24px 8px; text-align: center; }
-  .day-heading { font-size: 13px; font-weight: 600; color: var(--muted); margin: 18px 0 8px; text-transform: uppercase; letter-spacing: 0.4px; }
-
-  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .month-head { font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 4px; font-weight: 600; }
-  .month-cell { background: var(--card); border: 1px solid var(--border); border-radius: 8px; min-height: 78px; padding: 5px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; overflow: hidden; }
-  .month-cell.out { opacity: 0.35; }
-  .month-cell.today { border-color: var(--accent); }
-  .month-cell.selected { background: #EDE2CB; }
-  .month-num { font-size: 12px; font-weight: 600; }
-  .month-event { font-size: 9.5px; padding: 2px 4px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
-  .month-more { font-size: 9.5px; color: var(--muted); padding: 0 4px; }
-  .month-day-panel { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
-
-  .timeline-wrap { display: flex; overflow-x: auto; }
-  .tl-gutter { position: relative; width: 40px; flex-shrink: 0; }
-  .tl-gutter-label { position: absolute; right: 6px; transform: translateY(-6px); font-size: 10px; color: var(--muted); }
-  .tl-body { display: flex; flex: 1; min-width: 0; }
-  .tl-col { position: relative; flex: 1; min-width: 104px; border-left: 1px solid var(--border); }
-  .tl-hourline { position: absolute; left: 0; right: 0; border-top: 1px solid var(--border); }
-  .tl-empty { position: absolute; top: 8px; left: 6px; right: 6px; font-size: 11px; color: var(--muted); }
-  .event-block { position: absolute; inset: 0; border-radius: 6px; padding: 3px 6px; display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
-  .event-time { font-size: 10px; font-weight: 700; line-height: 1.2; }
-  .event-name { font-size: 11px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .week-headers { display: flex; margin-bottom: 4px; }
-  .week-header-gutter { width: 40px; flex-shrink: 0; }
-  .week-header-day { flex: 1; min-width: 104px; text-align: center; font-size: 12px; padding: 4px 0; }
-  .week-header-day .wd-name { font-weight: 700; }
-  .week-header-day .wd-num { color: var(--muted); font-size: 11px; }
-  .week-header-day.is-today .wd-name { color: var(--accent); }
-  .day-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
-  .day-header .dh-name { font-size: 15px; font-weight: 700; }
-  .day-header .dh-num { font-size: 13px; color: var(--muted); }
-
-  .modal-overlay { position: fixed; inset: 0; background: rgba(32,48,46,0.55); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
-  .modal { background: var(--card); border-radius: 14px; padding: 18px; width: 100%; max-width: 420px; max-height: 88vh; overflow-y: auto; }
-  .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .modal-head h3 { margin: 0; font-size: 16px; font-family: Georgia, serif; }
-  .modal-close { border: none; background: transparent; cursor: pointer; color: var(--muted); font-size: 18px; }
-  .field { margin-bottom: 12px; }
-  .field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
-  .field input, .field textarea { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 9px 10px; font-size: 14px; font-family: inherit; background: #FBF9F3; color: var(--ink); }
-  .field textarea { resize: vertical; min-height: 50px; }
-  .row2 { display: flex; gap: 10px; }
-  .row2 .field { flex: 1; }
-  .type-picker { display: flex; gap: 6px; flex-wrap: wrap; }
-  .type-pill { border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px; font-size: 12px; cursor: pointer; background: var(--card); color: var(--muted); }
-  .type-pill.selected { color: #fff; border-color: transparent; }
-  .modal-actions { display: flex; gap: 8px; margin-top: 16px; align-items: center; }
-  .btn-primary { flex: 1; background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 11px; font-size: 13px; font-weight: 700; cursor: pointer; }
-  .btn-secondary { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 11px 14px; font-size: 13px; cursor: pointer; color: var(--ink); }
-  .btn-full { width: 100%; margin-bottom: 4px; }
-  .btn-text-danger { border: none; background: transparent; color: #8C3E52; font-size: 12px; cursor: pointer; margin-right: auto; padding: 8px 0; }
-  .confirm-actions { display: flex; gap: 8px; margin-top: 10px; }
-
-  @media (min-width: 640px) {
-    .agenda-body { padding: 20px; }
+  body { margin: 0; background: #12140F; color: #E7E2D3; font-family: 'IBM Plex Mono', monospace; }
+  .disp { font-family: 'Space Grotesk', sans-serif; }
+  input, select, textarea { font-family: 'IBM Plex Mono', monospace; }
+  button { font-family: inherit; }
+  @media print {
+    body * { visibility: hidden; }
+    .relatorio-print-area, .relatorio-print-area * { visibility: visible; }
+    .relatorio-print-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; }
+    .no-print { display: none !important; }
   }
 </style>
 </head>
 <body>
+<div id="root">Carregando app… (se isso não sumir em alguns segundos, algo não carregou)</div>
 
-  <div class="agenda-top">
-    <p class="agenda-title">Agenda <small>cortinas &amp; persianas</small></p>
-    <p class="agenda-sub">Agenda compartilhada da equipe — instalação, medição e ambientação</p>
-  </div>
-
-  <div class="agenda-body">
-
-    <div id="installBanner" class="install-banner">
-      <span id="installText">Instale esse app na tela inicial do celular para acesso rápido.</span>
-      <button id="installBtn">Instalar</button>
-      <button class="close-x" id="installClose">✕</button>
-    </div>
-
-    <div class="toolbar">
-      <div class="view-tabs">
-        <button data-view="day">Dia</button>
-        <button data-view="week">Semana</button>
-        <button data-view="month">Mês</button>
-      </div>
-      <div class="nav-group">
-        <button class="nav-btn" id="navPrev">‹</button>
-        <span class="nav-label" id="navLabel"></span>
-        <button class="nav-btn" id="navNext">›</button>
-        <button class="today-btn" id="navToday">Hoje</button>
-      </div>
-    </div>
-
-    <div class="actions-row" style="margin-bottom:12px;">
-      <button class="add-btn" id="addBtn">+ Novo agendamento</button>
-      <button class="export-btn" id="exportAllBtn">Exportar agenda</button>
-    </div>
-
-    <div class="filters-row">
-      <div class="type-toggle on" data-type="instalacao" style="color:#2F5D58;border-color:#2F5D58;">
-        <span class="type-dot" style="background:#2F5D58;"></span>Instalação
-      </div>
-      <div class="type-toggle on" data-type="medicao" style="color:#95661E;border-color:#95661E;">
-        <span class="type-dot" style="background:#B8863E;"></span>Medição
-      </div>
-      <div class="type-toggle on" data-type="ambientacao" style="color:#8C3E52;border-color:#8C3E52;">
-        <span class="type-dot" style="background:#A8586B;"></span>Ambientação
-      </div>
-      <div class="search-box">
-        <span>🔎</span>
-        <input id="searchInput" placeholder="Buscar cliente, telefone ou endereço" />
-      </div>
-      <span class="sync-label"><span class="sync-dot" id="syncDot"></span><span id="syncText">conectado</span></span>
-    </div>
-
-    <div id="mainView"></div>
-  </div>
-
-  <div id="modalRoot"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-  <script>
-    // Manifest gerado na hora (para permitir instalar como app, mesmo sendo um arquivo único)
-    (function() {
-      const manifest = {
-        name: "Agenda Cortinas e Persianas",
-        short_name: "Agenda",
-        description: "Agenda da equipe para instalação, medição e ambientação",
-        start_url: ".",
-        scope: ".",
-        display: "standalone",
-        orientation: "portrait-primary",
-        background_color: "#F7F3EB",
-        theme_color: "#20302E",
-        icons: [
-          { src: "data:image/png;base64,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", sizes: "192x192", type: "image/png", purpose: "any" },
-          { src: "data:image/png;base64,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", sizes: "512x512", type: "image/png", purpose: "any maskable" }
-        ]
-      };
-      const blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
-      const link = document.createElement("link");
-      link.rel = "manifest";
-      link.href = URL.createObjectURL(blob);
-      document.head.appendChild(link);
-    })();
-  </script>
-  <script>
-// ---- Configuração do Supabase ----
-// A chave "publishable" abaixo é segura para ficar no código do app (front-end).
-// O acesso aos dados é controlado pelas políticas de RLS no banco, não por essa chave.
-const SUPABASE_URL = "https://fizosmjiwegepbizkjea.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpem9zbWppd2VnZXBiaXpramVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ1NzM4MzcsImV4cCI6MjEwMDE0OTgzN30.E5tx5xQEKr_vphVMsDjGn-hu56ODRe9SEbKSOsWrZ9k";
-const TABLE = "agendamentos";
-
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// ---- Constantes de domínio ----
-const TYPES = {
-  instalacao: { label: "Instalação", color: "#2F5D58", bg: "#E3EFED", dot: "#2F5D58" },
-  medicao: { label: "Medição", color: "#95661E", bg: "#F6ECD9", dot: "#B8863E" },
-  ambientacao: { label: "Ambientação", color: "#8C3E52", bg: "#F5E4E9", dot: "#A8586B" },
-};
-const WEEKDAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-const MONTHS = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-const HOUR_HEIGHT = 52;
-const DEFAULT_START = 7 * 60;
-const DEFAULT_END = 20 * 60;
-
-// ---- Estado ----
-let appointments = [];
-let view = "week";
-let currentDate = new Date();
-let activeTypes = new Set(Object.keys(TYPES));
-let search = "";
-let editingId = null;
-let confirmDeleteId = null;
-
-// ---- Utilitários de data ----
-function dateKey(d) {
-  const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,"0"), day = String(d.getDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
-function startOfWeek(d) { const r = new Date(d); r.setDate(r.getDate()-r.getDay()); r.setHours(0,0,0,0); return r; }
-function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
-function isSameDay(a,b) { return dateKey(a)===dateKey(b); }
-function monthMatrix(d) {
-  const first = new Date(d.getFullYear(), d.getMonth(), 1);
-  const gridStart = startOfWeek(first);
-  const weeks = [];
-  let cursor = new Date(gridStart);
-  for (let w=0; w<6; w++) {
-    const row = [];
-    for (let i=0;i<7;i++) { row.push(new Date(cursor)); cursor = addDays(cursor,1); }
-    weeks.push(row);
-  }
-  return weeks;
-}
-function toMinutes(t) { const [h,m] = t.split(":").map(Number); return h*60+(m||0); }
-function esc(s) {
-  return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
-function layoutItems(items) {
-  const sorted = [...items].sort((a,b) => toMinutes(a.time) - toMinutes(b.time));
-  const groups = [];
-  let currentGroup = [], currentEnd = -Infinity;
-  for (const it of sorted) {
-    const start = toMinutes(it.time);
-    if (currentGroup.length && start >= currentEnd) { groups.push(currentGroup); currentGroup = []; currentEnd = -Infinity; }
-    currentGroup.push(it);
-    currentEnd = Math.max(currentEnd, start+60);
-  }
-  if (currentGroup.length) groups.push(currentGroup);
-  const result = [];
-  for (const group of groups) {
-    const colEnds = [];
-    for (const it of group) {
-      const start = toMinutes(it.time);
-      let col = colEnds.findIndex((e) => e <= start);
-      if (col === -1) { col = colEnds.length; colEnds.push(start+60); } else colEnds[col] = start+60;
-      result.push({ ...it, col, maxCols: 0 });
-    }
-    const maxCols = colEnds.length;
-    for (let i=result.length-group.length; i<result.length; i++) result[i].maxCols = maxCols;
-  }
-  return result;
-}
-function getRange(itemsFlat) {
-  let start = DEFAULT_START, end = DEFAULT_END;
-  for (const it of itemsFlat) {
-    const s = toMinutes(it.time), e = s+60;
-    if (s < start) start = Math.floor(s/60)*60;
-    if (e > end) end = Math.ceil(e/60)*60;
-  }
-  return { start, end };
-}
-
-// ---- Dados: carregar e sincronizar ----
-async function loadData() {
-  setSyncStatus("loading");
-  try {
-    const { data, error } = await sb.from(TABLE).select("*").order("data").order("hora");
-    if (error) { setSyncStatus("error"); console.warn("Erro ao carregar agenda:", error.message || error); return; }
-    appointments = data.map(rowToAppt);
-    setSyncStatus("ok");
-    renderAll();
-  } catch (e) {
-    setSyncStatus("error");
-    console.warn("Sem conexao com o banco de dados no momento:", e && e.message ? e.message : e);
-  }
-}
-function rowToAppt(row) {
-  return {
-    id: row.id,
-    clientName: row.cliente_nome,
-    phone: row.telefone || "",
-    address: row.endereco || "",
-    type: row.tipo,
-    date: row.data,
-    time: (row.hora || "00:00:00").slice(0,5),
-    notes: row.observacoes || "",
+<script>
+  window.onerror = function (msg, url, line, col, error) {
+    var el = document.getElementById('root');
+    el.innerHTML += '<br><br><span style="color:#E08A7B;white-space:pre-wrap;">ERRO DETALHADO:\n' +
+      'Mensagem: ' + msg + '\n' +
+      'Arquivo: ' + url + '\n' +
+      'Linha: ' + line + ', Coluna: ' + col + '\n' +
+      (error && error.stack ? 'Stack: ' + error.stack : '') +
+      '</span>';
+    return false;
   };
-}
-function apptToRow(a) {
-  return {
-    cliente_nome: a.clientName,
-    telefone: a.phone || null,
-    endereco: a.address || null,
-    tipo: a.type,
-    data: a.date,
-    hora: a.time,
-    observacoes: a.notes || null,
-  };
-}
-function setSyncStatus(status) {
-  const dot = document.getElementById("syncDot");
-  const text = document.getElementById("syncText");
-  if (status === "ok") { dot.classList.remove("off"); text.textContent = "conectado"; }
-  else if (status === "loading") { dot.classList.remove("off"); text.textContent = "sincronizando…"; }
-  else { dot.classList.add("off"); text.textContent = "sem conexão"; }
-}
+</script>
 
-async function saveAppointment(form) {
-  const row = apptToRow(form);
-  if (editingId) {
-    const { error } = await sb.from(TABLE).update(row).eq("id", editingId);
-    if (error) { alert("Não foi possível salvar. Tente novamente."); console.error(error); return false; }
-  } else {
-    const { error } = await sb.from(TABLE).insert(row);
-    if (error) { alert("Não foi possível salvar. Tente novamente."); console.error(error); return false; }
-  }
-  return true;
-}
-async function deleteAppointment(id) {
-  const { error } = await sb.from(TABLE).delete().eq("id", id);
-  if (error) { alert("Não foi possível excluir. Tente novamente."); console.error(error); return false; }
-  return true;
-}
+<!-- ====== CONFIGURE AQUI ANTES DE PUBLICAR ====== -->
+<script>
+  window.SUPABASE_URL = "https://hmbvpmmmldbnvxzejvdc.supabase.co";
+  window.SUPABASE_ANON_KEY = "sb_publishable_-KsKYSvqFNsQwgUMce7zsw_LEvkIriw";
+</script>
+<!-- =============================================== -->
 
-// Sincronização em tempo real: qualquer pessoa da equipe que mudar algo
-// aparece na hora nos outros aparelhos, sem precisar atualizar a página.
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js" onerror="document.getElementById('root').innerHTML += '<br><span style=\'color:#E08A7B\'>ERRO: não consegui carregar React (react.production.min.js)</span>'"></script>
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js" onerror="document.getElementById('root').innerHTML += '<br><span style=\'color:#E08A7B\'>ERRO: não consegui carregar ReactDOM (react-dom.production.min.js)</span>'"></script>
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="document.getElementById('root').innerHTML += '<br><span style=\'color:#E08A7B\'>ERRO: não consegui carregar Supabase (supabase-js)</span>'"></script>
+
+<script>
 try {
-  sb.channel("agendamentos-realtime")
-    .on("postgres_changes", { event: "*", schema: "public", table: TABLE }, () => loadData())
-    .subscribe((status) => { if (status === "CHANNEL_ERROR") setSyncStatus("error"); });
+  let mesDaFatura2 = function(dataStr, diaFechamento, diaVencimento) {
+    const [ano, mes, dia] = dataStr.split("-").map(Number);
+    let mesIdx = mes - 1;
+    let anoAjustado = ano;
+    if (dia > diaFechamento) {
+      mesIdx += 1;
+    }
+    if (typeof diaVencimento === "number" && diaVencimento < diaFechamento) {
+      mesIdx += 1;
+    }
+    if (mesIdx > 11) {
+      mesIdx -= 12;
+      anoAjustado += 1;
+    } else if (mesIdx < 0) {
+      mesIdx += 12;
+      anoAjustado -= 1;
+    }
+    return { ano: anoAjustado, mes: mesIdx };
+  }, formatBRL2 = function(v) {
+    return (v || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }, todayISO2 = function() {
+    return (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+  }, normalizar2 = function(s) {
+    return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }, detectarParcelaFormal2 = function(descricao) {
+    const m = descricao.match(/parcelas?\s+(\d+)\s*(?:de|\/)\s*(\d+)/i);
+    if (!m) return null;
+    const atual = parseInt(m[1], 10), total = parseInt(m[2], 10);
+    if (total <= atual) return null;
+    const descBase = descricao.replace(m[0], "").replace(/\s{2,}/g, " ").trim() || "Compra";
+    return { atual, total, descBase };
+  }, detectarParcela2 = function(descricao) {
+    const formal = detectarParcelaFormal2(descricao);
+    if (formal) return formal;
+    const m = descricao.match(/(\d+)\s*(?:x|vezes)\b/i);
+    if (!m) return null;
+    const total = parseInt(m[1], 10);
+    if (total <= 1) return null;
+    const descBase = descricao.replace(m[0], "").replace(/\s{2,}/g, " ").trim() || "Compra";
+    return { atual: 1, total, descBase };
+  }, diasParaVencimento2 = function(dia) {
+    const hoje = /* @__PURE__ */ new Date();
+    let venc = new Date(hoje.getFullYear(), hoje.getMonth(), dia);
+    if (venc < hoje) venc = new Date(hoje.getFullYear(), hoje.getMonth() + 1, dia);
+    return Math.ceil((venc - hoje) / 864e5);
+  }, parseRapido2 = function(texto, contasFixas, bancos) {
+    const palavras = texto.trim().split(/\s+/);
+    if (!texto.trim()) return null;
+    const norm = palavras.map(normalizar2);
+    const fixaFlag = norm.some((w) => w === "fixa" || w === "fixo");
+    let tipo = null;
+    if (fixaFlag) tipo = "conta";
+    else if (norm.some((w) => w === "entrada" || w === "recebi" || w === "receita")) tipo = "entrada";
+    else if (norm.some((w) => w === "debito")) tipo = "debito";
+    else if (norm.some((w) => w === "pix")) tipo = "pix";
+    else if (norm.some((w) => w === "conta")) tipo = "conta";
+    else if (norm.some((w) => w === "credito" || w === "cartao")) tipo = "cartao";
+    const PALAVRAS_TIPO = /* @__PURE__ */ new Set(["fixa", "fixo", "entrada", "recebi", "receita", "debito", "pix", "conta", "credito", "cartao"]);
+    let valor = null, cartaoId = null, bancoId = null, contaId = null, data = null, diaFixa = null, terceiro = null, parcelasCount = null;
+    const restantes = [];
+    for (let i = 0; i < palavras.length; i++) {
+      const p = palavras[i];
+      const pNorm = norm[i];
+      const pNum = pNorm.replace(",", ".");
+      const matchData = p.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/);
+      if (!data && matchData) {
+        const hoje = /* @__PURE__ */ new Date();
+        let [_, dd, mm, aa] = matchData;
+        let ano = aa ? aa.length === 2 ? 2e3 + parseInt(aa, 10) : parseInt(aa, 10) : hoje.getFullYear();
+        const d = new Date(ano, parseInt(mm, 10) - 1, parseInt(dd, 10));
+        if (!isNaN(d.getTime())) {
+          data = d.toISOString().slice(0, 10);
+          continue;
+        }
+      }
+      if (!terceiro && p.startsWith("@") && p.length > 1) {
+        terceiro = p.slice(1).replace(/^\w/, (c) => c.toUpperCase());
+        continue;
+      }
+      const matchDiaGrudado = pNorm.match(/^dia(\d{1,2})$/);
+      if (!diaFixa && matchDiaGrudado) {
+        diaFixa = parseInt(matchDiaGrudado[1], 10);
+        continue;
+      }
+      if (!diaFixa && pNorm === "dia" && palavras[i + 1] && /^\d{1,2}$/.test(palavras[i + 1])) {
+        diaFixa = parseInt(palavras[i + 1], 10);
+        i += 1;
+        continue;
+      }
+      const matchVezesGrudado = pNorm.match(/^(\d+)x$/);
+      if (!parcelasCount && matchVezesGrudado) {
+        const n = parseInt(matchVezesGrudado[1], 10);
+        if (n > 1) {
+          parcelasCount = n;
+          continue;
+        }
+      }
+      if (!parcelasCount && /^\d+$/.test(p) && palavras[i + 1] && (norm[i + 1] === "x" || norm[i + 1] === "vezes")) {
+        const n = parseInt(p, 10);
+        if (n > 1) {
+          parcelasCount = n;
+          i += 1;
+          continue;
+        }
+      }
+      if (valor === null && /^\d+([.,]\d+)?$/.test(p)) {
+        valor = parseFloat(pNum);
+        continue;
+      }
+      if (PALAVRAS_TIPO.has(pNorm)) continue;
+      if (!cartaoId && (tipo === null || tipo === "cartao") && APELIDOS_CARTAO[pNorm]) {
+        cartaoId = APELIDOS_CARTAO[pNorm];
+        continue;
+      }
+      restantes.push(p);
+    }
+    if (valor === null) return null;
+    if (!tipo) tipo = "cartao";
+    let descricao = restantes.join(" ").trim() || (tipo === "entrada" ? "Entrada" : tipo === "conta" ? "Conta" : tipo === "debito" ? "D\xE9bito" : tipo === "pix" ? "Pix" : "Gasto");
+    let valorFinal = valor;
+    let parcelaInfo = null;
+    if (parcelasCount) {
+      valorFinal = Math.round(valor / parcelasCount * 100) / 100;
+      const descBaseLimpa = descricao;
+      descricao = `${descBaseLimpa} parcela 1 de ${parcelasCount}`;
+      parcelaInfo = { atual: 1, total: parcelasCount, descBase: descBaseLimpa };
+    } else {
+      parcelaInfo = detectarParcela2(descricao);
+    }
+    if (tipo === "conta" && !fixaFlag && contasFixas && contasFixas.length) {
+      const descNorm = normalizar2(descricao);
+      const match = contasFixas.find((c) => descNorm.includes(normalizar2(c.nome)) || normalizar2(c.nome).includes(descNorm));
+      if (match) contaId = match.id;
+    }
+    if (tipo === "cartao" && !cartaoId) cartaoId = CARTOES[0].id;
+    if ((tipo === "debito" || tipo === "pix" || tipo === "entrada") && bancos && bancos.length) {
+      const descNorm = normalizar2(descricao);
+      const palavrasDesc = descNorm.split(/\s+/).filter((w) => w.length >= 3);
+      const matchBanco = bancos.find((b) => {
+        const nomeNorm = normalizar2(b.nome);
+        if (descNorm.includes(nomeNorm) || nomeNorm.includes(descNorm)) return true;
+        const palavrasBanco = nomeNorm.split(/\s+/).filter((w) => w.length >= 3);
+        return palavrasBanco.some((pb) => palavrasDesc.includes(pb));
+      });
+      bancoId = matchBanco ? matchBanco.id : bancos[0].id;
+    }
+    if (fixaFlag && !diaFixa && data) diaFixa = parseInt(data.slice(8, 10), 10);
+    return { tipo, valor: valorFinal, descricao, cartaoId, contaId, bancoId, data, fixaFlag, diaFixa, terceiro, parcelaInfo };
+  }, App2 = function() {
+    const [lancamentos, setLancamentos] = useState([]);
+    const [contasFixas, setContasFixas] = useState([]);
+    const [bancos, setBancos] = useState([]);
+    const [investimentos, setInvestimentos] = useState([]);
+    const [parcelamentos, setParcelamentos] = useState([]);
+    const [cartoesPagos, setCartoesPagos] = useState([]);
+    const [metaEconomia, setMetaEconomia] = useState({ baseline: 2500, meta: 500 });
+    const [loading, setLoading] = useState(true);
+    const [saveError, setSaveError] = useState(false);
+    const [mesAtual, setMesAtual] = useState((/* @__PURE__ */ new Date()).getMonth());
+    const [anoAtual, setAnoAtual] = useState((/* @__PURE__ */ new Date()).getFullYear());
+    const [showForm, setShowForm] = useState(false);
+    const [cartaoDetalhe, setCartaoDetalhe] = useState(null);
+    const [showContaForm, setShowContaForm] = useState(false);
+    const [showBancoForm, setShowBancoForm] = useState(false);
+    const [showInvestimentoForm, setShowInvestimentoForm] = useState(false);
+    const [paginaAtual, setPaginaAtual] = useState("financas");
+    const [novaConta, setNovaConta] = useState({ nome: "", valor: "", dia: "", terceiro: "" });
+    const [novoBanco, setNovoBanco] = useState({ nome: "", saldoInicial: "" });
+    const [novoInvestimento, setNovoInvestimento] = useState({ nome: "", instituicao: "", valorInvestido: "", valorAtual: "", rendimentoMes: "" });
+    const [textoRapido, setTextoRapido] = useState("");
+    const [erroRapido, setErroRapido] = useState(false);
+    const [importStatus, setImportStatus] = useState(null);
+    const fileInputRef = useRef(null);
+    const [showLote, setShowLote] = useState(false);
+    const [textoLote, setTextoLote] = useState("");
+    const [resultadoLote, setResultadoLote] = useState(null);
+    const [form, setForm] = useState({
+      tipo: "cartao",
+      descricao: "",
+      valor: "",
+      data: todayISO2(),
+      cartaoId: CARTOES[0].id,
+      contaId: "",
+      bancoId: "",
+      terceiro: ""
+    });
+    useEffect(() => {
+      (async () => {
+        try {
+          const { data, error } = await supabaseClient.from("financas").select("dados").eq("id", "principal").single();
+          if (!error && data && data.dados) {
+            const lancsCarregados = data.dados.lancamentos || [];
+            const contasCarregadas = data.dados.contasFixas || [];
+            const bancosCarregados = data.dados.bancos || [];
+            const investimentosCarregados = data.dados.investimentos || [];
+            const parcelamentosCarregados = data.dados.parcelamentos || [];
+            const cartoesPagosCarregados = data.dados.cartoesPagos || [];
+            const metaEconomiaCarregada = data.dados.metaEconomia || { baseline: 2500, meta: 500 };
+            const parcelamentosFinal = escanearParcelamentosRetroativos(lancsCarregados, parcelamentosCarregados);
+            setLancamentos(lancsCarregados);
+            setContasFixas(contasCarregadas);
+            setBancos(bancosCarregados);
+            setInvestimentos(investimentosCarregados);
+            setParcelamentos(parcelamentosFinal);
+            setCartoesPagos(cartoesPagosCarregados);
+            setMetaEconomia(metaEconomiaCarregada);
+            if (parcelamentosFinal.length !== parcelamentosCarregados.length) {
+              supabaseClient.from("financas").update({
+                dados: { lancamentos: lancsCarregados, contasFixas: contasCarregadas, bancos: bancosCarregados, investimentos: investimentosCarregados, parcelamentos: parcelamentosFinal, cartoesPagos: cartoesPagosCarregados, metaEconomia: metaEconomiaCarregada },
+                atualizado_em: (/* @__PURE__ */ new Date()).toISOString()
+              }).eq("id", "principal").then(({ error: err2 }) => {
+                if (err2) setSaveError(true);
+              });
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }, []);
+    async function salvar(next) {
+      const novoLancamentos = next.lancamentos !== void 0 ? next.lancamentos : lancamentos;
+      const novoContasFixas = next.contasFixas !== void 0 ? next.contasFixas : contasFixas;
+      const novoBancos = next.bancos !== void 0 ? next.bancos : bancos;
+      const novoInvestimentos = next.investimentos !== void 0 ? next.investimentos : investimentos;
+      const novoParcelamentos = next.parcelamentos !== void 0 ? next.parcelamentos : parcelamentos;
+      const novoCartoesPagos = next.cartoesPagos !== void 0 ? next.cartoesPagos : cartoesPagos;
+      const novoMetaEconomia = next.metaEconomia !== void 0 ? next.metaEconomia : metaEconomia;
+      setLancamentos(novoLancamentos);
+      setContasFixas(novoContasFixas);
+      setBancos(novoBancos);
+      setInvestimentos(novoInvestimentos);
+      setParcelamentos(novoParcelamentos);
+      setCartoesPagos(novoCartoesPagos);
+      setMetaEconomia(novoMetaEconomia);
+      try {
+        const { error } = await supabaseClient.from("financas").update({
+          dados: { lancamentos: novoLancamentos, contasFixas: novoContasFixas, bancos: novoBancos, investimentos: novoInvestimentos, parcelamentos: novoParcelamentos, cartoesPagos: novoCartoesPagos, metaEconomia: novoMetaEconomia },
+          atualizado_em: (/* @__PURE__ */ new Date()).toISOString()
+        }).eq("id", "principal");
+        setSaveError(!!error);
+      } catch (e) {
+        setSaveError(true);
+      }
+    }
+    function exportarBackup() {
+      try {
+        const dados = { lancamentos, contasFixas, bancos, investimentos, parcelamentos, cartoesPagos, metaEconomia, exportadoEm: (/* @__PURE__ */ new Date()).toISOString() };
+        const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `financas-backup-${todayISO2()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        setImportStatus({ ok: true, msg: "Backup baixado. Guarde esse arquivo em algum lugar seguro do seu celular." });
+      } catch (e) {
+        setImportStatus({ ok: false, msg: "N\xE3o consegui gerar o arquivo de backup." });
+      }
+    }
+    function importarBackup(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const dados = JSON.parse(ev.target.result);
+          const novoLancamentos = Array.isArray(dados.lancamentos) ? dados.lancamentos : lancamentos;
+          const novoContasFixas = Array.isArray(dados.contasFixas) ? dados.contasFixas : contasFixas;
+          const novoBancos = Array.isArray(dados.bancos) ? dados.bancos : bancos;
+          const novoInvestimentos = Array.isArray(dados.investimentos) ? dados.investimentos : investimentos;
+          const novoParcelamentos = Array.isArray(dados.parcelamentos) ? dados.parcelamentos : parcelamentos;
+          const novoCartoesPagos = Array.isArray(dados.cartoesPagos) ? dados.cartoesPagos : cartoesPagos;
+          const novoMetaEconomia = dados.metaEconomia && typeof dados.metaEconomia === "object" ? dados.metaEconomia : metaEconomia;
+          salvar({ lancamentos: novoLancamentos, contasFixas: novoContasFixas, bancos: novoBancos, investimentos: novoInvestimentos, parcelamentos: novoParcelamentos, cartoesPagos: novoCartoesPagos, metaEconomia: novoMetaEconomia });
+          setImportStatus({ ok: true, msg: `Backup importado: ${novoLancamentos.length} lan\xE7amento(s) carregado(s).` });
+        } catch (err) {
+          setImportStatus({ ok: false, msg: "Esse arquivo n\xE3o parece ser um backup v\xE1lido." });
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    }
+    function registrarParcelamento(info, base, listaAtual) {
+      const dataBase = base.data || todayISO2();
+      const [anoRaw, mesRaw1, diaBase] = dataBase.split("-").map(Number);
+      let anoBase = anoRaw, mesBaseIdx = mesRaw1 - 1;
+      if (base.tipo === "cartao" && base.cartaoId) {
+        const cartaoInfo = CARTOES.find((c) => c.id === base.cartaoId);
+        if (cartaoInfo) {
+          const fat = mesDaFatura2(dataBase, cartaoInfo.fechamento, cartaoInfo.vencimento);
+          anoBase = fat.ano;
+          mesBaseIdx = fat.mes;
+        }
+      }
+      const chave = `${info.descBase}|${base.cartaoId || ""}|${base.terceiro || ""}|${info.total}`.toLowerCase();
+      const existente = listaAtual.find((p) => p.chave === chave);
+      if (existente) {
+        if (info.atual > existente.parcelaBase) {
+          return listaAtual.map((p) => p === existente ? { ...p, parcelaBase: info.atual, anoBase, mesBase: mesBaseIdx, dia: diaBase } : p);
+        }
+        return listaAtual;
+      }
+      const novo = {
+        id: Date.now().toString() + "p" + Math.random().toString(36).slice(2, 5),
+        chave,
+        descBase: info.descBase,
+        valor: base.valor,
+        tipo: base.tipo,
+        cartaoId: base.cartaoId || null,
+        terceiro: base.terceiro || null,
+        anoBase,
+        mesBase: mesBaseIdx,
+        dia: diaBase,
+        parcelaBase: info.atual,
+        totalParcelas: info.total
+      };
+      return [...listaAtual, novo];
+    }
+    function escanearParcelamentosRetroativos(lancs, parcelamentosIniciais) {
+      let resultado = parcelamentosIniciais;
+      for (const l of lancs) {
+        if (!l.descricao) continue;
+        const info = detectarParcelaFormal2(l.descricao);
+        if (!info) continue;
+        resultado = registrarParcelamento(info, l, resultado);
+      }
+      return resultado;
+    }
+    function gerarParcelasVirtuais(ano, mes, listaParcelamentos) {
+      const virtuais = [];
+      for (const p of listaParcelamentos) {
+        const mesesAFrente = ano * 12 + mes - (p.anoBase * 12 + p.mesBase);
+        const parcelaAlvo = p.parcelaBase + mesesAFrente;
+        if (mesesAFrente >= 1 && parcelaAlvo <= p.totalParcelas) {
+          const dia = Math.min(p.dia, 28);
+          const dataVirtual = new Date(ano, mes, dia).toISOString().slice(0, 10);
+          virtuais.push({
+            id: `virtual-${p.id}-${parcelaAlvo}`,
+            tipo: p.tipo,
+            cartaoId: p.cartaoId,
+            terceiro: p.terceiro,
+            contaId: null,
+            bancoId: null,
+            valor: p.valor,
+            data: dataVirtual,
+            descricao: `${p.descBase} parcela ${parcelaAlvo} de ${p.totalParcelas}`,
+            virtual: true,
+            parcelamentoId: p.id,
+            parcelaAlvo
+          });
+        }
+      }
+      return virtuais;
+    }
+    function addContaFixa(e) {
+      e.preventDefault();
+      const valorNum = parseFloat((novaConta.valor || "0").replace(",", "."));
+      const diaNum = parseInt(novaConta.dia, 10);
+      if (!novaConta.nome || isNaN(diaNum) || diaNum < 1 || diaNum > 31) return;
+      const nova = { id: Date.now().toString(), nome: novaConta.nome, valor: isNaN(valorNum) ? 0 : valorNum, dia: diaNum, terceiro: novaConta.terceiro ? novaConta.terceiro.trim() : null };
+      salvar({ contasFixas: [...contasFixas, nova] });
+      setNovaConta({ nome: "", valor: "", dia: "", terceiro: "" });
+      setShowContaForm(false);
+    }
+    function removerContaFixa(id) {
+      salvar({ contasFixas: contasFixas.filter((c) => c.id !== id) });
+    }
+    function addBanco(e) {
+      e.preventDefault();
+      const saldoNum = parseFloat((novoBanco.saldoInicial || "0").replace(",", "."));
+      if (!novoBanco.nome) return;
+      const novo = { id: Date.now().toString(), nome: novoBanco.nome, saldoInicial: isNaN(saldoNum) ? 0 : saldoNum };
+      salvar({ bancos: [...bancos, novo] });
+      setNovoBanco({ nome: "", saldoInicial: "" });
+      setShowBancoForm(false);
+    }
+    function removerBanco(id) {
+      salvar({ bancos: bancos.filter((b) => b.id !== id) });
+    }
+    function addInvestimento(e) {
+      e.preventDefault();
+      const valorInvestidoNum = parseFloat((novoInvestimento.valorInvestido || "0").replace(",", "."));
+      const valorAtualNum = parseFloat((novoInvestimento.valorAtual || "0").replace(",", "."));
+      const rendimentoMesNum = parseFloat((novoInvestimento.rendimentoMes || "0").replace(",", "."));
+      if (!novoInvestimento.nome) return;
+      const novo = {
+        id: Date.now().toString(),
+        nome: novoInvestimento.nome,
+        instituicao: novoInvestimento.instituicao ? novoInvestimento.instituicao.trim() : "",
+        valorInvestido: isNaN(valorInvestidoNum) ? 0 : valorInvestidoNum,
+        valorAtual: isNaN(valorAtualNum) ? 0 : valorAtualNum,
+        rendimentoMes: isNaN(rendimentoMesNum) ? 0 : rendimentoMesNum
+      };
+      salvar({ investimentos: [...investimentos, novo] });
+      setNovoInvestimento({ nome: "", instituicao: "", valorInvestido: "", valorAtual: "", rendimentoMes: "" });
+      setShowInvestimentoForm(false);
+    }
+    function removerInvestimento(id) {
+      salvar({ investimentos: investimentos.filter((i) => i.id !== id) });
+    }
+    function toggleContaPaga(conta, doMesAtual) {
+      const existentes = doMesAtual.filter((l) => l.tipo === "conta" && l.contaId === conta.id).map((l) => l.id);
+      if (existentes.length > 0) {
+        salvar({ lancamentos: lancamentos.filter((l) => !existentes.includes(l.id)) });
+      } else {
+        const novo = { id: Date.now().toString(), tipo: "conta", descricao: conta.nome, valor: conta.valor || 0, data: todayISO2(), cartaoId: null, contaId: conta.id, bancoId: null, terceiro: conta.terceiro || null };
+        salvar({ lancamentos: [novo, ...lancamentos] });
+      }
+    }
+    function chaveCartaoMes(cartaoId, ano, mes) {
+      return `${cartaoId}-${ano}-${mes}`;
+    }
+    function toggleCartaoPago(cartaoId) {
+      const chave = chaveCartaoMes(cartaoId, anoAtual, mesAtual);
+      const jaPago = cartoesPagos.includes(chave);
+      if (jaPago) {
+        salvar({
+          cartoesPagos: cartoesPagos.filter((k) => k !== chave),
+          lancamentos: lancamentos.filter((l) => l.faturaChave !== chave)
+        });
+        return;
+      }
+      const cartao = CARTOES.find((c) => c.id === cartaoId);
+      const gastoCartao = gastosPorCartao.find((c) => c.id === cartaoId);
+      const sugestao = gastoCartao && gastoCartao.total ? gastoCartao.total.toFixed(2).replace(".", ",") : "";
+      const valorStr = window.prompt(`Valor pago na fatura do ${cartao.nome}:`, sugestao);
+      if (valorStr === null) return;
+      const valorNum = parseFloat(valorStr.replace(",", "."));
+      if (isNaN(valorNum) || valorNum <= 0) {
+        setImportStatus({ ok: false, msg: "Valor inv\xE1lido \u2014 a fatura n\xE3o foi marcada como paga." });
+        return;
+      }
+      const bancoMatch = todosBancos.find((b) => normalizar2(b.nome) === normalizar2(cartao.nome));
+      const diaPagamento = Math.min(cartao.vencimento, 28);
+      const dataLancamento = new Date(anoAtual, mesAtual, diaPagamento).toISOString().slice(0, 10);
+      const novoLancamento = {
+        id: Date.now().toString() + "fat",
+        tipo: "debito",
+        descricao: `Fatura ${cartao.nome}`,
+        valor: valorNum,
+        data: dataLancamento,
+        cartaoId: null,
+        contaId: null,
+        bancoId: bancoMatch ? bancoMatch.id : null,
+        terceiro: null,
+        faturaChave: chave
+      };
+      salvar({
+        cartoesPagos: [...cartoesPagos, chave],
+        lancamentos: [novoLancamento, ...lancamentos]
+      });
+      if (!bancoMatch) {
+        setImportStatus({ ok: true, msg: `Fatura marcada como paga, mas n\xE3o achei uma conta banc\xE1ria "${cartao.nome}" pra debitar o valor. Cadastre uma conta banc\xE1ria com esse nome.` });
+      }
+    }
+    function addLancamento(e) {
+      e.preventDefault();
+      const valorNum = parseFloat(form.valor.replace(",", "."));
+      if (!form.descricao || isNaN(valorNum) || valorNum <= 0) return;
+      const novo = {
+        id: Date.now().toString(),
+        tipo: form.tipo,
+        descricao: form.descricao,
+        valor: valorNum,
+        data: form.data,
+        cartaoId: form.tipo === "cartao" ? form.cartaoId : null,
+        contaId: form.tipo === "conta" && form.contaId ? form.contaId : null,
+        bancoId: (form.tipo === "debito" || form.tipo === "pix" || form.tipo === "entrada") && form.bancoId ? form.bancoId : null,
+        terceiro: form.terceiro ? form.terceiro.trim() : null
+      };
+      let parcelamentosFinal = parcelamentos;
+      const infoManual = detectarParcela2(form.descricao);
+      if (infoManual) {
+        parcelamentosFinal = registrarParcelamento(infoManual, novo, parcelamentos);
+      }
+      salvar({ lancamentos: [novo, ...lancamentos], parcelamentos: parcelamentosFinal });
+      setForm({ ...form, descricao: "", valor: "", contaId: "", terceiro: "" });
+      setShowForm(false);
+    }
+    function removerLancamento(id) {
+      if (typeof id === "string" && id.startsWith("virtual-")) {
+        const item = doMes.find((l) => l.id === id);
+        if (item) {
+          salvar({ parcelamentos: parcelamentos.map((p) => p.id === item.parcelamentoId ? { ...p, totalParcelas: item.parcelaAlvo - 1 } : p) });
+        }
+        return;
+      }
+      const item = lancamentos.find((l) => l.id === id);
+      if (item && item.faturaChave) {
+        salvar({
+          lancamentos: lancamentos.filter((l) => l.id !== id),
+          cartoesPagos: cartoesPagos.filter((k) => k !== item.faturaChave)
+        });
+        return;
+      }
+      salvar({ lancamentos: lancamentos.filter((l) => l.id !== id) });
+    }
+    function enviarRapido(e) {
+      e.preventDefault();
+      const resultado = parseRapido2(textoRapido, contasFixas, todosBancos);
+      if (!resultado) {
+        setErroRapido("valor");
+        return;
+      }
+      if (resultado.fixaFlag && !resultado.diaFixa) {
+        setErroRapido("dia");
+        return;
+      }
+      let contaIdFinal = resultado.contaId;
+      let contasFixasFinal = contasFixas;
+      if (resultado.fixaFlag) {
+        const descNorm = normalizar2(resultado.descricao);
+        const jaExiste = contasFixas.find((c) => normalizar2(c.nome) === descNorm);
+        if (jaExiste) contaIdFinal = jaExiste.id;
+        else {
+          const novaContaFixa = { id: Date.now().toString() + "f", nome: resultado.descricao, valor: resultado.valor, dia: resultado.diaFixa, terceiro: resultado.terceiro || null };
+          contasFixasFinal = [...contasFixas, novaContaFixa];
+          contaIdFinal = novaContaFixa.id;
+        }
+      }
+      const novo = {
+        id: Date.now().toString(),
+        tipo: resultado.tipo,
+        descricao: resultado.descricao,
+        valor: resultado.valor,
+        data: resultado.data || todayISO2(),
+        cartaoId: resultado.cartaoId,
+        contaId: contaIdFinal,
+        bancoId: resultado.bancoId,
+        terceiro: resultado.terceiro || null
+      };
+      let parcelamentosFinal = parcelamentos;
+      if (resultado.parcelaInfo) {
+        parcelamentosFinal = registrarParcelamento(resultado.parcelaInfo, novo, parcelamentos);
+      }
+      salvar({ lancamentos: [novo, ...lancamentos], contasFixas: contasFixasFinal, parcelamentos: parcelamentosFinal });
+      setTextoRapido("");
+      setErroRapido(false);
+    }
+    function processarLote(e) {
+      e.preventDefault();
+      const linhas = textoLote.split("\n").map((l) => l.trim()).filter(Boolean);
+      const novos = [];
+      let parcelamentosFinal = parcelamentos;
+      let falhas = 0;
+      for (const linha of linhas) {
+        const r = parseRapido2(linha, contasFixas, todosBancos);
+        if (!r) {
+          falhas += 1;
+          continue;
+        }
+        const novo = {
+          id: Date.now().toString() + Math.random().toString(36).slice(2, 7),
+          tipo: r.tipo,
+          descricao: r.descricao,
+          valor: r.valor,
+          data: r.data || todayISO2(),
+          cartaoId: r.cartaoId,
+          contaId: r.contaId,
+          bancoId: r.bancoId,
+          terceiro: r.terceiro || null
+        };
+        if (r.parcelaInfo) {
+          parcelamentosFinal = registrarParcelamento(r.parcelaInfo, novo, parcelamentosFinal);
+        }
+        novos.push(novo);
+      }
+      if (novos.length > 0) salvar({ lancamentos: [...novos, ...lancamentos], parcelamentos: parcelamentosFinal });
+      setResultadoLote({ importados: novos.length, falhas });
+      if (falhas === 0) setTextoLote("");
+    }
+    const doMes = useMemo(() => {
+      const reais = lancamentos.filter((l) => {
+        if (l.tipo === "cartao" && l.cartaoId) {
+          const cartaoInfo = CARTOES.find((c) => c.id === l.cartaoId);
+          if (cartaoInfo) {
+            const { ano, mes } = mesDaFatura2(l.data, cartaoInfo.fechamento, cartaoInfo.vencimento);
+            return mes === mesAtual && ano === anoAtual;
+          }
+        }
+        const d = /* @__PURE__ */ new Date(l.data + "T00:00:00");
+        return d.getMonth() === mesAtual && d.getFullYear() === anoAtual;
+      });
+      const virtuais = gerarParcelasVirtuais(anoAtual, mesAtual, parcelamentos);
+      return [...reais, ...virtuais];
+    }, [lancamentos, parcelamentos, mesAtual, anoAtual]);
+    const mesAnteriorIdx = mesAtual === 0 ? 11 : mesAtual - 1;
+    const anoDoMesAnterior = mesAtual === 0 ? anoAtual - 1 : anoAtual;
+    const doMesAnterior = useMemo(() => {
+      const reais = lancamentos.filter((l) => {
+        if (l.tipo === "cartao" && l.cartaoId) {
+          const cartaoInfo = CARTOES.find((c) => c.id === l.cartaoId);
+          if (cartaoInfo) {
+            const { ano, mes } = mesDaFatura2(l.data, cartaoInfo.fechamento, cartaoInfo.vencimento);
+            return mes === mesAnteriorIdx && ano === anoDoMesAnterior;
+          }
+        }
+        const d = /* @__PURE__ */ new Date(l.data + "T00:00:00");
+        return d.getMonth() === mesAnteriorIdx && d.getFullYear() === anoDoMesAnterior;
+      });
+      const virtuais = gerarParcelasVirtuais(anoDoMesAnterior, mesAnteriorIdx, parcelamentos);
+      return [...reais, ...virtuais];
+    }, [lancamentos, parcelamentos, mesAnteriorIdx, anoDoMesAnterior]);
+    const totalEntradas = doMes.filter((l) => l.tipo === "entrada").reduce((s, l) => s + l.valor, 0);
+    const totalContas = doMes.filter((l) => l.tipo === "conta" && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const totalCartoes = doMes.filter((l) => l.tipo === "cartao" && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const totalDebitoPix = doMes.filter((l) => (l.tipo === "debito" || l.tipo === "pix") && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const totalGastosPuros = doMes.filter((l) => !l.virtual && GRUPO_GASTO.includes(l.tipo) && !l.terceiro && !detectarParcelaFormal2(l.descricao)).reduce((s, l) => s + l.valor, 0);
+    const saldo = totalEntradas - totalContas - totalCartoes - totalDebitoPix;
+    const totalGastosMes = totalContas + totalCartoes + totalDebitoPix;
+    const totalEntradasAnt = doMesAnterior.filter((l) => l.tipo === "entrada").reduce((s, l) => s + l.valor, 0);
+    const totalGastosAnt = doMesAnterior.filter((l) => (l.tipo === "conta" || l.tipo === "cartao" || l.tipo === "debito" || l.tipo === "pix") && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+    const gastosPorCategoria = ["cartao", "debito", "pix", "conta"].map((tp) => {
+      const total = doMes.filter((l) => l.tipo === tp && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+      return { tipo: tp, label: TIPOS[tp].label, cor: TIPOS[tp].cor, total, pct: totalGastosMes > 0 ? total / totalGastosMes * 100 : 0 };
+    }).filter((g) => g.total > 0);
+    const gastosPorCartao = CARTOES.map((c) => {
+      const doCartao = doMes.filter((l) => l.tipo === "cartao" && l.cartaoId === c.id);
+      const totalTerceiros = doCartao.filter((l) => l.terceiro).reduce((s, l) => s + l.valor, 0);
+      return {
+        ...c,
+        total: doCartao.reduce((s, l) => s + l.valor, 0),
+        totalTerceiros,
+        totalProprio: doCartao.reduce((s, l) => s + l.valor, 0) - totalTerceiros,
+        pago: cartoesPagos.includes(chaveCartaoMes(c.id, anoAtual, mesAtual))
+      };
+    });
+    const statusContasFixas = contasFixas.map((c) => {
+      const lancsDaConta = doMes.filter((l) => l.tipo === "conta" && l.contaId === c.id);
+      return { ...c, pago: lancsDaConta.reduce((s, l) => s + l.valor, 0), paga: lancsDaConta.length > 0 };
+    });
+    const nomesFixosNorm = BANCOS_PADRAO.map((b) => normalizar2(b.nome));
+    const fixosComHistorico = BANCOS_PADRAO.map((padrao) => {
+      const existente = bancos.find((b) => normalizar2(b.nome) === normalizar2(padrao.nome));
+      return existente || padrao;
+    });
+    const extras = bancos.filter((b) => !nomesFixosNorm.includes(normalizar2(b.nome)));
+    const todosBancos = [...fixosComHistorico, ...extras];
+    const statusBancos = todosBancos.map((b) => {
+      const entradas = lancamentos.filter((l) => l.tipo === "entrada" && l.bancoId === b.id).reduce((s, l) => s + l.valor, 0);
+      const saidas = lancamentos.filter((l) => (l.tipo === "debito" || l.tipo === "pix" || l.tipo === "conta") && l.bancoId === b.id && !l.terceiro).reduce((s, l) => s + l.valor, 0);
+      return { ...b, saldoAtual: (b.saldoInicial || 0) + entradas - saidas, fixo: nomesFixosNorm.includes(normalizar2(b.nome)) };
+    });
+    const totalInvestido = investimentos.reduce((s, i) => s + (i.valorInvestido || 0), 0);
+    const patrimonioInvestido = investimentos.reduce((s, i) => s + (i.valorAtual || 0), 0);
+    const rendimentoTotalInvestido = patrimonioInvestido - totalInvestido;
+    const rendimentoTotalPct = totalInvestido > 0 ? rendimentoTotalInvestido / totalInvestido * 100 : 0;
+    const rendimentoMesInvestido = investimentos.reduce((s, i) => s + (i.rendimentoMes || 0), 0);
+    const lancamentosTerceiros = doMes.filter((l) => l.terceiro);
+    const terceirosPorPessoa = Object.values(lancamentosTerceiros.reduce((acc, l) => {
+      if (!acc[l.terceiro]) acc[l.terceiro] = { nome: l.terceiro, total: 0, itens: [], porCartao: {} };
+      acc[l.terceiro].total += l.valor;
+      acc[l.terceiro].itens.push(l);
+      if (l.tipo === "cartao" && l.cartaoId) {
+        acc[l.terceiro].porCartao[l.cartaoId] = (acc[l.terceiro].porCartao[l.cartaoId] || 0) + l.valor;
+      }
+      return acc;
+    }, {}));
+    function mudarMes(delta) {
+      let m = mesAtual + delta, a = anoAtual;
+      if (m < 0) {
+        m = 11;
+        a -= 1;
+      }
+      if (m > 11) {
+        m = 0;
+        a += 1;
+      }
+      setMesAtual(m);
+      setAnoAtual(a);
+    }
+    if (loading) {
+      return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#E7E2D3" } }, "Carregando…");
+    }
+    return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", paddingBottom: 100 } }, /* @__PURE__ */ React.createElement("div", { style: { padding: "28px 20px 16px", borderBottom: "1px solid #262922" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 720, margin: "0 auto" } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, letterSpacing: 2, color: "#7A8071", textTransform: "uppercase" } }, "Livro-caixa"), /* @__PURE__ */ React.createElement("h1", { className: "disp", style: { margin: "4px 0 0", fontSize: 26, fontWeight: 700 } }, "Controle financeiro"))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginTop: 16, maxWidth: 720, margin: "16px auto 0" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setPaginaAtual("financas"), style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${paginaAtual === "financas" ? "#7FB069" : "#262922"}`, background: paginaAtual === "financas" ? "rgba(127,176,105,0.15)" : "#181B15", color: paginaAtual === "financas" ? "#9ED08A" : "#A6ABA0", fontWeight: 700, fontSize: 13, cursor: "pointer" } }, "\uD83D\uDCB3 Financeiro"), /* @__PURE__ */ React.createElement("button", { onClick: () => setPaginaAtual("investimentos"), style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${paginaAtual === "investimentos" ? "#5B9BD5" : "#262922"}`, background: paginaAtual === "investimentos" ? "rgba(91,155,213,0.15)" : "#181B15", color: paginaAtual === "investimentos" ? "#8FC1E8" : "#A6ABA0", fontWeight: 700, fontSize: 13, cursor: "pointer" } }, "\uD83D\uDCC8 Investimentos"), /* @__PURE__ */ React.createElement("button", { onClick: () => setPaginaAtual("meta"), style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${paginaAtual === "meta" ? "#D9A441" : "#262922"}`, background: paginaAtual === "meta" ? "rgba(217,164,65,0.15)" : "#181B15", color: paginaAtual === "meta" ? "#F0C15A" : "#A6ABA0", fontWeight: 700, fontSize: 13, cursor: "pointer" } }, "\uD83C\uDFAF Meta"), /* @__PURE__ */ React.createElement("button", { onClick: () => setPaginaAtual("relatorio"), style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${paginaAtual === "relatorio" ? "#E0A458" : "#262922"}`, background: paginaAtual === "relatorio" ? "rgba(224,164,88,0.15)" : "#181B15", color: paginaAtual === "relatorio" ? "#E0A458" : "#A6ABA0", fontWeight: 700, fontSize: 13, cursor: "pointer" } }, "\uD83D\uDCC4 Relat\xF3rio")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginTop: 14 } }, /* @__PURE__ */ React.createElement("button", { onClick: exportarBackup, style: { display: "flex", alignItems: "center", gap: 5, background: "#181B15", border: "1px solid #262922", color: "#A6ABA0", fontSize: 11.5, padding: "6px 12px", borderRadius: 20, cursor: "pointer" } }, "⬇ Exportar backup"), /* @__PURE__ */ React.createElement("button", { onClick: () => fileInputRef.current && fileInputRef.current.click(), style: { display: "flex", alignItems: "center", gap: 5, background: "#181B15", border: "1px solid #262922", color: "#A6ABA0", fontSize: 11.5, padding: "6px 12px", borderRadius: 20, cursor: "pointer" } }, "⬆ Importar backup"), /* @__PURE__ */ React.createElement("input", { ref: fileInputRef, type: "file", accept: "application/json", onChange: importarBackup, style: { display: "none" } })), importStatus && /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", fontSize: 11, marginTop: 8, color: importStatus.ok ? "#9ED08A" : "#E08A7B" } }, importStatus.msg), (paginaAtual === "financas" || paginaAtual === "relatorio" || paginaAtual === "meta") && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginTop: 18 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => mudarMes(-1), style: navBtnStyle }, "‹"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 15, minWidth: 120, textAlign: "center", fontWeight: 700 } }, MESES[mesAtual], " / ", anoAtual), /* @__PURE__ */ React.createElement("button", { onClick: () => mudarMes(1), style: navBtnStyle }, "›"))), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: 20, display: paginaAtual === "financas" ? "block" : "none" } }, /* @__PURE__ */ React.createElement("form", { onSubmit: enviarRapido, style: { marginBottom: 20 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8 } }, /* @__PURE__ */ React.createElement(
+      "input",
+      {
+        value: textoRapido,
+        onChange: (e) => {
+          setTextoRapido(e.target.value);
+          setErroRapido(false);
+        },
+        placeholder: "Ex: bradesco 45,90 mercado",
+        style: { ...inputStyle, flex: 1 }
+      }
+    ), /* @__PURE__ */ React.createElement("button", { type: "submit", style: { background: "#7FB069", border: "none", color: "#12140F", borderRadius: 8, padding: "0 16px", cursor: "pointer" } }, "+")), erroRapido === "dia" ? /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#E08A7B", marginTop: 6 } }, 'Pra criar conta fixa, diga o dia do vencimento. Ex: "fixa 120 dia 10 internet".') : erroRapido ? /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#E08A7B", marginTop: 6 } }, "N\xE3o entendi o valor — inclua um n\xFAmero.") : /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#6E7466", marginTop: 6, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 } }, /* @__PURE__ */ React.createElement("span", null, 'Cart\xE3o, d\xE9bito, pix, conta ou entrada + valor + descri\xE7\xE3o. "fixa"+"dia 10" cria conta fixa. "@Nome" marca gasto de terceiro.'), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setShowLote(true), style: { background: "none", border: "none", color: "#7FB069", cursor: "pointer", whiteSpace: "nowrap", fontSize: 11, textDecoration: "underline", flexShrink: 0 } }, "importar v\xE1rios"))), saveError && /* @__PURE__ */ React.createElement("div", { style: { background: "#2A1B1B", border: "1px solid #5B3434", borderRadius: 8, padding: "8px 12px", fontSize: 12, color: "#E08A7B", textAlign: "center", marginBottom: 16 } }, "N\xE3o consegui salvar agora — confira a conex\xE3o com o Supabase."), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 22 } }, /* @__PURE__ */ React.createElement(ResumoCard2, { label: "Entradas", valor: totalEntradas, cor: "#7FB069" }), /* @__PURE__ */ React.createElement(ResumoCard2, { label: "Contas+cart\xF5es+d\xE9b/pix", valor: totalContas + totalCartoes + totalDebitoPix, cor: "#D9705A" }), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: saldo >= 0 ? "#1B2A1E" : "#2A1B1B", border: `1px solid ${saldo >= 0 ? "#345B3C" : "#5B3434"}`, borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Saldo do m\xEAs"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 20, fontWeight: 700, color: saldo >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(saldo)))), /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Saldo em conta", onAdd: () => setShowBancoForm(true), addLabel: "nova conta banc\xE1ria" }, statusBancos.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhuma conta banc\xE1ria cadastrada." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, overflowX: "auto", paddingBottom: 6 } }, statusBancos.map((b) => /* @__PURE__ */ React.createElement("div", { key: b.id, style: { minWidth: 168, borderRadius: 12, padding: 14, background: "#182430", border: "1px solid #26343F", flexShrink: 0, position: "relative" } }, !b.fixo && /* @__PURE__ */ React.createElement("button", { onClick: () => removerBanco(b.id), style: xBtnStyle }, "\xD7"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, marginBottom: 10 } }, b.nome), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#8DA3B0", marginBottom: 4, textTransform: "uppercase" } }, "Saldo atual"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 18, fontWeight: 700, color: b.saldoAtual >= 0 ? "#E7E2D3" : "#E08A7B" } }, formatBRL2(b.saldoAtual)))))), /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Cart\xF5es" }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, overflowX: "auto", paddingBottom: 6 } }, gastosPorCartao.map((c) => {
+      const dias = diasParaVencimento2(c.vencimento);
+      return /* @__PURE__ */ React.createElement("div", { key: c.id, onClick: () => setCartaoDetalhe(c.id), style: { minWidth: 168, borderRadius: 12, padding: 14, background: c.cor, color: c.texto, flexShrink: 0, position: "relative", cursor: "pointer" } }, /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          onClick: (e) => { e.stopPropagation(); toggleCartaoPago(c.id); },
+          title: c.pago ? "Desmarcar fatura como paga" : "Marcar fatura como paga",
+          style: {
+            position: "absolute",
+            top: 8,
+            left: 8,
+            width: 20,
+            height: 20,
+            borderRadius: 6,
+            cursor: "pointer",
+            padding: 0,
+            border: `1.5px solid ${c.pago ? "#FFFFFF" : "rgba(255,255,255,0.5)"}`,
+            background: c.pago ? "rgba(255,255,255,0.9)" : "transparent",
+            color: c.cor,
+            fontSize: 12,
+            lineHeight: "16px",
+            fontWeight: 700
+          }
+        },
+        c.pago ? "✓" : ""
+      ), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, opacity: 0.85, textAlign: "right" } }, "Vence dia ", c.vencimento), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, margin: "12px 0 14px" } }, c.nome), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 17, fontWeight: 600 } }, formatBRL2(c.total)), c.totalTerceiros > 0 && /* @__PURE__ */ React.createElement("div", { style: { fontSize: 10.5, opacity: 0.9, marginTop: 6, display: "flex", flexDirection: "column", gap: 1 } }, /* @__PURE__ */ React.createElement("span", null, "Seu: ", formatBRL2(c.totalProprio)), /* @__PURE__ */ React.createElement("span", null, "Terceiros: ", formatBRL2(c.totalTerceiros))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 8, fontSize: 11, display: "inline-block", padding: "2px 8px", borderRadius: 20, background: c.pago ? "rgba(255,255,255,0.35)" : dias <= 5 ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.18)" } }, c.pago ? "fatura paga" : dias === 0 ? "vence hoje" : `${dias} dia${dias > 1 ? "s" : ""} p/ vencer`));
+    }))), /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Contas fixas", onAdd: () => setShowContaForm(true), addLabel: "nova conta" }, statusContasFixas.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhuma conta fixa cadastrada." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, overflowX: "auto", paddingBottom: 6 } }, statusContasFixas.map((c) => {
+      const dias = diasParaVencimento2(c.dia);
+      return /* @__PURE__ */ React.createElement("div", { key: c.id, style: { minWidth: 168, borderRadius: 12, padding: 14, background: "#1E2A1E", border: `1px solid ${c.paga ? "#345B3C" : "#262922"}`, flexShrink: 0, position: "relative" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => removerContaFixa(c.id), style: xBtnStyle }, "\xD7"), /* @__PURE__ */ React.createElement("button", { onClick: () => toggleContaPaga(c, doMes), style: { position: "absolute", top: 8, left: 8, width: 20, height: 20, borderRadius: 6, cursor: "pointer", border: `1.5px solid ${c.paga ? "#7FB069" : "#4A4F42"}`, background: c.paga ? "#7FB069" : "transparent", color: "#12140F", fontSize: 12, lineHeight: "16px", padding: 0 } }, c.paga ? "✓" : ""), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: "#A6ABA0", textAlign: "right" } }, "Vence dia ", c.dia), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, margin: "12px 0 14px" } }, c.nome), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 17, fontWeight: 600 } }, formatBRL2(c.valor)), c.terceiro && /* @__PURE__ */ React.createElement("div", { style: { fontSize: 10.5, color: "#E0A458", marginTop: 2 } }, "de ", c.terceiro), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 8, fontSize: 11, display: "inline-block", padding: "2px 8px", borderRadius: 20, background: c.paga ? "rgba(127,176,105,0.2)" : "rgba(255,255,255,0.08)", color: c.paga ? "#9ED08A" : "#A6ABA0" } }, c.paga ? "paga este m\xEAs" : dias === 0 ? "vence hoje" : `${dias} dia${dias > 1 ? "s" : ""} p/ vencer`));
+    }))), terceirosPorPessoa.length > 0 && /* @__PURE__ */ React.createElement(SectionBlock2, { title: "Terceiros (n\xE3o \xE9 seu)" }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 6 } }, terceirosPorPessoa.map((p) => /* @__PURE__ */ React.createElement("div", { key: p.nome, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, fontSize: 14 } }, p.nome), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, fontSize: 15, color: "#E0A458" } }, formatBRL2(p.total))), Object.keys(p.porCartao).length > 0 && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 } }, Object.entries(p.porCartao).map(([cid, val]) => {
+      const cInfo = CARTOES.find((c) => c.id === cid);
+      return /* @__PURE__ */ React.createElement("div", { key: cid, style: { background: cInfo ? cInfo.cor : "#262922", color: cInfo ? cInfo.texto : "#E7E2D3", borderRadius: 8, padding: "4px 10px", fontSize: 11.5, fontWeight: 700, display: "flex", alignItems: "center", gap: 6 } }, cInfo ? cInfo.nome : cid, /* @__PURE__ */ React.createElement("span", { style: { opacity: 0.85, fontWeight: 600 } }, formatBRL2(val)));
+    })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 6, display: "flex", flexDirection: "column", gap: 4 } }, p.itens.map((it) => /* @__PURE__ */ React.createElement("div", { key: it.id, style: { display: "flex", justifyContent: "space-between", fontSize: 12, color: "#7A8071" } }, /* @__PURE__ */ React.createElement("span", null, it.descricao), /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 6 } }, formatBRL2(it.valor), /* @__PURE__ */ React.createElement("button", { onClick: () => removerLancamento(it.id), style: { background: "none", border: "none", color: "#6E7466", cursor: "pointer", fontSize: 13 } }, "\xD7"))))))))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Lan\xE7amentos do m\xEAs"), /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px", marginBottom: 12, display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11.5, color: "#A6ABA0" } }, "Gastos \xE0 vista deste m\xEAs (sem parcelados)"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, fontSize: 15, color: "#D9705A" } }, formatBRL2(totalGastosPuros))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 } }, Object.entries(TIPOS).map(([key, tp]) => /* @__PURE__ */ React.createElement("div", { key, style: { display: "flex", alignItems: "center", gap: 5, background: "#181B15", border: "1px solid #262922", borderRadius: 20, padding: "4px 9px" } }, /* @__PURE__ */ React.createElement("div", { style: { width: 8, height: 8, borderRadius: 99, background: tp.cor, flexShrink: 0 } }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10.5, color: "#A6ABA0" } }, tp.label)))), doMes.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nada lan\xE7ado neste m\xEAs ainda." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 6 } }, [...doMes].sort((a, b) => b.data.localeCompare(a.data)).map((l) => {
+      const t = TIPOS[l.tipo] || TIPOS.conta;
+      const cartao = l.cartaoId ? CARTOES.find((c) => c.id === l.cartaoId) : null;
+      const banco = l.bancoId ? todosBancos.find((b) => b.id === l.bancoId) : null;
+      return /* @__PURE__ */ React.createElement("div", { key: l.id, style: { display: "flex", alignItems: "center", gap: 10, background: "#181B15", border: `1px solid ${l.virtual ? "#3A4A2E" : "#262922"}`, borderRadius: 10, padding: "10px 12px", opacity: l.virtual ? 0.85 : 1 } }, /* @__PURE__ */ React.createElement("div", { style: {
+        fontSize: 9.5,
+        fontWeight: 700,
+        textTransform: "uppercase",
+        letterSpacing: 0.3,
+        flexShrink: 0,
+        padding: "3px 6px",
+        borderRadius: 5,
+        color: t.cor,
+        background: t.cor + "22",
+        minWidth: 44,
+        textAlign: "center"
+      } }, t.label), /* @__PURE__ */ React.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13.5, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, l.descricao, l.virtual ? " \u{1F501}" : ""), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#7A8071" } }, (/* @__PURE__ */ new Date(l.data + "T00:00:00")).toLocaleDateString("pt-BR"), cartao ? ` \xB7 ${cartao.nome}` : "", banco ? ` \xB7 ${banco.nome}` : "", l.terceiro ? ` \xB7 de ${l.terceiro}` : "", l.virtual ? " \xB7 parcela autom\xE1tica" : "")), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, color: l.tipo === "entrada" ? "#9ED08A" : "#E08A7B" } }, l.tipo === "entrada" ? "+" : "−", formatBRL2(l.valor)), /* @__PURE__ */ React.createElement("button", { onClick: () => removerLancamento(l.id), title: l.virtual ? "Encerrar parcelamento a partir daqui" : "Remover", style: { background: "none", border: "none", color: "#6E7466", cursor: "pointer", fontSize: 16 } }, "\xD7"));
+    })))), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: 20, display: paginaAtual === "investimentos" ? "block" : "none" } }, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 14, fontWeight: 700 } }, "Seus investimentos"), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "14px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Total investido"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 18, fontWeight: 700 } }, formatBRL2(totalInvestido))), /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "14px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Patrim\xF4nio atual"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 18, fontWeight: 700, color: "#5B9BD5" } }, formatBRL2(patrimonioInvestido))), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: rendimentoTotalInvestido >= 0 ? "#1B2A1E" : "#2A1B1B", border: `1px solid ${rendimentoTotalInvestido >= 0 ? "#345B3C" : "#5B3434"}`, borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Rendimento total"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 18, fontWeight: 700, color: rendimentoTotalInvestido >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(rendimentoTotalInvestido), " (", rendimentoTotalPct.toFixed(1), "%)")), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Rende por m\xEAs"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 18, fontWeight: 700, color: rendimentoMesInvestido >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(rendimentoMesInvestido)))), investimentos.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhum investimento cadastrado. Toque no + pra adicionar." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10 } }, investimentos.map((i) => {
+      const ganho = (i.valorAtual || 0) - (i.valorInvestido || 0);
+      const ganhoPct = i.valorInvestido > 0 ? ganho / i.valorInvestido * 100 : 0;
+      return /* @__PURE__ */ React.createElement("div", { key: i.id, style: { borderRadius: 12, padding: 16, background: "#181B15", border: "1px solid #262922", position: "relative" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => removerInvestimento(i.id), style: xBtnStyle }, "\xD7"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 16 } }, i.nome), i.instituicao && /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11.5, color: "#7A8071", marginBottom: 10 } }, i.instituicao), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: 10 } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 10.5, color: "#8FA88A", textTransform: "uppercase" } }, "Valor atual"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 22, fontWeight: 700 } }, formatBRL2(i.valorAtual))), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "right", fontSize: 11, display: "inline-block", padding: "3px 9px", borderRadius: 20, background: "rgba(158,208,138,0.15)", color: "#9ED08A", fontWeight: 700 } }, "+", formatBRL2(i.rendimentoMes), "/m\xEAs")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 12, paddingTop: 12, borderTop: "1px solid #262922", fontSize: 12.5 } }, /* @__PURE__ */ React.createElement("span", { style: { color: "#7A8071" } }, "Investido: ", formatBRL2(i.valorInvestido)), /* @__PURE__ */ React.createElement("span", { style: { color: ganho >= 0 ? "#9ED08A" : "#E08A7B", fontWeight: 700 } }, ganho >= 0 ? "+" : "", formatBRL2(ganho), " (", ganhoPct.toFixed(1), "%)")));
+    }))), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: 20, display: paginaAtual === "meta" ? "block" : "none" } }, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 14, fontWeight: 700 } }, "Meta de economia"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: "#A6ABA0", marginBottom: 18, lineHeight: 1.5 } }, "Defina quanto costuma gastar por m\u00EAs em d\u00E9bito/pix pessoal (sem contar terceiros) e quanto quer economizar. Comparo com o que voc\u00EA j\u00E1 gastou no m\u00EAs selecionado (use as setas l\u00E1 em cima pra navegar entre meses)."), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 18 } }, /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("label", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6, display: "block" } }, "Gasto base mensal (R$)"), /* @__PURE__ */ React.createElement("input", { type: "number", defaultValue: metaEconomia.baseline, onBlur: (e) => { const v = parseFloat(e.target.value) || 0; salvar({ metaEconomia: { ...metaEconomia, baseline: v } }); }, style: { width: "100%", background: "#12140F", border: "1px solid #262922", borderRadius: 6, color: "#E7E2D3", padding: "8px 10px", fontSize: 15, fontFamily: "inherit" } })), /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("label", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6, display: "block" } }, "Meta de economia (R$)"), /* @__PURE__ */ React.createElement("input", { type: "number", defaultValue: metaEconomia.meta, onBlur: (e) => { const v = parseFloat(e.target.value) || 0; salvar({ metaEconomia: { ...metaEconomia, meta: v } }); }, style: { width: "100%", background: "#12140F", border: "1px solid #262922", borderRadius: 6, color: "#E7E2D3", padding: "8px 10px", fontSize: 15, fontFamily: "inherit" } }))), (() => {
+      const baseline = metaEconomia.baseline || 0;
+      const metaVal = metaEconomia.meta || 0;
+      const alvo = baseline - metaVal;
+      const gastoAtual = totalDebitoPix;
+      const economia = baseline - gastoAtual;
+      const progresso = alvo > 0 ? Math.min(100, gastoAtual / alvo * 100) : 0;
+      const dentroDaMeta = gastoAtual <= alvo;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "14px 16px", marginBottom: 14 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 12, color: "#A6ABA0" } }, /* @__PURE__ */ React.createElement("span", null, "Gasto vari\u00E1vel do m\u00EAs (", MESES[mesAtual], ")"), /* @__PURE__ */ React.createElement("span", { style: { color: dentroDaMeta ? "#9ED08A" : "#E08A7B", fontWeight: 700 } }, formatBRL2(gastoAtual), " / ", formatBRL2(alvo))), /* @__PURE__ */ React.createElement("div", { style: { height: 8, background: "#262922", borderRadius: 4, overflow: "hidden" } }, /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: `${progresso}%`, background: dentroDaMeta ? "#7FB069" : "#D9705A", transition: "width 0.3s" } }))), /* @__PURE__ */ React.createElement("div", { style: { background: economia >= 0 ? "#1B2A1E" : "#2A1B1B", border: `1px solid ${economia >= 0 ? "#345B3C" : "#5B3434"}`, borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Economia estimada neste m\u00EAs"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 20, fontWeight: 700, color: economia >= 0 ? "#9ED08A" : "#E08A7B" } }, economia >= 0 ? "+" : "", formatBRL2(economia))));
+    })()), /* @__PURE__ */ React.createElement("div", { className: "relatorio-print-area", style: { maxWidth: 720, margin: "0 auto", padding: 20, display: paginaAtual === "relatorio" ? "block" : "none" } }, /* @__PURE__ */ React.createElement("div", { className: "no-print", style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 } }, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", fontWeight: 700 } }, "Relat\xF3rio mensal"), /* @__PURE__ */ React.createElement("button", { onClick: () => window.print(), style: { background: "#181B15", border: "1px solid #262922", color: "#E0A458", fontSize: 12, padding: "8px 14px", borderRadius: 20, cursor: "pointer", fontWeight: 700 } }, "\u2B07 Baixar / Compartilhar PDF")), /* @__PURE__ */ React.createElement("h2", { className: "disp", style: { fontSize: 22, fontWeight: 700, margin: "0 0 2px" } }, MESES[mesAtual], " / ", anoAtual), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#7A8071", marginBottom: 20 } }, "Gerado em ", (/* @__PURE__ */ new Date()).toLocaleDateString("pt-BR")), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Entradas"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 17, fontWeight: 700, color: "#7FB069" } }, formatBRL2(totalEntradas))), /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, "Sa\xEDdas totais"), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 17, fontWeight: 700, color: "#D9705A" } }, formatBRL2(totalGastosMes))), /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1 / -1", background: saldo >= 0 ? "#1B2A1E" : "#2A1B1B", border: `1px solid ${saldo >= 0 ? "#345B3C" : "#5B3434"}`, borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#A6ABA0", textTransform: "uppercase" } }, "Saldo do m\xEAs"), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 20, fontWeight: 700, color: saldo >= 0 ? "#9ED08A" : "#E08A7B" } }, formatBRL2(saldo)))), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Comparado com ", MESES[mesAnteriorIdx]), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8, marginBottom: 22 } }, [{ label: "Entradas", atual: totalEntradas, ant: totalEntradasAnt, corBoa: "#9ED08A" }, { label: "Gastos", atual: totalGastosMes, ant: totalGastosAnt, corBoa: "#E08A7B", invertido: true }].map((c, idx) => {
+      const delta = c.atual - c.ant;
+      const pct = c.ant > 0 ? delta / c.ant * 100 : c.atual > 0 ? 100 : 0;
+      const melhorou = c.invertido ? delta <= 0 : delta >= 0;
+      return /* @__PURE__ */ React.createElement("div", { key: idx, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13, color: "#A6ABA0" } }, c.label), /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 8 } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#6E7466" } }, "antes: ", formatBRL2(c.ant)), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 13, fontWeight: 700, color: melhorou ? "#9ED08A" : "#E08A7B" } }, delta >= 0 ? "\u2191" : "\u2193", " ", Math.abs(pct).toFixed(0), "%")));
+    })), gastosPorCategoria.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Gastos por categoria"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8, marginBottom: 22 } }, gastosPorCategoria.map((g) => /* @__PURE__ */ React.createElement("div", { key: g.tipo, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 6 } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13, display: "flex", alignItems: "center", gap: 6 } }, /* @__PURE__ */ React.createElement("span", { style: { width: 8, height: 8, borderRadius: 99, background: g.cor, display: "inline-block" } }), g.label), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 13, fontWeight: 700 } }, formatBRL2(g.total), " \xB7 ", g.pct.toFixed(0), "%")), /* @__PURE__ */ React.createElement("div", { style: { height: 5, background: "#262922", borderRadius: 3, overflow: "hidden" } }, /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: `${g.pct}%`, background: g.cor } })))))), gastosPorCartao.filter((c) => c.total > 0).length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, "Gastos por cart\xE3o"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } }, gastosPorCartao.filter((c) => c.total > 0).map((c) => /* @__PURE__ */ React.createElement("div", { key: c.id, style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13 } }, c.nome), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontSize: 14, fontWeight: 700 } }, formatBRL2(c.total))))))), paginaAtual !== "relatorio" && paginaAtual !== "meta" && /* @__PURE__ */ React.createElement("button", { onClick: () => paginaAtual === "financas" ? setShowForm(true) : setShowInvestimentoForm(true), style: { position: "fixed", bottom: 24, right: 20, width: 54, height: 54, borderRadius: "50%", background: "#7FB069", border: "none", color: "#12140F", fontSize: 26, cursor: "pointer", boxShadow: "0 6px 18px rgba(127,176,105,0.4)" } }, "+"), showForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addLancamento }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Novo lan\xE7amento", onClose: () => setShowForm(false) }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, marginBottom: 8 } }, ["entrada", "conta"].map((k) => /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        type: "button",
+        key: k,
+        onClick: () => setForm({ ...form, tipo: k }),
+        style: tipoBtnStyle2(form.tipo === k, TIPOS[k].cor)
+      },
+      TIPOS[k].label
+    )), /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        type: "button",
+        onClick: () => setForm({ ...form, tipo: GRUPO_GASTO.includes(form.tipo) ? form.tipo : "cartao" }),
+        style: tipoBtnStyle2(GRUPO_GASTO.includes(form.tipo), "#D9705A")
+      },
+      "Gasto"
+    )), GRUPO_GASTO.includes(form.tipo) && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, marginBottom: 14 } }, GRUPO_GASTO.map((k) => /* @__PURE__ */ React.createElement("button", { type: "button", key: k, onClick: () => setForm({ ...form, tipo: k }), style: tipoBtnStyle2(form.tipo === k, TIPOS[k].cor) }, TIPOS[k].label))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Descri\xE7\xE3o"), /* @__PURE__ */ React.createElement("input", { required: true, value: form.descricao, onChange: (e) => setForm({ ...form, descricao: e.target.value }), placeholder: "Ex: Supermercado", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10 } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor (R$)"), /* @__PURE__ */ React.createElement("input", { required: true, value: form.valor, onChange: (e) => setForm({ ...form, valor: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle })), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Data"), /* @__PURE__ */ React.createElement("input", { required: true, type: "date", value: form.data, onChange: (e) => setForm({ ...form, data: e.target.value }), style: inputStyle }))), form.tipo === "cartao" && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Cart\xE3o"), /* @__PURE__ */ React.createElement("select", { value: form.cartaoId, onChange: (e) => setForm({ ...form, cartaoId: e.target.value }), style: inputStyle }, CARTOES.map((c) => /* @__PURE__ */ React.createElement("option", { key: c.id, value: c.id }, c.nome, " (vence dia ", c.vencimento, ")")))), (form.tipo === "debito" || form.tipo === "pix" || form.tipo === "entrada") && todosBancos.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Conta banc\xE1ria"), /* @__PURE__ */ React.createElement("select", { value: form.bancoId, onChange: (e) => setForm({ ...form, bancoId: e.target.value }), style: inputStyle }, /* @__PURE__ */ React.createElement("option", { value: "" }, "Selecione"), todosBancos.map((b) => /* @__PURE__ */ React.createElement("option", { key: b.id, value: b.id }, b.nome)))), form.tipo === "conta" && contasFixas.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Vincular a conta fixa (opcional)"), /* @__PURE__ */ React.createElement("select", { value: form.contaId, onChange: (e) => {
+      const id = e.target.value;
+      const conta = contasFixas.find((c) => c.id === id);
+      setForm({ ...form, contaId: id, descricao: conta ? conta.nome : form.descricao, valor: conta && conta.valor ? String(conta.valor) : form.valor });
+    }, style: inputStyle }, /* @__PURE__ */ React.createElement("option", { value: "" }, "Avulsa / outra"), contasFixas.map((c) => /* @__PURE__ */ React.createElement("option", { key: c.id, value: c.id }, c.nome, " (vence dia ", c.dia, ")")))), GRUPO_GASTO.includes(form.tipo) && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "N\xE3o \xE9 seu? De quem \xE9 (opcional)"), /* @__PURE__ */ React.createElement("input", { value: form.terceiro, onChange: (e) => setForm({ ...form, terceiro: e.target.value }), placeholder: "Ex: Jo\xE3o, Maria", style: inputStyle })), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#7FB069") }, "Salvar lan\xE7amento"))), showContaForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowContaForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addContaFixa }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Nova conta fixa", onClose: () => setShowContaForm(false) }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Nome"), /* @__PURE__ */ React.createElement("input", { required: true, value: novaConta.nome, onChange: (e) => setNovaConta({ ...novaConta, nome: e.target.value }), placeholder: "Ex: Aluguel, Internet", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10 } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor aprox. (R$)"), /* @__PURE__ */ React.createElement("input", { value: novaConta.valor, onChange: (e) => setNovaConta({ ...novaConta, valor: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle })), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Dia do vencimento"), /* @__PURE__ */ React.createElement("input", { required: true, type: "number", min: "1", max: "31", value: novaConta.dia, onChange: (e) => setNovaConta({ ...novaConta, dia: e.target.value }), placeholder: "Ex: 5", style: inputStyle }))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "N\xE3o \xE9 sua? De quem \xE9 (opcional)"), /* @__PURE__ */ React.createElement("input", { value: novaConta.terceiro, onChange: (e) => setNovaConta({ ...novaConta, terceiro: e.target.value }), placeholder: "Ex: M\xE3e, Jo\xE3o", style: inputStyle }), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#E0A458") }, "Salvar conta"))), showBancoForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowBancoForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addBanco }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Nova conta banc\xE1ria", onClose: () => setShowBancoForm(false) }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Nome do banco"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoBanco.nome, onChange: (e) => setNovoBanco({ ...novoBanco, nome: e.target.value }), placeholder: "Ex: Nubank, Ita\xFA", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 } }, CARTOES.filter((c) => !todosBancos.some((b) => normalizar2(b.nome) === normalizar2(c.nome))).map((c) => /* @__PURE__ */ React.createElement("button", { type: "button", key: c.id, onClick: () => setNovoBanco({ ...novoBanco, nome: c.nome }), style: chipStyle }, "+ ", c.nome))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Saldo atual (R$)"), /* @__PURE__ */ React.createElement("input", { value: novoBanco.saldoInicial, onChange: (e) => setNovoBanco({ ...novoBanco, saldoInicial: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle }), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#5B9BD5") }, "Salvar conta banc\xE1ria"))), showInvestimentoForm && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setShowInvestimentoForm(false) }, /* @__PURE__ */ React.createElement("form", { onSubmit: addInvestimento }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Novo investimento", onClose: () => setShowInvestimentoForm(false) }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Nome"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoInvestimento.nome, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, nome: e.target.value }), placeholder: "Ex: Tesouro Selic, CDB Bradesco", style: inputStyle }), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Institui\xE7\xE3o (opcional)"), /* @__PURE__ */ React.createElement("input", { value: novoInvestimento.instituicao, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, instituicao: e.target.value }), placeholder: "Ex: XP, Bradesco, Nubank", style: inputStyle }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10 } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor investido (R$)"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoInvestimento.valorInvestido, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, valorInvestido: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle })), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Valor atual (R$)"), /* @__PURE__ */ React.createElement("input", { required: true, value: novoInvestimento.valorAtual, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, valorAtual: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle }))), /* @__PURE__ */ React.createElement("label", { style: labelStyle }, "Quanto rende por m\xEAs (R$)"), /* @__PURE__ */ React.createElement("input", { value: novoInvestimento.rendimentoMes, onChange: (e) => setNovoInvestimento({ ...novoInvestimento, rendimentoMes: e.target.value }), placeholder: "0,00", inputMode: "decimal", style: inputStyle }), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#5B9BD5") }, "Salvar investimento"))), showLote && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => {
+      setShowLote(false);
+      setResultadoLote(null);
+    } }, /* @__PURE__ */ React.createElement("form", { onSubmit: processarLote }, /* @__PURE__ */ React.createElement(ModalHeader2, { title: "Importar v\xE1rios lan\xE7amentos", onClose: () => {
+      setShowLote(false);
+      setResultadoLote(null);
+    } }), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: "#7A8071", marginBottom: 10, lineHeight: 1.5 } }, "Uma linha por lan\xE7amento, com data opcional (dd/mm):", /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { style: { color: "#A6ABA0" } }, "bradesco 45,90 12/07 mercado"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { style: { color: "#A6ABA0" } }, "conta 120 08/07 internet"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { style: { color: "#A6ABA0" } }, "entrada 3000 05/07 salario")), /* @__PURE__ */ React.createElement(
+      "textarea",
+      {
+        value: textoLote,
+        onChange: (e) => {
+          setTextoLote(e.target.value);
+          setResultadoLote(null);
+        },
+        placeholder: "bradesco 45,90 12/07 mercado\nc6 89,00 14/07 farmacia\nconta 120 08/07 internet",
+        rows: 8,
+        style: { ...inputStyle, resize: "vertical", fontSize: 13, lineHeight: 1.6 }
+      }
+    ), resultadoLote && /* @__PURE__ */ React.createElement("div", { style: {
+      marginTop: 10,
+      fontSize: 12,
+      padding: "8px 12px",
+      borderRadius: 8,
+      background: resultadoLote.falhas > 0 ? "rgba(224,138,123,0.15)" : "rgba(127,176,105,0.15)",
+      color: resultadoLote.falhas > 0 ? "#E08A7B" : "#9ED08A"
+    } }, resultadoLote.importados, " lan\xE7amento", resultadoLote.importados !== 1 ? "s" : "", " importado", resultadoLote.importados !== 1 ? "s" : "", ".", resultadoLote.falhas > 0 ? ` ${resultadoLote.falhas} linha${resultadoLote.falhas > 1 ? "s" : ""} n\xE3o reconhecida${resultadoLote.falhas > 1 ? "s" : ""}.` : ""), /* @__PURE__ */ React.createElement("button", { type: "submit", style: submitBtnStyle2("#7FB069") }, "Importar tudo"))), cartaoDetalhe && /* @__PURE__ */ React.createElement(Modal2, { onClose: () => setCartaoDetalhe(null) }, (() => {
+      const cInfo = CARTOES.find((c) => c.id === cartaoDetalhe);
+      const itensCartao = doMes.filter((l) => l.tipo === "cartao" && l.cartaoId === cartaoDetalhe);
+      const totalC = itensCartao.reduce((s, l) => s + l.valor, 0);
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(ModalHeader2, { title: (cInfo ? cInfo.nome : "Cart\xE3o") + " \xB7 " + MESES[mesAtual] + "/" + anoAtual, onClose: () => setCartaoDetalhe(null) }), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13, color: "#A6ABA0", marginBottom: 12, display: "flex", justifyContent: "space-between" } }, /* @__PURE__ */ React.createElement("span", null, itensCartao.length + " lan\xE7amento" + (itensCartao.length !== 1 ? "s" : "")), /* @__PURE__ */ React.createElement("span", { className: "disp", style: { fontWeight: 700, color: "#E7E2D3" } }, formatBRL2(totalC))), itensCartao.length === 0 ? /* @__PURE__ */ React.createElement(EmptyHint2, { text: "Nenhum lan\xE7amento neste cart\xE3o este m\xEAs." }) : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 6 } }, [...itensCartao].sort((a, b) => b.data.localeCompare(a.data)).map((l) => /* @__PURE__ */ React.createElement("div", { key: l.id, style: { display: "flex", alignItems: "center", gap: 10, background: "#12140F", border: `1px solid ${l.virtual ? "#3A4A2E" : "#262922"}`, borderRadius: 10, padding: "10px 12px" } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13.5, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, l.descricao, l.virtual ? " \u{1F501}" : ""), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#7A8071" } }, (/* @__PURE__ */ new Date(l.data + "T00:00:00")).toLocaleDateString("pt-BR"), l.terceiro ? ` \xB7 de ${l.terceiro}` : "")), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontWeight: 700, fontSize: 14, color: "#E08A7B" } }, formatBRL2(l.valor))))));
+    })()));
+  }, ResumoCard2 = function({ label, valor, cor }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { background: "#181B15", border: "1px solid #262922", borderRadius: 10, padding: "12px 14px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: "#A6ABA0", textTransform: "uppercase", marginBottom: 6 } }, label), /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 17, fontWeight: 700, color: cor } }, formatBRL2(valor)));
+  }, SectionBlock2 = function({ title, onAdd, addLabel, children }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } }, /* @__PURE__ */ React.createElement("div", { className: "disp", style: { fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8071", marginBottom: 10, fontWeight: 700 } }, title), onAdd && /* @__PURE__ */ React.createElement("button", { onClick: onAdd, style: { background: "none", border: "none", color: "#7FB069", fontSize: 12, cursor: "pointer", marginBottom: 10 } }, "+ ", addLabel)), children);
+  }, EmptyHint2 = function({ text }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", padding: "20px 10px", color: "#6E7466", fontSize: 13, border: "1px dashed #262922", borderRadius: 10 } }, text);
+  }, Modal2 = function({ onClose, children }) {
+    useEffect(() => {
+      const overflowAnterior = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = overflowAnterior;
+      };
+    }, []);
+    return /* @__PURE__ */ React.createElement("div", { style: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "flex-end", zIndex: 50, overscrollBehavior: "contain" }, onClick: onClose }, /* @__PURE__ */ React.createElement("div", { onClick: (e) => e.stopPropagation(), style: { background: "#181B15", borderTopLeftRadius: 18, borderTopRightRadius: 18, padding: "20px 20px 28px", width: "100%", maxWidth: 720, margin: "0 auto", border: "1px solid #262922", borderBottom: "none", maxHeight: "85vh", overflowY: "auto", overscrollBehavior: "contain" } }, children));
+  }, ModalHeader2 = function({ title, onClose }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 } }, /* @__PURE__ */ React.createElement("h2", { className: "disp", style: { margin: 0, fontSize: 17 } }, title), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, style: { background: "none", border: "none", color: "#A6ABA0", cursor: "pointer", fontSize: 18 } }, "\xD7"));
+  }, tipoBtnStyle2 = function(ativo, cor) {
+    return { flex: 1, padding: "8px 4px", borderRadius: 8, fontSize: 12, cursor: "pointer", border: `1px solid ${ativo ? cor : "#262922"}`, background: ativo ? cor + "22" : "transparent", color: ativo ? cor : "#A6ABA0" };
+  }, submitBtnStyle2 = function(cor) {
+    return { marginTop: 16, width: "100%", padding: 13, borderRadius: 10, border: "none", background: cor, color: "#12140F", fontWeight: 700, fontSize: 14, cursor: "pointer" };
+  };
+  var mesDaFatura = mesDaFatura2, formatBRL = formatBRL2, todayISO = todayISO2, normalizar = normalizar2, diasParaVencimento = diasParaVencimento2, parseRapido = parseRapido2, App = App2, ResumoCard = ResumoCard2, SectionBlock = SectionBlock2, EmptyHint = EmptyHint2, Modal = Modal2, ModalHeader = ModalHeader2, tipoBtnStyle = tipoBtnStyle2, submitBtnStyle = submitBtnStyle2;
+  if (!window.React || !window.ReactDOM) {
+    throw new Error("React n\xE3o carregou. Verifique sua conex\xE3o com a internet e recarregue a p\xE1gina.");
+  }
+  if (!window.supabase) {
+    throw new Error("A biblioteca do Supabase n\xE3o carregou. Verifique sua conex\xE3o com a internet e recarregue a p\xE1gina.");
+  }
+  const { useState, useEffect, useMemo, useRef } = React;
+  const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  const CARTOES = [
+    { id: "bradesco", nome: "Bradesco Visa", vencimento: 10, fechamento: 29, cor: "#CC092F", texto: "#FFFFFF" },
+    { id: "c6", nome: "C6 Bank", vencimento: 20, fechamento: 14, cor: "#111111", texto: "#FFDD00" },
+    { id: "mp", nome: "Mercado Pago", vencimento: 20, fechamento: 15, cor: "#009EE3", texto: "#FFFFFF" },
+    { id: "amex", nome: "Amex Platinum", vencimento: 25, fechamento: 13, cor: "#5C6670", texto: "#F1E7D0" },
+    { id: "viacredi", nome: "Viacredi", vencimento: 22, fechamento: 11, cor: "#00A551", texto: "#FFFFFF" }
+  ];
+  const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  const BANCOS_PADRAO = [
+    { id: "padrao-bradesco", nome: "Bradesco Visa", saldoInicial: 650.13 },
+    { id: "padrao-viacredi", nome: "Viacredi", saldoInicial: 0.1 },
+    { id: "padrao-mp", nome: "Mercado Pago", saldoInicial: 12.85 },
+    { id: "padrao-c6", nome: "C6 Bank", saldoInicial: 0 }
+  ];
+  const TIPOS = {
+    entrada: { label: "Entrada", cor: "#7FB069" },
+    conta: { label: "Conta", cor: "#E0A458" },
+    cartao: { label: "Cr\xE9dito", cor: "#D9705A" },
+    debito: { label: "D\xE9bito", cor: "#5B9BD5" },
+    pix: { label: "Pix", cor: "#32BCAD" }
+  };
+  const GRUPO_GASTO = ["cartao", "debito", "pix"];
+  const APELIDOS_CARTAO = {
+    bradesco: "bradesco",
+    visa: "bradesco",
+    c6: "c6",
+    mp: "mp",
+    mercadopago: "mp",
+    "mercado-pago": "mp",
+    amex: "amex",
+    amexplatinum: "amex",
+    platinum: "amex",
+    viacredi: "viacredi"
+  };
+  const navBtnStyle = { background: "#181B15", border: "1px solid #262922", color: "#E7E2D3", width: 32, height: 32, borderRadius: 8, fontSize: 18, cursor: "pointer" };
+  const labelStyle = { display: "block", fontSize: 11, color: "#7A8071", marginBottom: 4, marginTop: 10, textTransform: "uppercase" };
+  const inputStyle = { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid #262922", background: "#12140F", color: "#E7E2D3", fontSize: 14 };
+  const xBtnStyle = { position: "absolute", top: 8, right: 8, background: "none", border: "none", color: "#6E7466", cursor: "pointer", fontSize: 14 };
+  const chipStyle = { fontSize: 11, padding: "5px 10px", borderRadius: 20, cursor: "pointer", border: "1px solid #262922", background: "transparent", color: "#7A8071" };
+  ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ React.createElement(App2, null));
 } catch (e) {
-  console.warn("Realtime indisponivel, seguindo sem atualizacao automatica:", e);
+  document.getElementById("root").innerHTML = '<div style="padding:20px;color:#E08A7B;font-family:monospace;white-space:pre-wrap;">Erro ao iniciar o app:\n' + (e && e.message ? e.message : String(e)) + "</div>";
 }
-
-// Evita que erros nao-criticos (ex: rede instavel, script de terceiros) quebrem a tela
-// ou aparecam como "Uncaught" no console.
-window.addEventListener("error", (e) => {
-  console.warn("Aviso (ignorado):", e.message || e);
-  e.preventDefault();
-  return true;
-});
-window.addEventListener("unhandledrejection", (e) => {
-  console.warn("Aviso (ignorado):", e.reason);
-  e.preventDefault();
-});
-
-// ---- Filtragem ----
-function getFiltered() {
-  const q = search.trim().toLowerCase();
-  return appointments.filter((a) => {
-    if (!activeTypes.has(a.type)) return false;
-    if (q && !(a.clientName.toLowerCase().includes(q) || (a.address||"").toLowerCase().includes(q) || (a.phone||"").toLowerCase().includes(q))) return false;
-    return true;
-  });
-}
-function getByDate() {
-  const map = {};
-  for (const a of getFiltered()) { (map[a.date] ||= []).push(a); }
-  for (const k in map) map[k].sort((x,y) => x.time.localeCompare(y.time));
-  return map;
-}
-
-// ---- Render ----
-function renderAll() {
-  renderNavLabel();
-  renderMainView();
-}
-function renderNavLabel() {
-  const el = document.getElementById("navLabel");
-  const weekDates = getWeekDates();
-  if (view === "day") el.textContent = `${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}, ${currentDate.getFullYear()}`;
-  else if (view === "week") {
-    const s = weekDates[0], e = weekDates[6];
-    el.textContent = s.getMonth()===e.getMonth() ? `${s.getDate()} – ${e.getDate()} de ${MONTHS[s.getMonth()]}` : `${s.getDate()} ${MONTHS[s.getMonth()].slice(0,3)} – ${e.getDate()} ${MONTHS[e.getMonth()].slice(0,3)}`;
-  } else el.textContent = `${MONTHS[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-}
-function getWeekDates() {
-  const start = startOfWeek(currentDate);
-  return Array.from({length:7}, (_,i) => addDays(start,i));
-}
-
-function apptRowHTML(a) {
-  const meta = TYPES[a.type];
-  return `
-    <div class="appt-row" style="border-left:3px solid ${meta.color}" data-id="${a.id}">
-      <div class="appt-time">${a.time}</div>
-      <div class="appt-main">
-        <div class="appt-top">
-          <span class="appt-name">${esc(a.clientName)}</span>
-          <span class="appt-chip" style="background:${meta.bg};color:${meta.color}">${meta.label}</span>
-        </div>
-        ${(a.phone || a.address) ? `<div class="appt-sub">${a.phone ? `<span>📞 ${esc(a.phone)}</span>` : ""}${a.address ? `<span>📍 ${esc(a.address)}</span>` : ""}</div>` : ""}
-        ${a.notes ? `<div class="appt-notes">${esc(a.notes)}</div>` : ""}
-      </div>
-      <div class="appt-actions">
-        <button class="icon-btn" data-action="ics" data-id="${a.id}" title="Adicionar lembrete">🔔</button>
-        <button class="icon-btn" data-action="edit" data-id="${a.id}" title="Editar">✎</button>
-        <button class="icon-btn danger" data-action="delete" data-id="${a.id}" title="Excluir">🗑</button>
-      </div>
-    </div>`;
-}
-function dayListHTML(date) {
-  const items = (getByDate()[dateKey(date)]) || [];
-  if (items.length === 0) return `<div class="empty-day">Nenhum agendamento nesse dia.</div>`;
-  return `<div class="appt-list">${items.map(apptRowHTML).join("")}</div>`;
-}
-
-function timelineColumnHTML(date, start, end) {
-  const items = (getByDate()[dateKey(date)]) || [];
-  const laidOut = layoutItems(items);
-  const hours = [];
-  for (let h = start/60; h <= end/60; h++) hours.push(h);
-  const hourlines = hours.slice(0,-1).map((h) =>
-    `<div class="tl-hourline" style="top:${(h*60-start)/60*HOUR_HEIGHT}px;height:${HOUR_HEIGHT}px"></div>`
-  ).join("");
-  const blocks = laidOut.map((a) => {
-    const s = toMinutes(a.time);
-    const top = ((s-start)/60)*HOUR_HEIGHT + 1;
-    const height = HOUR_HEIGHT - 3;
-    const meta = TYPES[a.type];
-    const left = `calc(${(a.col/a.maxCols)*100}% + 2px)`;
-    const width = `calc(${100/a.maxCols}% - 4px)`;
-    return `<div style="position:absolute;top:${top}px;height:${height}px;left:0;right:0;">
-      <div class="event-block" data-action="edit" data-id="${a.id}" style="left:${left};width:${width};background:${meta.bg};border-left:3px solid ${meta.color};color:${meta.color}">
-        <span class="event-time">${a.time}</span>
-        <span class="event-name">${esc(a.clientName)}</span>
-      </div>
-    </div>`;
-  }).join("");
-  const empty = items.length === 0 ? `<div class="tl-empty">Sem agendamentos</div>` : "";
-  return `<div class="tl-col" style="height:${((end-start)/60)*HOUR_HEIGHT}px">${hourlines}${blocks}${empty}</div>`;
-}
-function hourGutterHTML(start, end) {
-  const hours = [];
-  for (let h = start/60; h <= end/60; h++) hours.push(h);
-  return `<div class="tl-gutter" style="height:${((end-start)/60)*HOUR_HEIGHT}px">
-    ${hours.map((h) => `<div class="tl-gutter-label" style="top:${(h*60-start)/60*HOUR_HEIGHT}px">${String(h).padStart(2,"0")}:00</div>`).join("")}
-  </div>`;
-}
-
-function renderMainView() {
-  const root = document.getElementById("mainView");
-  const byDate = getByDate();
-
-  if (view === "day") {
-    const items = byDate[dateKey(currentDate)] || [];
-    const { start, end } = getRange(items);
-    root.innerHTML = `
-      <div class="day-header">
-        <span class="dh-name">${WEEKDAYS[currentDate.getDay()]}</span>
-        <span class="dh-num">${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}</span>
-      </div>
-      <div class="timeline-wrap">
-        ${hourGutterHTML(start,end)}
-        <div class="tl-body">${timelineColumnHTML(currentDate, start, end)}</div>
-      </div>`;
-  } else if (view === "week") {
-    const weekDates = getWeekDates();
-    const flat = weekDates.flatMap((d) => byDate[dateKey(d)] || []);
-    const { start, end } = getRange(flat);
-    const today = new Date();
-    root.innerHTML = `
-      <div class="week-headers">
-        <div class="week-header-gutter"></div>
-        ${weekDates.map((d) => `
-          <div class="week-header-day ${isSameDay(d,today)?"is-today":""}">
-            <div class="wd-name">${WEEKDAYS[d.getDay()]}</div>
-            <div class="wd-num">${d.getDate()}</div>
-          </div>`).join("")}
-      </div>
-      <div class="timeline-wrap">
-        ${hourGutterHTML(start,end)}
-        <div class="tl-body">${weekDates.map((d) => timelineColumnHTML(d,start,end)).join("")}</div>
-      </div>`;
-  } else {
-    const weeksM = monthMatrix(currentDate);
-    const today = new Date();
-    const cells = weeksM.flat().map((d) => {
-      const key = dateKey(d);
-      const items = byDate[key] || [];
-      const out = d.getMonth() !== currentDate.getMonth();
-      const isToday = isSameDay(d, today);
-      const isSelected = isSameDay(d, currentDate) && !isToday;
-      const shown = items.slice(0,3);
-      const extra = items.length - shown.length;
-      return `<div class="month-cell ${out?"out":""} ${isToday?"today":""} ${isSelected?"selected":""}" data-action="pick-day" data-date="${key}">
-        <span class="month-num">${d.getDate()}</span>
-        ${shown.map((a) => { const meta = TYPES[a.type]; return `<div class="month-event" style="background:${meta.bg};color:${meta.color}">${a.time} ${esc(a.clientName)}</div>`; }).join("")}
-        ${extra>0 ? `<div class="month-more">+${extra} mais</div>` : ""}
-      </div>`;
-    }).join("");
-    root.innerHTML = `
-      <div class="month-grid">
-        ${WEEKDAYS.map((w) => `<div class="month-head">${w}</div>`).join("")}
-        ${cells}
-      </div>
-      <div class="month-day-panel">
-        <div class="day-heading">${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}</div>
-        ${dayListHTML(currentDate)}
-      </div>`;
-  }
-  bindDynamicEvents();
-}
-
-function bindDynamicEvents() {
-  document.querySelectorAll('[data-action="edit"]').forEach((el) =>
-    el.addEventListener("click", () => openEditModal(el.dataset.id)));
-  document.querySelectorAll('[data-action="delete"]').forEach((el) =>
-    el.addEventListener("click", (e) => { e.stopPropagation(); openConfirmDelete(el.dataset.id); }));
-  document.querySelectorAll('[data-action="ics"]').forEach((el) =>
-    el.addEventListener("click", (e) => { e.stopPropagation(); const a = appointments.find((x) => x.id===el.dataset.id); if (a) exportOneICS(a); }));
-  document.querySelectorAll('[data-action="pick-day"]').forEach((el) =>
-    el.addEventListener("click", () => { currentDate = new Date(el.dataset.date + "T00:00:00"); renderAll(); }));
-}
-
-// ---- Navegação ----
-function goPrev() {
-  if (view === "day") currentDate = addDays(currentDate,-1);
-  else if (view === "week") currentDate = addDays(currentDate,-7);
-  else currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()-1, 1);
-  renderAll();
-}
-function goNext() {
-  if (view === "day") currentDate = addDays(currentDate,1);
-  else if (view === "week") currentDate = addDays(currentDate,7);
-  else currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 1);
-  renderAll();
-}
-function goToday() { currentDate = new Date(); renderAll(); }
-
-// ---- Modal: adicionar/editar ----
-const emptyForm = () => ({ clientName:"", phone:"", address:"", type:"instalacao", date: dateKey(currentDate), time:"09:00", notes:"" });
-let formState = emptyForm();
-
-function openNewModal() { editingId = null; formState = emptyForm(); renderModal(); }
-function openEditModal(id) {
-  const a = appointments.find((x) => x.id === id);
-  if (!a) return;
-  editingId = id;
-  formState = { ...a };
-  renderModal();
-}
-function closeModal() { document.getElementById("modalRoot").innerHTML = ""; }
-
-function renderModal() {
-  const root = document.getElementById("modalRoot");
-  root.innerHTML = `
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal">
-        <div class="modal-head">
-          <h3>${editingId ? "Editar agendamento" : "Novo agendamento"}</h3>
-          <button class="modal-close" id="modalCloseBtn">✕</button>
-        </div>
-        <form id="apptForm">
-          <div class="field">
-            <label>Cliente</label>
-            <input required id="f_clientName" value="${esc(formState.clientName)}" placeholder="Nome do cliente" />
-          </div>
-          <div class="row2">
-            <div class="field"><label>Telefone</label><input id="f_phone" value="${esc(formState.phone)}" placeholder="(00) 00000-0000" /></div>
-            <div class="field"><label>Endereço</label><input id="f_address" value="${esc(formState.address)}" placeholder="Rua, bairro" /></div>
-          </div>
-          <div class="field">
-            <label>Tipo de atendimento</label>
-            <div class="type-picker" id="typePicker">
-              ${Object.entries(TYPES).map(([k,meta]) => `<div class="type-pill ${formState.type===k?"selected":""}" data-type="${k}" style="${formState.type===k?`background:${meta.color}`:""}">${meta.label}</div>`).join("")}
-            </div>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Data</label><input required type="date" id="f_date" value="${formState.date}" /></div>
-            <div class="field"><label>Horário</label><input required type="time" id="f_time" value="${formState.time}" /></div>
-          </div>
-          <div class="field">
-            <label>Observações</label>
-            <textarea id="f_notes" placeholder="Detalhes do pedido, medidas, preferências...">${esc(formState.notes)}</textarea>
-          </div>
-          <button type="button" class="btn-secondary btn-full" id="icsFromModalBtn">🔔 Adicionar lembrete no celular (1h antes)</button>
-          <div class="modal-actions">
-            ${editingId ? `<button type="button" class="btn-text-danger" id="deleteFromModalBtn">Excluir</button>` : ""}
-            <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
-            <button type="submit" class="btn-primary">${editingId ? "Salvar" : "Adicionar"}</button>
-          </div>
-        </form>
-      </div>
-    </div>`;
-
-  document.getElementById("modalOverlay").addEventListener("click", (e) => { if (e.target.id === "modalOverlay") closeModal(); });
-  document.getElementById("modalCloseBtn").addEventListener("click", closeModal);
-  document.getElementById("cancelBtn").addEventListener("click", closeModal);
-  document.querySelectorAll("#typePicker .type-pill").forEach((el) =>
-    el.addEventListener("click", () => { readFormIntoState(); formState.type = el.dataset.type; renderModal(); }));
-  if (editingId) document.getElementById("deleteFromModalBtn").addEventListener("click", () => { closeModal(); openConfirmDelete(editingId); });
-  document.getElementById("icsFromModalBtn").addEventListener("click", () => {
-    readFormIntoState();
-    if (!formState.clientName.trim() || !formState.date || !formState.time) { alert("Preencha ao menos o cliente, a data e o horário."); return; }
-    exportOneICS({ ...formState, id: editingId || "novo" });
-  });
-  document.getElementById("apptForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    readFormIntoState();
-    if (!formState.clientName.trim() || !formState.date || !formState.time) return;
-    const ok = await saveAppointment(formState);
-    if (ok) { closeModal(); loadData(); }
-  });
-}
-function readFormIntoState() {
-  formState.clientName = document.getElementById("f_clientName").value;
-  formState.phone = document.getElementById("f_phone").value;
-  formState.address = document.getElementById("f_address").value;
-  formState.date = document.getElementById("f_date").value;
-  formState.time = document.getElementById("f_time").value;
-  formState.notes = document.getElementById("f_notes").value;
-}
-function syncFormFieldsFromInputs() {
-  // re-render preserved values already handled via formState before re-render
-}
-
-// ---- Confirmação de exclusão ----
-function openConfirmDelete(id) {
-  confirmDeleteId = id;
-  const root = document.getElementById("modalRoot");
-  root.innerHTML = `
-    <div class="modal-overlay" id="confirmOverlay">
-      <div class="modal" style="max-width:320px;">
-        <div class="modal-head"><h3>Excluir agendamento</h3><button class="modal-close" id="confirmCloseBtn">✕</button></div>
-        <p style="font-size:13px;color:var(--muted);margin:0;">Essa ação não pode ser desfeita. Deseja continuar?</p>
-        <div class="confirm-actions">
-          <button class="btn-secondary" id="confirmCancelBtn">Cancelar</button>
-          <button class="btn-primary" style="background:#8C3E52" id="confirmDeleteBtn">Excluir</button>
-        </div>
-      </div>
-    </div>`;
-  document.getElementById("confirmOverlay").addEventListener("click", (e) => { if (e.target.id === "confirmOverlay") closeModal(); });
-  document.getElementById("confirmCloseBtn").addEventListener("click", closeModal);
-  document.getElementById("confirmCancelBtn").addEventListener("click", closeModal);
-  document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
-    const ok = await deleteAppointment(confirmDeleteId);
-    if (ok) { closeModal(); loadData(); }
-  });
-}
-
-// ---- Exportar lembrete (.ics) ----
-function pad2(n) { return String(n).padStart(2,"0"); }
-function icsDate(dateStr, timeStr) {
-  const [y,m,d] = dateStr.split("-").map(Number);
-  const [hh,mm] = timeStr.split(":").map(Number);
-  return `${y}${pad2(m)}${pad2(d)}T${pad2(hh)}${pad2(mm)}00`;
-}
-function icsDateEnd(dateStr, timeStr) {
-  const [y,m,d] = dateStr.split("-").map(Number);
-  const [hh,mm] = timeStr.split(":").map(Number);
-  const dt = new Date(y, m-1, d, hh, mm+60);
-  return `${dt.getFullYear()}${pad2(dt.getMonth()+1)}${pad2(dt.getDate())}T${pad2(dt.getHours())}${pad2(dt.getMinutes())}00`;
-}
-function icsEscape(s) { return String(s||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"); }
-function apptToICSBlock(a) {
-  const meta = TYPES[a.type];
-  const desc = [meta.label, a.phone?`Telefone: ${a.phone}`:"", a.notes||""].filter(Boolean).join(" | ");
-  return ["BEGIN:VEVENT",
-    `UID:${a.id}-${Date.now()}@agenda-cortinas`,
-    `DTSTAMP:${icsDate(a.date,a.time)}`,
-    `DTSTART:${icsDate(a.date,a.time)}`,
-    `DTEND:${icsDateEnd(a.date,a.time)}`,
-    `SUMMARY:${icsEscape(`${meta.label} - ${a.clientName}`)}`,
-    a.address ? `LOCATION:${icsEscape(a.address)}` : "",
-    `DESCRIPTION:${icsEscape(desc)}`,
-    "BEGIN:VALARM","TRIGGER:-PT1H","ACTION:DISPLAY","DESCRIPTION:Lembrete de agendamento","END:VALARM",
-    "END:VEVENT"].filter(Boolean).join("\r\n");
-}
-function downloadICS(filename, blocks) {
-  const content = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Agenda Cortinas e Persianas//PT-BR","CALSCALE:GREGORIAN",...blocks,"END:VCALENDAR"].join("\r\n");
-  const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url; link.download = filename;
-  document.body.appendChild(link); link.click(); document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-}
-function exportOneICS(a) { downloadICS(`${a.clientName.replace(/[^a-zA-Z0-9]+/g,"-")}.ics`, [apptToICSBlock(a)]); }
-function exportAllICS() { downloadICS("agenda-cortinas.ics", getFiltered().map(apptToICSBlock)); }
-
-// ---- Ligações da interface estática ----
-document.querySelectorAll(".view-tabs button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    view = btn.dataset.view;
-    document.querySelectorAll(".view-tabs button").forEach((b) => b.classList.toggle("active", b===btn));
-    renderAll();
-  });
-});
-document.querySelector('.view-tabs button[data-view="week"]').classList.add("active");
-document.getElementById("navPrev").addEventListener("click", goPrev);
-document.getElementById("navNext").addEventListener("click", goNext);
-document.getElementById("navToday").addEventListener("click", goToday);
-document.getElementById("addBtn").addEventListener("click", openNewModal);
-document.getElementById("exportAllBtn").addEventListener("click", exportAllICS);
-document.getElementById("searchInput").addEventListener("input", (e) => { search = e.target.value; renderMainView(); });
-document.querySelectorAll(".type-toggle").forEach((el) => {
-  el.addEventListener("click", () => {
-    const t = el.dataset.type;
-    if (activeTypes.has(t)) activeTypes.delete(t); else activeTypes.add(t);
-    el.classList.toggle("on");
-    renderMainView();
-  });
-});
-
-// ---- Instalação do app (Android/Chrome) ----
-let deferredInstallPrompt = null;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredInstallPrompt = e;
-  if (!localStorage.getItem("installBannerDismissed")) {
-    document.getElementById("installBanner").classList.add("show");
-  }
-});
-document.getElementById("installBtn").addEventListener("click", async () => {
-  if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; }
-  document.getElementById("installBanner").classList.remove("show");
-});
-document.getElementById("installClose").addEventListener("click", () => {
-  document.getElementById("installBanner").classList.remove("show");
-  localStorage.setItem("installBannerDismissed", "1");
-});
-// iOS Safari não dispara beforeinstallprompt — mostramos instrução manual.
-const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
-if (isIOS && !isStandalone && !localStorage.getItem("installBannerDismissed")) {
-  document.getElementById("installText").textContent = "Toque em Compartilhar e depois em \"Adicionar à Tela de Início\" para instalar o app.";
-  document.getElementById("installBtn").style.display = "none";
-  document.getElementById("installBanner").classList.add("show");
-}
-
-// ---- Início ----
-loadData();
-
-  </script>
+</script>
 </body>
 </html>
