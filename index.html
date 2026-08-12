@@ -640,7 +640,7 @@ function renderModal() {
   document.getElementById("modalCloseBtn").addEventListener("click", closeModal);
   document.getElementById("cancelBtn").addEventListener("click", closeModal);
   document.querySelectorAll("#typePicker .type-pill").forEach((el) =>
-    el.addEventListener("click", () => { formState.type = el.dataset.type; renderModal(); syncFormFieldsFromInputs(); }));
+    el.addEventListener("click", () => { readFormIntoState(); formState.type = el.dataset.type; renderModal(); }));
   if (editingId) document.getElementById("deleteFromModalBtn").addEventListener("click", () => { closeModal(); openConfirmDelete(editingId); });
   document.getElementById("icsFromModalBtn").addEventListener("click", () => {
     readFormIntoState();
