@@ -96,7 +96,8 @@
   .timeline-wrap { display: flex; overflow-x: auto; }
   .tl-gutter { position: relative; width: 40px; flex-shrink: 0; }
   .tl-gutter-label { position: absolute; right: 6px; transform: translateY(-6px); font-size: 10px; color: var(--muted); }
-  .tl-body { display: flex; flex: 1; min-width: 0; background-image: repeating-linear-gradient(to bottom, var(--border) 0px, var(--border) 1px, transparent 1px, transparent 52px); background-position: 0 1px; }
+  .tl-body { display: flex; flex: 1; min-width: 0; }
+  .tl-hourline { position: absolute; left: 0; right: 0; border-top: 1px solid #C9BFA0; }
   .tl-col { position: relative; flex: 1; min-width: 104px; border-left: 1px solid var(--border); }
   .tl-hourline { position: absolute; left: 0; right: 0; border-top: 1px solid var(--border); }
   .tl-empty { position: absolute; top: 8px; left: 6px; right: 6px; font-size: 11px; color: var(--muted); }
@@ -109,6 +110,13 @@
   .week-header-day .wd-name { font-weight: 700; }
   .week-header-day .wd-num { color: var(--muted); font-size: 11px; }
   .week-header-day.is-today .wd-name { color: var(--accent); }
+  .week-day-block { margin-bottom: 20px; }
+  .week-day-block:last-child { margin-bottom: 0; }
+  .week-day-title { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .week-day-name { font-size: 14px; font-weight: 700; }
+  .week-day-num { font-size: 12.5px; color: var(--muted); }
+  .week-day-block.is-today .week-day-name { color: var(--accent); }
+  .week-day-block.is-today .week-day-title { border-bottom-color: var(--accent); }
   .day-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
   .day-header .dh-name { font-size: 15px; font-weight: 700; }
   .day-header .dh-num { font-size: 13px; color: var(--muted); }
@@ -460,6 +468,11 @@ function dayListHTML(date) {
 function timelineColumnHTML(date, start, end) {
   const items = (getByDate()[dateKey(date)]) || [];
   const laidOut = layoutItems(items);
+  const hours = [];
+  for (let h = start/60; h <= end/60; h++) hours.push(h);
+  const hourlines = hours.slice(0,-1).map((h) =>
+    `<div class="tl-hourline" style="top:${(h*60-start)/60*HOUR_HEIGHT}px;height:${HOUR_HEIGHT}px"></div>`
+  ).join("");
   const blocks = laidOut.map((a) => {
     const s = toMinutes(a.time);
     const top = ((s-start)/60)*HOUR_HEIGHT + 1;
@@ -475,7 +488,7 @@ function timelineColumnHTML(date, start, end) {
     </div>`;
   }).join("");
   const empty = items.length === 0 ? `<div class="tl-empty">Sem agendamentos</div>` : "";
-  return `<div class="tl-col" style="height:${((end-start)/60)*HOUR_HEIGHT}px">${blocks}${empty}</div>`;
+  return `<div class="tl-col" style="height:${((end-start)/60)*HOUR_HEIGHT}px">${hourlines}${blocks}${empty}</div>`;
 }
 function hourGutterHTML(start, end) {
   const hours = [];
@@ -490,35 +503,23 @@ function renderMainView() {
   const byDate = getByDate();
 
   if (view === "day") {
-    const items = byDate[dateKey(currentDate)] || [];
-    const { start, end } = getRange(items);
     root.innerHTML = `
       <div class="day-header">
         <span class="dh-name">${WEEKDAYS[currentDate.getDay()]}</span>
         <span class="dh-num">${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}</span>
       </div>
-      <div class="timeline-wrap">
-        ${hourGutterHTML(start,end)}
-        <div class="tl-body">${timelineColumnHTML(currentDate, start, end)}</div>
-      </div>`;
+      ${dayListHTML(currentDate)}`;
   } else if (view === "week") {
     const weekDates = getWeekDates();
-    const flat = weekDates.flatMap((d) => byDate[dateKey(d)] || []);
-    const { start, end } = getRange(flat);
     const today = new Date();
-    root.innerHTML = `
-      <div class="week-headers">
-        <div class="week-header-gutter"></div>
-        ${weekDates.map((d) => `
-          <div class="week-header-day ${isSameDay(d,today)?"is-today":""}">
-            <div class="wd-name">${WEEKDAYS[d.getDay()]}</div>
-            <div class="wd-num">${d.getDate()}</div>
-          </div>`).join("")}
-      </div>
-      <div class="timeline-wrap">
-        ${hourGutterHTML(start,end)}
-        <div class="tl-body">${weekDates.map((d) => timelineColumnHTML(d,start,end)).join("")}</div>
-      </div>`;
+    root.innerHTML = weekDates.map((d) => `
+      <div class="week-day-block ${isSameDay(d,today)?"is-today":""}">
+        <div class="week-day-title">
+          <span class="week-day-name">${WEEKDAYS[d.getDay()]}</span>
+          <span class="week-day-num">${d.getDate()} de ${MONTHS[d.getMonth()]}</span>
+        </div>
+        ${dayListHTML(d)}
+      </div>`).join("");
   } else {
     const weeksM = monthMatrix(currentDate);
     const today = new Date();
