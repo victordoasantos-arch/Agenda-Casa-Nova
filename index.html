@@ -93,7 +93,7 @@
   .month-more { font-size: 9.5px; color: var(--muted); padding: 0 4px; }
   .month-day-panel { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
 
-  .timeline-wrap { display: flex; overflow-x: auto; }
+  .timeline-wrap { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
   .tl-gutter { position: relative; width: 40px; flex-shrink: 0; }
   .tl-gutter-label { position: absolute; right: 6px; transform: translateY(-6px); font-size: 10px; color: var(--muted); }
   .tl-body { display: flex; flex: 1; min-width: 0; }
@@ -144,6 +144,22 @@
 
   @media (min-width: 640px) {
     .agenda-body { padding: 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .tl-gutter { width: 30px; }
+    .tl-gutter-label { font-size: 9px; right: 3px; }
+    .tl-col { min-width: 72px; }
+    .week-header-day { min-width: 72px; font-size: 11px; padding: 3px 0; }
+    .week-header-day .wd-num { font-size: 10px; }
+    .event-block { padding: 2px 4px; }
+    .event-time { font-size: 9px; }
+    .event-name { font-size: 10px; }
+    .actions-row { gap: 6px; }
+    .add-btn { font-size: 12.5px; padding: 9px 10px; }
+    .export-btn { font-size: 11.5px; padding: 9px 8px; }
+    .type-toggle { font-size: 11px; padding: 4px 8px; }
+    .nav-label { min-width: 130px; font-size: 13px; }
   }
 </style>
 </head>
@@ -503,23 +519,35 @@ function renderMainView() {
   const byDate = getByDate();
 
   if (view === "day") {
+    const items = byDate[dateKey(currentDate)] || [];
+    const { start, end } = getRange(items);
     root.innerHTML = `
       <div class="day-header">
         <span class="dh-name">${WEEKDAYS[currentDate.getDay()]}</span>
         <span class="dh-num">${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}</span>
       </div>
-      ${dayListHTML(currentDate)}`;
+      <div class="timeline-wrap">
+        ${hourGutterHTML(start,end)}
+        <div class="tl-body">${timelineColumnHTML(currentDate, start, end)}</div>
+      </div>`;
   } else if (view === "week") {
     const weekDates = getWeekDates();
+    const flat = weekDates.flatMap((d) => byDate[dateKey(d)] || []);
+    const { start, end } = getRange(flat);
     const today = new Date();
-    root.innerHTML = weekDates.map((d) => `
-      <div class="week-day-block ${isSameDay(d,today)?"is-today":""}">
-        <div class="week-day-title">
-          <span class="week-day-name">${WEEKDAYS[d.getDay()]}</span>
-          <span class="week-day-num">${d.getDate()} de ${MONTHS[d.getMonth()]}</span>
-        </div>
-        ${dayListHTML(d)}
-      </div>`).join("");
+    root.innerHTML = `
+      <div class="week-headers">
+        <div class="week-header-gutter"></div>
+        ${weekDates.map((d) => `
+          <div class="week-header-day ${isSameDay(d,today)?"is-today":""}">
+            <div class="wd-name">${WEEKDAYS[d.getDay()]}</div>
+            <div class="wd-num">${d.getDate()}</div>
+          </div>`).join("")}
+      </div>
+      <div class="timeline-wrap">
+        ${hourGutterHTML(start,end)}
+        <div class="tl-body">${weekDates.map((d) => timelineColumnHTML(d,start,end)).join("")}</div>
+      </div>`;
   } else {
     const weeksM = monthMatrix(currentDate);
     const today = new Date();
