@@ -97,9 +97,8 @@
   .tl-gutter { position: relative; width: 40px; flex-shrink: 0; }
   .tl-gutter-label { position: absolute; right: 6px; transform: translateY(-6px); font-size: 10px; color: var(--muted); }
   .tl-body { display: flex; flex: 1; min-width: 0; }
-  .tl-hourline { position: absolute; left: 0; right: 0; border-top: 1px solid #C9BFA0; }
   .tl-col { position: relative; flex: 1; min-width: 104px; border-left: 1px solid var(--border); }
-  .tl-hourline { position: absolute; left: 0; right: 0; border-top: 1px solid var(--border); }
+  .tl-slot { border-top: 1px solid #C9BFA0; box-sizing: border-box; }
   .tl-empty { position: absolute; top: 8px; left: 6px; right: 6px; font-size: 11px; color: var(--muted); }
   .event-block { position: absolute; inset: 0; border-radius: 6px; padding: 3px 6px; display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
   .event-time { font-size: 10px; font-weight: 700; line-height: 1.2; }
@@ -485,11 +484,8 @@ function dayListHTML(date) {
 function timelineColumnHTML(date, start, end) {
   const items = (getByDate()[dateKey(date)]) || [];
   const laidOut = layoutItems(items);
-  const hours = [];
-  for (let h = start/60; h <= end/60; h++) hours.push(h);
-  const hourlines = hours.slice(0,-1).map((h) =>
-    `<div class="tl-hourline" style="top:${(h*60-start)/60*HOUR_HEIGHT}px;height:${HOUR_HEIGHT}px"></div>`
-  ).join("");
+  const numSlots = (end - start) / 60;
+  const slots = Array.from({length: numSlots}, () => `<div class="tl-slot" style="height:${HOUR_HEIGHT}px"></div>`).join("");
   const blocks = laidOut.map((a) => {
     const s = toMinutes(a.time);
     const top = ((s-start)/60)*HOUR_HEIGHT + 1;
@@ -505,7 +501,7 @@ function timelineColumnHTML(date, start, end) {
     </div>`;
   }).join("");
   const empty = items.length === 0 ? `<div class="tl-empty">Sem agendamentos</div>` : "";
-  return `<div class="tl-col" style="height:${((end-start)/60)*HOUR_HEIGHT}px">${hourlines}${blocks}${empty}</div>`;
+  return `<div class="tl-col" style="height:${((end-start)/60)*HOUR_HEIGHT}px">${slots}${blocks}${empty}</div>`;
 }
 function hourGutterHTML(start, end) {
   const hours = [];
