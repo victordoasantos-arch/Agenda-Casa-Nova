@@ -93,7 +93,7 @@
   .month-more { font-size: 9.5px; color: var(--muted); padding: 0 4px; }
   .month-day-panel { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
 
-  .timeline-wrap { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+  .timeline-wrap { display: flex; overflow-x: auto; }
   .tl-gutter { position: relative; width: 40px; flex-shrink: 0; }
   .tl-gutter-label { position: absolute; right: 6px; transform: translateY(-6px); font-size: 10px; color: var(--muted); }
   .tl-body { display: flex; flex: 1; min-width: 0; }
@@ -261,7 +261,8 @@ const TYPES = {
   medicao: { label: "Medição", color: "#95661E", bg: "#F6ECD9", dot: "#B8863E" },
   ambientacao: { label: "Ambientação", color: "#8C3E52", bg: "#F5E4E9", dot: "#A8586B" },
 };
-const WEEKDAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const WEEKDAYS = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+function weekdayIndex(d) { return (d.getDay() + 6) % 7; }
 const MONTHS = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const HOUR_HEIGHT = 52;
 const DEFAULT_START = 7 * 60;
@@ -281,7 +282,7 @@ function dateKey(d) {
   const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,"0"), day = String(d.getDate()).padStart(2,"0");
   return `${y}-${m}-${day}`;
 }
-function startOfWeek(d) { const r = new Date(d); r.setDate(r.getDate()-r.getDay()); r.setHours(0,0,0,0); return r; }
+function startOfWeek(d) { const r = new Date(d); r.setDate(r.getDate() - weekdayIndex(r)); r.setHours(0,0,0,0); return r; }
 function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
 function isSameDay(a,b) { return dateKey(a)===dateKey(b); }
 function monthMatrix(d) {
@@ -523,7 +524,7 @@ function renderMainView() {
     const { start, end } = getRange(items);
     root.innerHTML = `
       <div class="day-header">
-        <span class="dh-name">${WEEKDAYS[currentDate.getDay()]}</span>
+        <span class="dh-name">${WEEKDAYS[weekdayIndex(currentDate)]}</span>
         <span class="dh-num">${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]}</span>
       </div>
       <div class="timeline-wrap">
@@ -540,7 +541,7 @@ function renderMainView() {
         <div class="week-header-gutter"></div>
         ${weekDates.map((d) => `
           <div class="week-header-day ${isSameDay(d,today)?"is-today":""}">
-            <div class="wd-name">${WEEKDAYS[d.getDay()]}</div>
+            <div class="wd-name">${WEEKDAYS[weekdayIndex(d)]}</div>
             <div class="wd-num">${d.getDate()}</div>
           </div>`).join("")}
       </div>
