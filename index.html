@@ -96,19 +96,21 @@
   .timeline-wrap { display: flex; overflow-x: auto; }
   .tl-gutter { position: relative; width: 40px; flex-shrink: 0; }
   .tl-gutter-label { position: absolute; right: 6px; transform: translateY(-6px); font-size: 10px; color: var(--muted); }
+  .tl-gutter-wrap { display: flex; flex-direction: column; flex-shrink: 0; }
+  .tl-gutter-spacer { height: 40px; flex-shrink: 0; }
   .tl-body { display: flex; flex: 1; min-width: 0; }
   .tl-col { position: relative; flex: 1; min-width: 104px; border-left: 1px solid var(--border); }
+  .tl-col-wrap { display: flex; flex-direction: column; flex: 1; min-width: 104px; }
+  .tl-col-header { height: 40px; flex-shrink: 0; text-align: center; font-size: 12px; padding: 4px 0; border-left: 1px solid var(--border); box-sizing: border-box; }
+  .tl-col-header .wd-name { font-weight: 700; }
+  .tl-col-header .wd-num { color: var(--muted); font-size: 11px; }
+  .tl-col-header.is-today .wd-name { color: var(--accent); }
   .tl-slot { border-top: 1px solid #C9BFA0; box-sizing: border-box; }
   .tl-empty { position: absolute; top: 8px; left: 6px; right: 6px; font-size: 11px; color: var(--muted); }
   .event-block { position: absolute; inset: 0; border-radius: 6px; padding: 3px 6px; display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
   .event-time { font-size: 10px; font-weight: 700; line-height: 1.2; }
   .event-name { font-size: 11px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .week-headers { display: flex; margin-bottom: 4px; }
-  .week-header-gutter { width: 40px; flex-shrink: 0; }
-  .week-header-day { flex: 1; min-width: 104px; text-align: center; font-size: 12px; padding: 4px 0; }
-  .week-header-day .wd-name { font-weight: 700; }
-  .week-header-day .wd-num { color: var(--muted); font-size: 11px; }
-  .week-header-day.is-today .wd-name { color: var(--accent); }
+  
   .week-day-block { margin-bottom: 20px; }
   .week-day-block:last-child { margin-bottom: 0; }
   .week-day-title { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
@@ -149,8 +151,9 @@
     .tl-gutter { width: 30px; }
     .tl-gutter-label { font-size: 9px; right: 3px; }
     .tl-col { min-width: 72px; }
-    .week-header-day { min-width: 72px; font-size: 11px; padding: 3px 0; }
-    .week-header-day .wd-num { font-size: 10px; }
+    .tl-col-wrap { min-width: 72px; }
+    .tl-col-header { font-size: 11px; padding: 3px 0; }
+    .tl-col-header .wd-num { font-size: 10px; }
     .event-block { padding: 2px 4px; }
     .event-time { font-size: 9px; }
     .event-name { font-size: 10px; }
@@ -533,17 +536,19 @@ function renderMainView() {
     const { start, end } = getRange(flat);
     const today = new Date();
     root.innerHTML = `
-      <div class="week-headers">
-        <div class="week-header-gutter"></div>
-        ${weekDates.map((d) => `
-          <div class="week-header-day ${isSameDay(d,today)?"is-today":""}">
-            <div class="wd-name">${WEEKDAYS[weekdayIndex(d)]}</div>
-            <div class="wd-num">${d.getDate()}</div>
-          </div>`).join("")}
-      </div>
       <div class="timeline-wrap">
-        ${hourGutterHTML(start,end)}
-        <div class="tl-body">${weekDates.map((d) => timelineColumnHTML(d,start,end)).join("")}</div>
+        <div class="tl-gutter-wrap">
+          <div class="tl-gutter-spacer"></div>
+          ${hourGutterHTML(start,end)}
+        </div>
+        <div class="tl-body">${weekDates.map((d) => `
+          <div class="tl-col-wrap">
+            <div class="tl-col-header ${isSameDay(d,today)?"is-today":""}">
+              <div class="wd-name">${WEEKDAYS[weekdayIndex(d)]}</div>
+              <div class="wd-num">${d.getDate()}</div>
+            </div>
+            ${timelineColumnHTML(d,start,end)}
+          </div>`).join("")}</div>
       </div>`;
   } else {
     const weeksM = monthMatrix(currentDate);
